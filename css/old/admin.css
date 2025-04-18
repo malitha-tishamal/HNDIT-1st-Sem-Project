@@ -1,0 +1,103 @@
+.contect-box{
+    border: 2px solid blue;
+    padding: 20px;
+    margin-bottom: 40px;
+    display: block;
+}
+.subcontent-box1{
+    display:flex;
+    border: 2px solid blue;
+    padding: 8px 5px 40px 10px;
+    height: 120px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.subcontent-box2{
+    padding: 8px 5px 10px 10px;
+    height: 300px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/*admin tab serch button */
+.dta-button{
+    border: none;
+    font-weight: bold;
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+    margin-right: 20px;
+}
+.courses-link-btn{
+    border: none;
+    background-color: red;
+    font-weight: bold;
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+/*admin tab serch button color 1*/
+.dta-color1{
+    background-color: blue;
+}
+
+/*admin tab serch button color 1*/
+.dta-color2{
+    background-color: #00cc00;
+}
+.dta-button, .courses-link-btn:hover{
+    opacity: 0.8;
+}
+
+input[type=text],select{
+    border-radius: 8px;
+    width: 200px;
+    height: 30px;
+}
+
+select{
+    border-radius: 8px;
+    width: 150px;
+    height: 35px;
+}
+
+/*Output table sql*/
+
+.Table
+{
+    display: table;
+}
+.Title
+{
+    display: table-caption;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+}
+.Heading
+{
+    display: table-row;
+    font-weight: bold;
+    text-align: center;
+}
+.Row
+{
+    display: table-row;
+}
+.Cell
+{
+    display: table-cell;
+    border: solid;
+    border-width: thin;
+    padding: 5px;
+}
+/*edit search result mark tag*/
+mark{
+    color: white;
+    background-color: red;
+}
+.ajest{
+    padding-right: 25px;
+}

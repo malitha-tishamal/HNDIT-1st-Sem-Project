@@ -1,0 +1,74 @@
+
+/*main box*/
+.form-content{
+    display: flex;
+    justify-content: space-around;
+}
+
+/*sub main box*/
+.subform-box{
+    padding: 20px 5px 5px 5px;
+    width: 100px;
+    height: 80px;
+}
+/*pading ajest form inside boxes div*/
+.sub-btn{
+    padding-right: 30px;
+    padding-bottom: 50px;
+}
+
+/*form inside box*/
+.form-box{
+    padding: 8px 15px 8px 25px;
+    width: 40%;
+}
+
+}
+/*input text boxes*/
+.apply5{
+  width: 60%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+/*input boxes on course update tabs*/
+#apply6{
+  width: 150px;
+  margin-right: 10px;
+  height: 30px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.heding2{
+    font-size: 18px;
+    background-color: blue;
+    color: white;
+    padding: 5px 5px 5px 5px;
+    font-weight: bold;
+    border-radius: 0px;
+    text-align: center;
+    margin : 0px 0px 0px 0px;
+}
+/* course update tabs div boxes*/
+
+/* course update tab form fieldset width ajest*/
+.align8{
+    display: flex;
+}
+.align9{
+    width: 100%;
+}
+
+select {
+  width: 160px;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+/*output tab*/
+.align6{
+    padding: 0px 0px 0px 50px;
+}
+

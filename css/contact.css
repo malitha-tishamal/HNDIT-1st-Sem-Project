@@ -1,0 +1,110 @@
+.main-box{
+	display: flex;
+	flex-direction: inline;
+}
+
+.sub-box1{
+	padding: 10px 20px 10px 20px;
+	width: 40%;
+}
+/*inside box of sub box 1(data delivary message box)*/
+.sub-box2{
+    height: 50px;
+}
+
+/*inside box of sub box 1(icon box)*/
+.sub-box3{
+    text-align: center;
+    padding-bottom: 40px;
+}
+ /*inside box of sub box1(admin & contact box)*/
+.sub-box4{
+    padding: 10px;
+    box-shadow: 0 15px 20px rgba(0, 0, 204, 0.4);
+    border-radius: 8px;
+    background-color: #e6e6ff;
+    display: flex;
+    flex-direction: inline;
+}
+
+
+/*social icons css avalabile on "main.css"file*/
+
+/*ajest icons*/
+.ajest-ico{
+  font-size:5px;
+  width: 45px;
+  padding:15px;
+  border-radius: 10px;
+  text-shadow: 2px 2px 2px black;
+}
+/*follow social intro*/
+
+.social-intro{
+	padding-top: 20px;
+	padding-bottom: 10px;
+	font-size: 30px;
+	font-weight: bold;
+	font-style: italic;
+}
+/*ajest images admin*/
+.ajest-img{
+    padding-top: 5px;
+}
+/*ajest admin contact intro*/
+.ajest-intro{
+    padding-left: 15px;
+    font-weight: bold;
+}
+
+/*Mobile Responsive*/
+
+@media (max-width: 768px) {
+  .main-box {
+    flex-direction: column; 
+    align-items: center; 
+  }
+  .sub-box1 {
+    width: 90%; 
+    padding: 10px; 
+  }
+  .sub-box2 {
+    height: auto; 
+  }
+  .sub-box3 {
+    padding-bottom: 20px;
+  }
+  .sub-box4 {
+    flex-direction: column; 
+    padding: 10px; 
+  }
+  .ajest-ico {
+    font-size: 20px;
+    width: 40px; 
+    padding: 10px; 
+  }
+  .social-intro {
+    font-size: 24px; 
+    padding-top: 10px; 
+  }
+  .ajest-intro {
+    padding-left: 10px;
+    font-size: 16px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .sub-box1 {
+    width: 100%; 
+  }
+ .social-intro {
+    font-size: 20px; 
+  }
+  .ajest-ico {
+    font-size: 18px; 
+    width: 45px; 
+  }
+  .ajest-intro {
+    font-size: 14px; /
+  }
+}
