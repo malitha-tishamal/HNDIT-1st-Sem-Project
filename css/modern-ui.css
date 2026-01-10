@@ -443,31 +443,128 @@ body.modern-theme {
     margin-bottom: 1rem;
 }
 
-.news-tag {
-    background: rgba(99, 102, 241, 0.1);
-    color: var(--primary);
-    padding: 0.2rem 0.6rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
+.news-item-modern {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 1.25rem;
+    padding-left: 1.5rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.news-item-modern:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateX(8px);
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.4);
+}
+
+.news-item-modern::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 6px;
+    height: 100%;
+    background: var(--primary);
+    transition: var(--transition);
+    opacity: 0.3;
+}
+
+.news-item-modern:hover::before {
+    opacity: 1;
+}
+
+/* Color Themes */
+.java-item::before {
+    background: #f87171;
+}
+
+.java-item:hover {
+    border-color: rgba(248, 113, 113, 0.3);
+}
+
+.java-item .news-tag-modern {
+    background: rgba(248, 113, 113, 0.15);
+    color: #f87171;
+}
+
+.java-item:hover .news-link-modern {
+    color: #f87171;
+}
+
+.python-item::before {
+    background: #60a5fa;
+}
+
+.python-item:hover {
+    border-color: rgba(96, 165, 250, 0.3);
+}
+
+.python-item .news-tag-modern {
+    background: rgba(96, 165, 250, 0.15);
+    color: #60a5fa;
+}
+
+.python-item:hover .news-link-modern {
+    color: #60a5fa;
+}
+
+.web-item::before {
+    background: #c084fc;
+}
+
+.web-item:hover {
+    border-color: rgba(192, 132, 252, 0.3);
+}
+
+.web-item .news-tag-modern {
+    background: rgba(192, 132, 252, 0.15);
+    color: #c084fc;
+}
+
+.web-item:hover .news-link-modern {
+    color: #c084fc;
+}
+
+.iot-item::before {
+    background: #fbbf24;
+}
+
+.iot-item:hover {
+    border-color: rgba(251, 191, 36, 0.3);
+}
+
+.iot-item .news-tag-modern {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+}
+
+.iot-item:hover .news-link-modern {
+    color: #fbbf24;
+}
+
+.news-date-modern {
+    color: var(--text-muted);
+    font-size: 0.8rem;
     font-weight: 600;
 }
 
-.news-date {
-    color: var(--text-muted);
-    font-size: 0.8rem;
-    margin-left: 0.5rem;
-}
-
-.news-item a {
-    display: block;
-    margin-top: 0.4rem;
-    color: var(--text-main);
+.news-link-modern {
+    color: #ffffff;
     text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.4;
+    display: block;
+    margin-top: 0.75rem;
     transition: var(--transition);
 }
 
-.news-item a:hover {
+.footer-section h3 i {
     color: var(--primary);
+    font-size: 1.25rem;
 }
 
 .category-tags {

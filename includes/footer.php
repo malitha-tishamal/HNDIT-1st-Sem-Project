@@ -23,21 +23,44 @@
 
             <div class="footer-section popular-news">
                 <h3><i class="fa fa-newspaper-o"></i> Popular News</h3>
-                <div class="news-item">
-                    <span class="news-tag">Robotics</span>
-                    <span class="news-date">2024.09.10</span>
-                    <a href="news.php#robotic1">New Course Starting Nov 18th</a>
-                </div>
-                <div class="news-item">
-                    <span class="news-tag">Java</span>
-                    <span class="news-date">2024.09.08</span>
-                    <a href="news.php#java6">New 6th Batch Starting Nov 12</a>
-                </div>
-                <div class="news-item">
-                    <span class="news-tag">Python</span>
-                    <span class="news-date">2024.06.06</span>
-                    <a href="news.php#python5">New 5th Batch Starting Oct 6</a>
-                </div>
+                <?php
+                require_once("connect.php");
+                // Fetch the latest 3 courses for the news section
+                $footerNewsQuery = "SELECT * FROM courses ORDER BY course_date DESC LIMIT 3";
+                $footerNewsResult = $con->query($footerNewsQuery);
+                
+                if ($footerNewsResult && $footerNewsResult->num_rows > 0) {
+                    while($fRow = $footerNewsResult->fetch_assoc()) {
+                        $fId = $fRow['course_id'];
+                        $fTag = ucfirst($fId);
+                        if ($fId == 'iot') $fTag = "Robotics";
+                        if ($fId == 'web') $fTag = "Web";
+                        
+                        // Format the title for the news link
+                        $fTitle = "New Course Starting " . date('M jS', strtotime($fRow['course_date']));
+                        if ($fId == 'java') $fTitle = "New 6th Batch Starting " . date('M jS', strtotime($fRow['course_date']));
+                        if ($fId == 'python') $fTitle = "New 5th Batch Starting " . date('M jS', strtotime($fRow['course_date']));
+                        ?>
+                        <?php
+                        $colorClass = 'default-color';
+                        if ($fId == 'java') $colorClass = 'java-item';
+                        if ($fId == 'python') $colorClass = 'python-item';
+                        if ($fId == 'web') $colorClass = 'web-item';
+                        if ($fId == 'iot') $colorClass = 'iot-item';
+                        ?>
+                        <div class="news-item-modern <?php echo $colorClass; ?> mb-4">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <span class="news-tag-modern"><?php echo $fTag; ?></span>
+                                <span class="news-date-modern"><?php echo str_replace('-', '.', $fRow['course_date']); ?></span>
+                            </div>
+                            <a href="news.php#<?php echo $fId; ?>" class="news-link-modern">
+                                <?php echo $fTitle; ?>
+                            </a>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
             </div>
 
             <div class="footer-section categories">
