@@ -1,1074 +1,755 @@
 <?php
 session_start();
+require_once("connect.php");
+
+// Admin Login Logic
+if (isset($_POST["admin_login"])) {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    if ($username == "admin@elk.com" && $password == "1234") {
+        $_SESSION["admin"] = "Admin";
+    } else {
+        $login_error = "Invalid Administrative Credentials";
+    }
+}
+
+// Admin Logout
+if (isset($_POST["admin_logout"])) {
+    unset($_SESSION["admin"]);
+    header("Location: Admin.php");
+    exit();
+}
+
+$pageTitle = "Admin Dashboard";
+include("includes/header.php");
 ?>
-<?php include("connect.php");?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="images/icon-head.png">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<link rel="stylesheet" type="text/css" href="css/admin2.css">
-	<link rel="stylesheet" type="text/css" href="css/register.css">
-	<link rel="stylesheet" type="text/css" href="css/forms.css">
-	<link rel="stylesheet" type="text/css" href="css/log-in-out.css">
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<title>Learninglk - Admin</title>
-	<style type="text/css">
-		#admin-user{
-			height: 38px;		
-		}
-		#admin-user:focus{
-			border: 2px solid black;
-		}
-		#ajest-input2{
-			width: 180px;
-			height: 30px;
-			padding: 8px;
-			margin: 0px 8px 0px 8px;
-		}
-		.updatedta{
-			font-weight: bold;
-			font-size: 12px;
-			color: red;
-		}
-	</style>
-</head>
-<body>
-
-	<div class="user">
-        <div class="top-box align3">&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="index.php"><img src="images/icon.png" width="200px" height="60px"></a></div>
-
-        <div class="top-box"></div>
-
-        <div class="top-box output-align ">             
-            
-            <?php
-                if (isset($_POST["sub12"])) {           
-                    $username = $_POST["username"];
-                    $password = $_POST["password"];
-                    if ($username =="admin@elk.com" && $password =="1234") {
-                        echo "<div ><img src='images/admin2.jpg' width='55px'></div>";
-                        echo "<div class='success'> Log in Successfull! <br> As Admin. Wellcome! </div>";
-                        $_SESSION["user"]="Admin";
-                    }
-                   
-                    else{
-                        echo "<div ><img src='images/error.png' width='50px'></div>";
-                        echo "<div class='error'> Invalid Credentials! <br>  Please Cheak Again! </div>";
-                        }
-                    }
-            ?>
-
-            <?php
-                     if(isset($_GET['sign'])){
-                        if ($_GET['sign']== 1) {
-                        	echo "<div ><img src='images/success.png' width='55px'></div>";
-                            echo "<div class='success'>New Account Create Successfull</div>";
-                        }
-                        if ($_GET['sign']== 0) {
-                        	echo "<div ><img src='images/error.png' width='50px'></div>";
-                            echo "<div class='error'>New Account Create Unsuccessfull</div>";
-                        }
-                    }
-            ?>
-            <?php
-                     if(isset($_GET['send'])){
-                        if ($_GET['send']== 1) {
-                        	echo "<div ><img src='images/success.png' width='55px'></div>";
-                            echo "<div class='success'>Update Successfull</div>";
-                        }
-                        if ($_GET['send']== 0) {
-                        	echo "<div ><img src='images/error.png' width='50px'></div>";
-                            echo "<div class='error'>Update Unsuccessfull</div>";
-                        }
-                    }
-            ?>
-
-
-        </div>
-
-        <div class="top-box align4">
-	        <button class="main login" onclick="document.getElementById('id01').style.display='block'">
-        	<i class="fa fa-fw fa-user"></i>Login
-	        </button>
-	        <button class="main signup" onclick="document.getElementById('id02').style.display='block'" >
-        	<i class="fa fa-sign-in"></i>SignUp
-        </button>
-        </div>
-    </div>
-
-
-    <!--Log in content -->
-    <div id="id01" class="modal">
-	  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-	  
-	  <div class="signup-container modal-content">
-	        <h1>Log In</h1>
-	        <p>Don't have an Account? <span onclick="signform()">Sign in</span></p>
-	       
-	        <div class="social-signup">
-	            <button class="social-btn">Google
-	            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	            	<img src="images/google.png" width="20px">
-	            </button>
-	            <button class="social-btn">Facebook
-	            	&nbsp;&nbsp;&nbsp;
-	            	<img src="images/facebook2.png" width="20px">
-	            </button>
-	        </div>  
-	        <div class="social-signup">
-	            <button class="social-btn">Instagram
-	            	&nbsp;&nbsp;&nbsp;
-	            	<img src="images/ins.jpg" width="20px">
-	            </button>
-	            <button class="social-btn">Github
-	            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	            	<img src="images/github.png" width="20px">
-	            </button>
-	        </div>
-	        
-	        <div class="divid">OR</div>
-	        
-	        <form class="signup-form" method="post">
-	            <input type="text" id="admin-user" name="username" placeholder="email" required>
-	            <input type="password" id="ajest-input" name="password" placeholder="password" required>
-	            <button class="social-btn">Forgot Password ?</button>
-	            <button type="submit" name="sub12" class="signup-btn width-ajest2">Log In</button>
-	        </form>
-	        
-	    </div>
-	</div>
-	
-	<!--sign in content -->
-	<div id="id02" class="modal">
-	  <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-	  
-	  <div class="signup-container modal-content">
-	        <h1>Sign Up</h1>
-	        <p>Already have an account? <span onclick="loginform()">Log in</span></p>
-	       
-	        <div class="social-signup">
-	            <button class="social-btn">Google
-	            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	            	<img src="images/google.png" width="20px">
-	            </button>
-	            <button class="social-btn">Facebook
-	            	&nbsp;&nbsp;&nbsp;
-	            	<img src="images/facebook2.png" width="20px">
-	            </button>
-	        </div>  
-	        <div class="social-signup">
-	            <button class="social-btn">Instagram
-	            	&nbsp;&nbsp;&nbsp;
-	            	<img src="images/ins.jpg" width="20px">
-	            </button>
-	            <button class="social-btn">Github
-	            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	            	<img src="images/github.png" width="20px">
-	            </button>
-	        </div>
-	        
-	        <div class="divid">OR</div>
-	        
-	        <form class="signup-form" method="get" action="entry3.php">
-	            <input type="email" id="ajest-input" name="email" placeholder="email" required>
-	            <input type="password" id="ajest-input" name="password" placeholder="password" required>
-	            <input type="text" id="ajest-input" name="first_name" placeholder="first name" required>
-	            <input type="text" id="ajest-input" name="last_name" placeholder="last name" required>
-	            <input type="submit" value="SignUp" class="signup-btn width-ajest1">
-	        </form>
-	        
-	        <p class="terms">
-	            By signing up you agree to our <a href="#" >
-	            <span class="policy">Terms of Service</span><br>
-	            </a> and <a href="#" ><span class="policy">Privacy Policy</span></a><br>
-	            <br><br>
-	            <span class="policy">
-	            <input type="checkbox" checked ></span>
-	            Email me with news and updates
-	        </p>
-	    </div>
-	</div>
-
-	<script type="text/javascript">
-		function signform(){
-				document.getElementById('id01').style.display='none';
-				document.getElementById('id02').style.display='block';
-			}
-			function loginform(){
-				document.getElementById('id02').style.display='none';
-				document.getElementById('id01').style.display='block';
-			}
-	</script>
-
-	<script type="text/javascript" src="js/user.js"></script>
-	
-	<div class="navbar">
-		<a  href="index.php">
-			<i class="fa fa-home"></i> Home
-		</a>
-		<a href="Store.php">
- 			<i class="fa fa-newspaper-o"></i> Store
- 		</a>
- 		<a href="news.php">
- 			<i class="fa fa-newspaper-o"></i> News
- 		</a>
- 		<div class="dropdown">
- 			<button class="dropdown-btn">
- 				<i class="fa fa-download"></i> Downloads 
- 			</button>
-   			<div class="dropdown-contents">
-                <a href="java-download.php"><i class='fa fa-coffee' style='color:red'></i> Java Programming</a>
-                <a href="python-download.php"><i class="fa fa-code" style="color:orange"></i> Python Programming</a>
-                <a href="web-download.php"><i class="fa fa-code" style="color:blue"></i> Web Programming</a>
+<div class="admin-wrapper">
+    <?php if (!isset($_SESSION["admin"])): ?>
+        <section class="admin-login-section">
+            <div class="login-card card glass-card">
+                <h2>Admin Access</h2>
+                <form method="post" class="modern-form">
+                    <?php if (isset($login_error)): ?>
+                        <div class="alert alert-error"><?php echo $login_error; ?></div>
+                    <?php endif; ?>
+                    <div class="input-group">
+                        <label>Admin Email</label>
+                        <input type="email" name="username" required placeholder="admin@elk.com">
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" name="password" required placeholder="••••">
+                    </div>
+                    <button type="submit" name="admin_login" class="btn btn-primary full-width">Login to Dashboard</button>
+                </form>
             </div>
- 		</div>
- 		<a href="courses.php">
- 			<i class="fa fa-clone"></i> Courses
- 		</a>
- 		<a href="contact.php">
-            <i class="fa fa-envelope"></i> Contact
-        </a>
- 		<a href="#" style="background-color: red;">
- 			<i class="fa fa-user-circle-o"></i> Admin
- 		</a>
- 		<a href="Register.php">
- 			<i class="fa fa-user-circle-o"></i> Register
- 		</a>
- 		<form method="post">
- 			<input type="submit" value="Log Out" name="sub13" class="log-out-btn">
- 		</form>		
-    </div>
- 
-	<?php
-	//remove admin access
-		if (isset($_POST["sub13"])) {
-			// remove all session 
-			session_unset();
-			// destroy the session
-			//session_destroy();								
-		}
-	?>
-
-	<?php
-	 if (isset($_SESSION["user"])) {
-	 	# code...
-	?>
-				
-    <div class="conent-box">
-    	<div class="subcontent-box1">
-    		<form  method="post">
-    			<div class="sidenav">
-	    			  <div class="dash-intro">
-		    			 <div>
-		    			 	<img src="images/admin2.jpg" class="dash-img">
-		    			 </div>
-		    			 <div class="dash-heading">Admin Dashbord</div>
-	    			  </div>
-	    			  <div class="dash-btn ajest2" onclick="myFunction()"> <i class="fa fa-line-chart"></i> Status</div>
-					  <div>
-					  	<button class="dash-btn ajest1" name="sub1"><i class="fa fa-rss"></i> All Register Data</button>
-					  </div>
-					  <div>
-					  	<button class="dash-btn ajest1" name="sub4"><i class='fa fa-coffee'></i> Java Registed</button>
-					  </div>
-					  <div>
-					  	<button class="dash-btn ajest1" name="sub5"><i class="fa fa-file-code-o"></i> Web Registed</button>
-					  </div>
-					  <div>
-					  	<button class="dash-btn ajest1" name="sub6"><i class="fa fa-file-code-o"></i> Python Registed</button>
-					  </div>
-					  <div>
-					  	<button class="dash-btn ajest1" name="sub7"><i class="fa fa-rss"></i> All Contact Us Data </button>
-					  </div>
-					  <div class="dash-btn ajest2" id="serchbtn"> <i class="fa fa-search"></i> Search Manually</div>
-					  <div class="dash-btn ajest2" id="addbtn"> <i class="fa fa-keyboard-o"></i> Add New Course</div>
-					  <div class="dash-btn ajest2" id="updatebtn"> <i class="fa fa-wrench"></i> Update Course Data</div>
-					  
-				</div>
-    		</form>
-    	</div>
-
-    <div class="subcontent-box2">
-    	<div class="subcontent-box3">
-    		
-    	</div>
-    	<div class="subcontent-box3"></div>
-    	<div class="subcontent-box3">
-    		<?php
-
-	    	if(isset($_POST['sub'])){
-	    			$nic_no = $_POST['nic_no'];
-	    			$query = "SELECT * FROM students WHERE nic_no ='$nic_no'";
-	    			$result = mysqli_query($con,$query);
-
-	    			if(mysqli_num_rows($result)==0){
-	    				echo "No Relult ";
-	    			}
-	    			else{
-
-						echo "<table border='2'>
-
-							<tr>
-								<th>Name</th>
-								<th>NIC No</th>
-								<th>E-Mail</th>
-								<th>Number</th>
-								<th>Age</th>
-								<th>Gender</th>
-								<th>City</th>
-								<th>Java</th>
-								<th>Web</th>
-								<th>Python</th>
-								<th>Class</th>
-							</tr>";
-
-		    			while ($row = mysqli_fetch_array($result)) {
-
-		    				echo "<tr>";
-		    				echo "<td>" .$row['name']."</td>";
-		    				echo "<td>" .$row['nic_no']."</td>";
-		    				echo "<td>" .$row['email']."</td>";
-		    				echo "<td>" .$row['number']."</td>";
-		    				echo "<td>" .$row['age']."</td>";
-		    				echo "<td>" .$row['gender']."</td>";
-		    				echo "<td>" .$row['city']."</td>";
-		    				echo "<td>" .$row['java']."</td>";
-		    				echo "<td>" .$row['web']."</td>";
-		    				echo "<td>" .$row['python']."</td>";
-		    				echo "<td>" .$row['class']."</td>";
-		    				echo "</tr>";
-	    				}
-	    			}
-	    		}
-
-	    		if(isset($_POST['sub1'])){
-	    		    if ($con) {
-		    			$query = "SELECT * FROM students";
-		    			$result = mysqli_query($con,$query);
-
-		    			echo "<table border='2'>
-
-							<tr>
-								<th>Name</th>
-								<th>NIC No</th>
-								<th>E-Mail</th>
-								<th>Number</th>
-								<th>Age</th>
-								<th>Gender</th>
-								<th>City</th>
-								<th>Java</th>
-								<th>Web</th>
-								<th>Python</th>
-								<th>Class</th>
-							</tr>";
-
-		    			while ($row = mysqli_fetch_array($result)) {
-
-		    				echo "<tr>";
-		    				echo "<td>" .$row['name']."</td>";
-		    				echo "<td>" .$row['nic_no']."</td>";
-		    				echo "<td>" .$row['email']."</td>";
-		    				echo "<td>" .$row['number']."</td>";
-		    				echo "<td>" .$row['age']."</td>";
-		    				echo "<td>" .$row['gender']."</td>";
-		    				echo "<td>" .$row['city']."</td>";
-		    				echo "<td>" .$row['java']."</td>";
-		    				echo "<td>" .$row['web']."</td>";
-		    				echo "<td>" .$row['python']."</td>";
-		    				echo "<td>" .$row['class']."</td>";
-		    				echo "</tr>";
-		    			}
-		    			
-		    		}
-		    	}
-
-		    	if(isset($_POST['sub2'])){
-	    			$city = $_POST['city'];
-	    			$query = "SELECT * FROM students WHERE city ='$city'";
-	    			$result = mysqli_query($con,$query);
-
-	    			if(mysqli_num_rows($result)==0){
-	    				echo "No Relult ";
-	    			}
-	    			else{
-	    				echo "<table border='2'>
-
-							<tr>
-								<th>Name</th>
-								<th>NIC No</th>
-								<th>E-Mail</th>
-								<th>Number</th>
-								<th>Age</th>
-								<th>Gender</th>
-								<th>City</th>
-								<th>Java</th>
-								<th>Web</th>
-								<th>Python</th>
-								<th>Class</th>
-							</tr>";
-
-		    			while ($row = mysqli_fetch_array($result)) {
-
-		    				echo "<tr>";
-		    				echo "<td>" .$row['name']."</td>";
-		    				echo "<td>" .$row['nic_no']."</td>";
-		    				echo "<td>" .$row['email']."</td>";
-		    				echo "<td>" .$row['number']."</td>";
-		    				echo "<td>" .$row['age']."</td>";
-		    				echo "<td>" .$row['gender']."</td>";
-		    				echo "<td>" .$row['city']."</td>";
-		    				echo "<td>" .$row['java']."</td>";
-		    				echo "<td>" .$row['web']."</td>";
-		    				echo "<td>" .$row['python']."</td>";
-		    				echo "<td>" .$row['class']."</td>";
-		    				echo "</tr>";
-	    				}
-	    			}
-	    		}
-	    		
-
-		    	if(isset($_POST['sub3'])){
-	    			$name = $_POST['name'];
-	    			$query = "SELECT * FROM students WHERE name ='$name'";
-	    			$result = mysqli_query($con,$query);
-	    			if(mysqli_num_rows($result)==0){
-	    				echo "No Relult ";
-	    			}
-	    			else{
-	    				echo "<table border='2'>
-
-							<tr>
-								<th>Name</th>
-								<th>NIC No</th>
-								<th>E-Mail</th>
-								<th>Number</th>
-								<th>Age</th>
-								<th>Gender</th>
-								<th>City</th>
-								<th>Java</th>
-								<th>Web</th>
-								<th>Python</th>
-								<th>Class</th>
-							</tr>";
-
-		    			while ($row = mysqli_fetch_array($result)) {
-
-		    				echo "<tr>";
-		    				echo "<td>" .$row['name']."</td>";
-		    				echo "<td>" .$row['nic_no']."</td>";
-		    				echo "<td>" .$row['email']."</td>";
-		    				echo "<td>" .$row['number']."</td>";
-		    				echo "<td>" .$row['age']."</td>";
-		    				echo "<td>" .$row['gender']."</td>";
-		    				echo "<td>" .$row['city']."</td>";
-		    				echo "<td>" .$row['java']."</td>";
-		    				echo "<td>" .$row['web']."</td>";
-		    				echo "<td>" .$row['python']."</td>";
-		    				echo "<td>" .$row['class']."</td>";
-		    				echo "</tr>";
-	    				}
-	    			}
-	    		}
-
-
-	    		if(isset($_POST['sub4'])){
-	    		    if ($con) {
-		    			$query = "SELECT * FROM students WHERE java = 15000";
-		    			$result = mysqli_query($con,$query);
-		    			echo "<table border='2'>
-
-							<tr>
-								<th><mark>Name</mark></th>
-								<th>NIC No</th>
-								<th>E-Mail</th>
-								<th>Number</th>
-								<th>Age</th>
-								<th>Gender</th>
-								<th>City</th>
-								<th>Java</th>
-								<th>Web</th>
-								<th>Python</th>
-								<th>Class</th>
-							</tr>";
-
-		    			while ($row = mysqli_fetch_array($result)) {
-
-		    				echo "<tr>";
-		    				echo "<td>" .$row['name']."</td>";
-		    				echo "<td>" .$row['nic_no']."</td>";
-		    				echo "<td>" .$row['email']."</td>";
-		    				echo "<td>" .$row['number']."</td>";
-		    				echo "<td>" .$row['age']."</td>";
-		    				echo "<td>" .$row['gender']."</td>";
-		    				echo "<td>" .$row['city']."</td>";
-		    				echo "<td><mark>" .$row['java']."</mark></td>";
-		    				echo "<td>" .$row['web']."</td>";
-		    				echo "<td>" .$row['python']."</td>";
-		    				echo "<td>" .$row['class']."</td>";
-		    				echo "</tr>";
-		    			}
-		    			
-		    		}
-		    	}
-		     
-			    if(isset($_POST['sub5'])){
-		    		    if ($con) {
-			    			$query = "SELECT * FROM students WHERE web = 10000";
-			    			$result = mysqli_query($con,$query);
-			    			echo "<table border='2'>
-
-							<tr>
-								<th><mark>Name<mark></th>
-								<th>NIC No</th>
-								<th>E-Mail</th>
-								<th>Number</th>
-								<th>Age</th>
-								<th>Gender</th>
-								<th>City</th>
-								<th>Java</th>
-								<th>Web</th>
-								<th>Python</th>
-								<th>Class</th>
-							</tr>";
-
-		    			while ($row = mysqli_fetch_array($result)) {
-
-		    				echo "<tr>";
-		    				echo "<td>" .$row['name']."</td>";
-		    				echo "<td>" .$row['nic_no']."</td>";
-		    				echo "<td>" .$row['email']."</td>";
-		    				echo "<td>" .$row['number']."</td>";
-		    				echo "<td>" .$row['age']."</td>";
-		    				echo "<td>" .$row['gender']."</td>";
-		    				echo "<td>" .$row['city']."</td>";
-		    				echo "<td>" .$row['java']."</td>";
-		    				echo "<td><mark>" .$row['web']."</mark></td>";
-		    				echo "<td>" .$row['python']."</td>";
-		    				echo "<td>" .$row['class']."</td>";
-		    				echo "</tr>";		    			
-			    		}
-			    	}
-			    }
-
-			    if(isset($_POST['sub6'])){
-		    		    if ($con) {
-			    			$query = "SELECT * FROM students WHERE python = 12000";
-			    			$result = mysqli_query($con,$query);
-			    			echo "<table border='2'>
-
-							<tr>
-								<th><mark>Name<mark></th>
-								<th>NIC No</th>
-								<th>E-Mail</th>
-								<th>Number</th>
-								<th>Age</th>
-								<th>Gender</th>
-								<th>City</th>
-								<th>Java</th>
-								<th>Web</th>
-								<th>Python</th>
-								<th>Class</th>
-							</tr>";
-
-		    			while ($row = mysqli_fetch_array($result)) {
-
-		    				echo "<tr>";
-		    				echo "<td>" .$row['name']."</td>";
-		    				echo "<td>" .$row['nic_no']."</td>";
-		    				echo "<td>" .$row['email']."</td>";
-		    				echo "<td>" .$row['number']."</td>";
-		    				echo "<td>" .$row['age']."</td>";
-		    				echo "<td>" .$row['gender']."</td>";
-		    				echo "<td>" .$row['city']."</td>";
-		    				echo "<td>" .$row['java']."</td>";
-		    				echo "<td>" .$row['web']."</td>";
-		    				echo "<td><mark>" .$row['python']."<mark></td>";
-		    				echo "<td>" .$row['class']."</td>";
-		    				echo "</tr>";		    			
-			    		}
-			    	}
-			    } 
-
-			    if(isset($_POST['sub7'])){
-				    if ($con) {
-		    			$query = "SELECT * FROM contact";
-		    			$result = mysqli_query($con,$query);
-		    			echo "
-		    			<table border='2'>
-							<tr>
-								<th>Name</th>
-								<th>E-Mail</th>
-								<th>Date</th>
-								<th>Number</th>
-								<th>Message</th>
-							</tr>";
-
-		    			while ($row = mysqli_fetch_array($result)) {
-
-		    				echo "<tr>";
-		    				echo "<td>" .$row['sd_name']."</td>";
-		    				echo "<td>" .$row['sd_email']."</td>";
-		    				echo "<td>" .$row['sd_date']."</td>";
-		    				echo "<td>" .$row['sd_number']."</td>";
-		    				echo "<td>" .$row['sd_message']."</td>";
-		    				echo "</tr>";	    			
-			    		}
-			    	}
-			    }
-
-			   if(isset($_POST['sub8'])){
-		    			$sd_date = $_POST['sd_date'];
-		    			$query = "SELECT * FROM contact WHERE sd_date ='$sd_date'";
-		    			$result = mysqli_query($con,$query);
-		    			if(mysqli_num_rows($result)==0){
-		    				echo "No Relult ";
-		    			}
-		    			else{
-		    				echo "<table border='2'>;
-
-							<tr>
-								<th>Name</th>
-								<th>E-Mail</th>
-								<th>Date</th>
-								<th>Number</th>
-								<th>Message</th>
-							</tr>";
-
-		    			while ($row = mysqli_fetch_array($result)) {
-
-		    				echo "<tr>";
-		    				echo "<td>" .$row['sd_name']."</td>";
-		    				echo "<td>" .$row['sd_email']."</td>";
-		    				echo "<td>" .$row['sd_date']."</td>";
-		    				echo "<td>" .$row['sd_number']."</td>";
-		    				echo "<td>" .$row['sd_message']."</td>";
-		    				echo "</tr>";
-		    				}
-		    			}
-		    		}
-    		?>
-    	</div>
-    	<div class="subcontent-box3">
-    		<div id="dbscreen">
-    		<h2>Total Summery</h2>
-    		<div id="dbbox">
-    			<div class="db-details">
-    				<div class="db-hedding">Total Register</div>
-    				<?php
-		    			$sql = "SELECT count(*) FROM students "; 
-							$result = $con->query($sql); 
-							  
-							// Display data on web page 
-							while($row = mysqli_fetch_array($result)) { 
-							    echo '<div class = "db-count">'.$row['count(*)'].'</div>';  
-							} 
-		    			?>
-    			</div>
-
-    			<div class="db-details">
-    				<div class="db-hedding">Total Masseages</div>
-    				<?php
-		    			$sql = "SELECT count(*) FROM contact "; 
-							$result = $con->query($sql); 
-							  
-							// Display data on web page 
-							while($row = mysqli_fetch_array($result)) { 
-							    echo '<div class = "db-count">'.$row['count(*)'].'</div>'; 
-							} 
-		    			?>
-    			</div>
-
-    			<div class="db-details">
-    				<div class="db-hedding">Total Courses</div>
-    				<?php
-		    			$sql = "SELECT count(*) FROM courses "; 
-							$result = $con->query($sql); 
-							  
-							// Display data on web page 
-							while($row = mysqli_fetch_array($result)) { 
-							    echo '<div class = "db-count">'.$row['count(*)'].'</div>';  
-							} 
-		    			?>
-    			</div>
-
-    			<div class="db-details">
-    				<div class="db-hedding">Total Signups</div>
-    				<?php
-		    			$sql = "SELECT count(*) FROM account "; 
-							$result = $con->query($sql); 
-							  
-							// Display data on web page 
-							while($row = mysqli_fetch_array($result)) { 
-							    echo '<div class = "db-count">'.$row['count(*)'].'</div>';  
-							} 
-		    			?>
-    			</div>
-    		</div>
-
-    		<h2>Course Register Count</h2>
-
-    		<div id="dbbox">
-    			<div class="db-details">
-    				<div class="db-hedding">Java Register</div>
-    				<?php
-		    			$sql = "SELECT count(*) FROM students WHERE java = 15000 "; 
-							$result = $con->query($sql); 
-							  
-							// Display data on web page 
-							while($row = mysqli_fetch_array($result)) { 
-							    echo '<div class = "db-count">'.$row['count(*)'].'</div>';   
-							} 
-		    			?>
-    			</div>
-
-    			<div class="db-details">
-    				<div class="db-hedding">Web Register</div>
-    				<?php
-		    			$sql = "SELECT count(*) FROM students WHERE web = 10000 "; 
-							$result = $con->query($sql); 
-							  
-							// Display data on web page 
-							while($row = mysqli_fetch_array($result)) { 
-							    echo '<div class = "db-count">'.$row['count(*)'].'</div>';   
-							} 
-		    			?>
-    			</div>
-
-    			<div class="db-details">
-    				<div class="db-hedding">Python Register</div>
-    				<?php
-		    			$sql = "SELECT count(*) FROM students WHERE python = 12000";
-							$result = $con->query($sql); 
-							  
-							// Display data on web page 
-							while($row = mysqli_fetch_array($result)) { 
-							    echo "<div class = 'db-count'>".$row['count(*)']."</div>";  
-							} 
-		    			?>
-    			</div>
-    			<div class="db-details">
-    				<div class="db-hedding">IOT Register</div>
-    				<?php
-			    			$sql = "SELECT count(*) FROM students WHERE iot = 12000";
-								$result = $con->query($sql); 
-								  
-								//Display data on web page 
-								while($row = mysqli_fetch_array($result)) { 
-							    echo "<div class = 'db-count'>".$row['count(*)']."</div>";  
-							} 
-		    			?>
-    			</div>
-    		</div>
-
-			<div id="dbbox">
-    			<div class="db-details">
-	    				<div class="db-hedding">C# Register</div>
-	    				<?php
-			    			$sql = "SELECT count(*) FROM students WHERE c1 = 12000";
-								$result = $con->query($sql); 
-								  
-								// Display data on web page 
-								while($row = mysqli_fetch_array($result)) { 
-							    echo "<div class = 'db-count'>".$row['count(*)']."</div>";  
-							} 
-		    			?>
-	    		</div>   			
-    		</div>
-    	</div>
-    	</div>
-    	<div class="subcontent-box3">
-    		<div id="inputdta">
-    			<form method="post">
-    				<div class="heading-serch">Search Manually</div>
-    				<input type="text" style="width: 25%;" placeholder="Search by NIC No" name="nic_no">
-		    		<input type="submit" class="dta-btn" value="Search" name="sub">
-
-		    		<select name="city" >
-		    			<option >Search by City</option>
-		    			<option value="Matara">Matara</option>
-		    			<option value="Galle">Galle</option>
-		    			<option value="Hambanthot">Hambantota</option>
-		    		</select>
-		    		<input type="submit" class="dta-btn" value="Search" name="sub2">
-
-		    		<input type="text" style="width: 25%;" placeholder="Search by Students Name" name="name">
-		    		<input type="submit" class="dta-btn" value="Search" name="sub3">
-		    	</form>
-    		</div>
-
-    		<div id="updatecourse">
-				<div class="align8"> 
-				    <form method="get" action="update-time.php"> 			
-				        <div class="form-container2 ajest-form4">
-				        	<div class="heding2">Update Course Time</div>
-					        <div style="padding: 10px;">
-						        <lable class="updatedta">Course ID * :</label><br>
-		                        <input type="text" id="apply6" name="course_id" placeholder="e.g.- java" required>
-						        <label>
-					            <i class="fa fa-user icon"></i>
-					            Class Time :</label>
-					            <input type="text" id="apply6" name="course_time" placeholder="e.g: 9.30 P.M." >
-					            <input type="submit" class="submitbtn" name="submit" value="Update">
-					        </div>
-				        </div>
-				    </form>
-				    <form method="get" action="update-date.php">  
-				       <div class="form-container2 ajest-form4">
-				       	<div class="heding2">Update Course Date</div>
-					       	<div style="padding: 10px;">
-					       		<lable class="updatedta">Course ID * :</label><br>
-		                        <input type="text" id="apply6" name="course_id" placeholder="e.g.- Java" required>
-					            <label>
-					            <i class="fa fa-user icon"></i>
-					            Start Date :</label>
-					            <input type="date" id="apply6" name="course_date" placeholder="yyyy/mm/dd">
-					            <input type="submit" class="submitbtn" name="submit" value="Update">
-					         </div>
-				        </div>
-				    </form>
-				    <form method="get" action="update-month.php">  
-				        <div class="form-container2 ajest-form4">
-				        	<div class="heding2">Update Duration Months</div>
-				        	<div style="padding: 10px;">
-					        	<lable class="updatedta">Course ID * :</label><br>
-		                        <input type="text" id="apply6" name="course_id" placeholder="e.g.- Java" required>
-					            <label>
-					            <i class="fa fa-user icon"></i>
-					            Duration Months :</label>
-					            <input type="text" id="apply6" name="duration_months" placeholder="e.g.- 8 Months " required>
-					            <input type="submit" class="submitbtn" name="submit" value="Update">
-					        </div>
-				        </div>
-				    </form>
-				</div>
-				<div class="align8"> 
-				    <form method="get" action="update-hours.php">  
-				        <div class="form-container2 ajest-form4">
-				        	<div class="heding2">Update Duration Hours</div>
-				        	<div style="padding: 10px;">
-					        	<lable class="updatedta">Course ID * :</label><br>
-		                        <input type="text" id="apply6" name="course_id" placeholder="e.g.- java" required>
-					            <label>
-					            <i class="fa fa-user icon"></i>
-					            Class Hours :</label>
-					            <input type="text" id="apply6" name="duration_hours" placeholder="e.g.- 120 Hours" >
-					            <input type="submit" class="submitbtn" name="submit" value="Update">
-					        </div>
-				        </div>
-				    </form>
-				    <form method="get" action="update-type.php">  
-				        <div class="form-container2 ajest-form4">
-				        	<div class="heding2">Update Cours Type</div>
-				        	<div style="padding: 10px;">
-					        	<lable class="updatedta">Course ID * :</label>
-		                        <br>
-		                        <input type="text" id="apply6" name="course_id" placeholder="e.g.- Java" required>
-					             <label>
-					            <i class="fa fa-user icon"></i>
-					            Course Type :</label>
-					            <input type="text" id="apply6" name="course_type" placeholder="e.g.- Online | Instatute" >
-					            <input type="submit" class="submitbtn" name="submit" value="Update">
-					        </div>
-				        </div>
-				    </form>
-				    <form method="get" action="update-batch.php">  
-				        <div class="form-container2 ajest-form4">
-				        	<div class="heding2">Update Student Sheets</div>
-				        	<div style="padding: 10px;">
-					        	<lable class="updatedta">Course ID * :</label><br>
-		                        <input type="text" id="apply6" name="course_id" placeholder="e.g.- Java" required>
-					            <label>
-					            <i class="fa fa-user icon"></i>
-					            Students Batch :</label>
-					            <input type="number" id="apply6" name="students" placeholder="e.g.- 20">
-					            <input type="submit" class="submitbtn" name="submit" value="Update">
-					        </div>
-				        </div>
-				    </form> 
-				</div>
-				<div class="align8"> 
-				    <form method="get" action="update-payments.php">  
-				         <div class="form-container2 ajest-form4">
-				        	<div class="heding2">Update Course Payments</div>
-				        	<div style="padding: 10px;">
-					        	<lable class="updatedta">Course ID * :</label>
-		                        <br>
-		                        <input type="text" id="apply6" name="course_id" placeholder="e.g.- Java" required>
-					            <label>
-					            <i class="fa fa-user icon"></i>
-					            Course payments :</label>
-					            <input type="text" id="apply6" name="payments" placeholder="e.g.- 15000 (5000x3)">
-					            <input type="submit" class="submitbtn" name="submit" value="Update">
-					        </div>
-				        </div>
-				    </form> 
-				    <form method="get" action="update-link.php">  
-				        <div class="form-container2 ajest-form4">
-				        	<div class="heding2">Update Class Link</div>
-				        	<div style="padding: 10px;">
-					        	<lable class="updatedta">Course ID * :</label><br>
-		                        <input type="text" id="apply6" name="course_id" placeholder="e.g.- Java" required>
-					            <label>
-					            <i class="fa fa-user icon"></i>
-					            Class Link :</label>
-					            <textarea name="link" style="width: 150px;"></textarea>
-					            <input type="submit" class="submitbtn" name="submit" value="Update">
-					        </div>
-				        </div>
-				    </form>
-				</div>
-    	</div>
-    	<div class="subcontent-box3">
-    		<div id="addcourse">
-    			<div class="form-container ajest-form3">
-                <div class="hedding">Add Course</div>
-    			<form method="get" action="entry4.php">  
-	                <div class="align8">
-	                	<div class="align10">
-	                        <label>
-	                        <i class="fa fa-user icon"></i>
-	                        Course ID <font color="red">*</font> :</label>
-	                        <input type="text" id="ajest-input2" name="course_id" placeholder="e.g.- Java" required>
-	                    </div>
-	                    <div class="align10">
-	                        <label>
-	                        <i class="fa fa-user icon"></i>
-	                        Course Name <font color="red">*</font> :</label>
-	                        <input type="text" id="ajest-input2" name="course_name" placeholder="e.g.- Java Programming" required>
-	                    </div>
-
-	                    <div class="align10">
-	                        <label>
-	                        <i class="fa fa-user icon"></i>
-	                        Class Time <font color="red">*</font> :</label>
-	                        <input type="time" id="ajest-input2" name="course_time"  required>
-	                    </div>
-	                </div><br>
-	                <div class="align8">
-	                    <div class="align10">
-	                        <label>
-	                        <i class="fa fa-user icon"></i>
-	                        Start Date <font color="red">*</font> :</label>
-	                        <input type="date" id="ajest-input2" name="course_date" required>
-	                    </div>
-	                    <div class="align10">
-	                        <label>
-	                        <i class="fa fa-user icon"></i>
-	                         Duration Months <font color="red">*</font> :</label>
-	                        <input type="text" id="ajest-input2" name="duration_months" placeholder="e.g.- 8 Months " required>
-	                    </div>
-
-	                    <div class="align10">
-	                        <label>
-	                        <i class="fa fa-user icon"></i>
-	                         Duration Hours<font color="red">*</font> :</label>
-	                        <input type="text" id="ajest-input2" name="duration_hours" placeholder="e.g.- 120 hours " required>
-	                    </div>
-	                </div><br>
-	                <div class="align8">
-	                    <div class="align10">
-	                        <label>
-	                        <i class="fa fa-user icon"></i>
-	                        Course Type <font color="red">*</font> :</label>
-	                        <input type="text" id="ajest-input2" name="course_type" placeholder="e.g.- Online | Instatute" required>
-	                    </div>
-	                
-	                    <div class="align10">
-	                        <label>
-	                        <i class="fa fa-user icon"></i>
-	                        Students Batch  <font color="red">*</font> :</label>
-	                        <input type="number" id="ajest-input2" name="students" placeholder="e.g.- 20" required>
-	                    </div>
-
-	                    <div class="align10">
-	                        <label>
-	                        <i class="fa fa-user icon"></i>
-	                        Course payments <font color="red">*</font> :</label>
-	                        <input type="text" id="ajest-input2" name="payments" placeholder="e.g.- 15000 (5000x3)" required>
-	                    </div>
-	                </div><br>
-	                <div class="align8">
-	                    <div class="align10">
-	                        <label>
-	                        <i class="fa fa-user icon"></i>
-	                        Class Link <font color="red">*</font> :</label>
-	                        <textarea id="ajest-input2" required name="link"></textarea>
-	                    </div>
-	                </div><br>
-	                
-	                <div class="align7 sub-btn">
-	                    <input type="submit" class="submitbtn" name="submit" value="Submit"> 
-	                    <input type="reset" class="submitbtn" name="clear" value="Clear">   
-	                </div>
-	           </form>
-	         </div>
-	    	</div>
-    	</div>
-    	<div class="subcontent-box3"></div>
-    </div>
-
-    <script>
-
-		  function myFunction() {
-			  var x = document.getElementById("dbscreen");
-			  if (x.style.display === "none") {
-			    x.style.display = "block";
-			  } else {
-			    x.style.display = "none";;
-			  }
-			}
-
-        const button = document.getElementById('serchbtn');
-        const inputField = document.getElementById('inputdta');
-
-        button.addEventListener('click', () => {
-            if (inputField.style.display === 'none' || inputField.style.display === '') {
-                inputField.style.display = 'block'; // Show the input field	                
-            } else {
-                inputField.style.display = 'none'; // Hide the input field	               
-            }
-        });
-
-        const button2 = document.getElementById('addbtn');
-        const inputField3 = document.getElementById('addcourse');
-
-        button2.addEventListener('click', () => {
-            if (inputField3.style.display === 'none' || inputField3.style.display === '') {
-                inputField3.style.display = 'block'; // Show the input field	                
-            } else {
-                inputField3.style.display = 'none'; // Hide the input field	               
-            }
-        });
-
-        const button3 = document.getElementById('updatebtn');
-        const inputField2 = document.getElementById('updatecourse');
-
-        button3.addEventListener('click', () => {
-            if (inputField2.style.display === 'none' || inputField2.style.display === '') {
-                inputField2.style.display = 'block'; // Show the input field	                
-            } else {
-                inputField2.style.display = 'none'; // Hide the input field	               
-            }
-        });
-	</script>
-    	
-
-    		<?php
-			}
-			else{
-				echo "<div class='session-ban'> You Have Not Access This Page...! <br> 
-						Please login to As Admin ";
-
-						echo "<div ><img src='images/access.jpg'></div>
-						<img src='images/icon.png' width='400px'></div>
-					  </div>";
-			}
-		?>
-
-</body>
-</html>
+        </section>
+    <?php else: ?>
+        <div class="dashboard-layout">
+            <aside class="admin-sidebar">
+                <div class="admin-profile">
+                    <img src="images/admin2.jpg" alt="Admin" class="dash-img">
+                    <h3>Administrator</h3>
+                    <p>System Control</p>
+                </div>
+                <nav class="admin-nav">
+                    <button class="nav-item active" onclick="showTab('stats')"><i class="fa fa-line-chart"></i> Overview</button>
+                    <button class="nav-item" onclick="showTab('registers')"><i class="fa fa-users"></i> Course Registrations</button>
+                    <button class="nav-item" onclick="showTab('courses')"><i class="fa fa-book"></i> Course Management</button>
+                </nav>
+                <form method="post" class="logout-form">
+                    <button type="submit" name="admin_logout" class="btn btn-secondary full-width">
+                        <i class="fa fa-sign-out"></i> Logout
+                    </button>
+                </form>
+            </aside>
+
+            <main class="admin-main">
+                <div id="stats" class="tab-content active">
+                    <div class="dashboard-header">
+                        <h1>System Status</h1>
+                        <p>Real-time analytics for Learninglk</p>
+                    </div>
+
+                    <?php if (isset($_GET['send'])): ?>
+                        <div class="alert <?php echo $_GET['send'] == '1' ? 'alert-success' : 'alert-error'; ?>">
+                            <?php echo $_GET['send'] == '1' ? 'Course updated successfully!' : 'Failed to update course.'; ?>
+                        </div>
+                    <?php endif; ?>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fa fa-user-plus"></i></div>
+                            <div class="stat-info">
+                                <h4>Total Students</h4>
+                                <span class="count"><?php echo $con->query("SELECT count(*) FROM students")->fetch_row()[0]; ?></span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fa fa-book"></i></div>
+                            <div class="stat-info">
+                                <h4>Courses</h4>
+                                <span class="count"><?php echo $con->query("SELECT count(*) FROM courses")->fetch_row()[0]; ?></span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fa fa-user-circle"></i></div>
+                            <div class="stat-info">
+                                <h4>User Accounts</h4>
+                                <span class="count"><?php echo $con->query("SELECT count(*) FROM account")->fetch_row()[0]; ?></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="courses-detailed-stats card mt-2">
+                        <h3>Registration Breakdown</h3>
+                        <div class="mini-stats">
+                            <div class="mini-stat">Java: <span><?php echo $con->query("SELECT count(*) FROM students WHERE java > 0")->fetch_row()[0]; ?></span></div>
+                            <div class="mini-stat">Web: <span><?php echo $con->query("SELECT count(*) FROM students WHERE web > 0")->fetch_row()[0]; ?></span></div>
+                            <div class="mini-stat">Python: <span><?php echo $con->query("SELECT count(*) FROM students WHERE python > 0")->fetch_row()[0]; ?></span></div>
+                            <div class="mini-stat">IOT: <span><?php echo $con->query("SELECT count(*) FROM students WHERE iot > 0")->fetch_row()[0]; ?></span></div>
+                            <div class="mini-stat">C#: <span><?php echo $con->query("SELECT count(*) FROM students WHERE c1 > 0 OR c1 = '12000'")->fetch_row()[0]; ?></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="registers" class="tab-content">
+                    <div class="dashboard-header">
+                        <h1>Student Registrations</h1>
+                    </div>
+
+                    <div class="search-filters-container card mb-2">
+                        <h3>Search & Filter</h3>
+                        <form method="get" class="search-form mt-1">
+                            <div class="search-grid">
+                                <div class="input-group">
+                                    <label>NIC No</label>
+                                    <input type="text" name="nic_no" placeholder="Search NIC..." value="<?php echo $_GET['nic_no'] ?? ''; ?>">
+                                </div>
+                                <div class="input-group">
+                                    <label>Student Name</label>
+                                    <input type="text" name="student_name" placeholder="Search Name..." value="<?php echo $_GET['student_name'] ?? ''; ?>">
+                                </div>
+                                <div class="input-group">
+                                    <label>City</label>
+                                    <select name="city" class="modern-select">
+                                        <option value="">All Cities</option>
+                                        <option value="Matara" <?php echo ($_GET['city'] ?? '') == 'Matara' ? 'selected' : ''; ?>>Matara</option>
+                                        <option value="Galle" <?php echo ($_GET['city'] ?? '') == 'Galle' ? 'selected' : ''; ?>>Galle</option>
+                                        <option value="Hambantota" <?php echo ($_GET['city'] ?? '') == 'Hambantota' ? 'selected' : ''; ?>>Hambantota</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <label>Course Filter</label>
+                                    <select name="course_filter" class="modern-select">
+                                        <option value="">All Courses</option>
+                                        <option value="java" <?php echo ($_GET['course_filter'] ?? '') == 'java' ? 'selected' : ''; ?>>Java (Registered)</option>
+                                        <option value="web" <?php echo ($_GET['course_filter'] ?? '') == 'web' ? 'selected' : ''; ?>>Web (Registered)</option>
+                                        <option value="python" <?php echo ($_GET['course_filter'] ?? '') == 'python' ? 'selected' : ''; ?>>Python (Registered)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="search-actions mt-1">
+                                <button type="submit" class="btn btn-primary">Apply Filters</button>
+                                <a href="Admin.php?tab=registers" class="btn btn-secondary">Clear</a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container card">
+                        <table class="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>NIC</th>
+                                    <th>Email</th>
+                                    <th>City</th>
+                                    <th>Courses</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $where = ["1=1"];
+                                if (!empty($_GET['nic_no'])) $where[] = "nic_no LIKE '%" . $con->real_escape_string($_GET['nic_no']) . "%'";
+                                if (!empty($_GET['student_name'])) $where[] = "name LIKE '%" . $con->real_escape_string($_GET['student_name']) . "%'";
+                                if (!empty($_GET['city'])) $where[] = "city = '" . $con->real_escape_string($_GET['city']) . "'";
+                                if (!empty($_GET['course_filter'])) {
+                                    if ($_GET['course_filter'] == 'java') $where[] = "java > 0";
+                                    elseif ($_GET['course_filter'] == 'web') $where[] = "web > 0";
+                                    elseif ($_GET['course_filter'] == 'python') $where[] = "python > 0";
+                                }
+
+                                $query = "SELECT * FROM students WHERE " . implode(" AND ", $where) . " ORDER BY nic_no DESC LIMIT 50";
+                                $res = $con->query($query);
+                                
+                                if ($res->num_rows > 0) {
+                                    while($row = $res->fetch_assoc()) {
+                                        $courses = [];
+                                        if ($row['java'] > 0) $courses[] = "Java";
+                                        if ($row['web'] > 0) $courses[] = "Web";
+                                        if ($row['python'] > 0) $courses[] = "Python";
+                                        
+                                        echo "<tr>
+                                            <td>".htmlspecialchars($row['name'])."</td>
+                                            <td>".htmlspecialchars($row['nic_no'])."</td>
+                                            <td>".htmlspecialchars($row['email'])."</td>
+                                            <td>".htmlspecialchars($row['city'])."</td>
+                                            <td><span class='badge'>".implode(", ", $courses)."</span></td>
+                                        </tr>";
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='5' class='text-center'>No matching records found.</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="courses" class="tab-content">
+                    <div class="dashboard-header">
+                        <h1>Course Management</h1>
+                    </div>
+
+                    <div class="management-top card mb-2">
+                        <div class="tabs-sub">
+                            <button class="sub-tab-btn active" onclick="showSubTab('update-course')">Update Existing</button>
+                            <button class="sub-tab-btn" onclick="showSubTab('add-course')">Add New Course</button>
+                        </div>
+                    </div>
+
+                    <div id="update-course-section" class="sub-tab-content active">
+                        <div class="card mb-2">
+                            <h3>Select Course to Edit</h3>
+                            <form method="get" id="course_selector_form" style="margin-top: 1rem;">
+                                <input type="hidden" name="tab" value="courses">
+                                <div class="input-group">
+                                    <select name="selected_course" id="selected_course" class="modern-select" onchange="this.form.submit()">
+                                        <option value="">-- Select a Course --</option>
+                                        <?php
+                                        $course_list = $con->query("SELECT course_id, course_id as name FROM courses");
+                                        $current_selection = $_GET['selected_course'] ?? '';
+                                        while($c = $course_list->fetch_assoc()) {
+                                            $sel = ($current_selection == $c['course_id']) ? 'selected' : '';
+                                            echo "<option value='".htmlspecialchars($c['course_id'])."' $sel>".htmlspecialchars($c['course_id'])."</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+
+                        <?php if ($current_selection): ?>
+                        <div class="management-grid">
+                            <div class="card">
+                                <h3>Basic Information</h3>
+                                <form action="update-batch.php" method="get" class="modern-form inline-form mt-1">
+                                    <input type="hidden" name="course_id" value="<?php echo htmlspecialchars($current_selection); ?>">
+                                    <label>Batch Size</label>
+                                    <input type="number" name="students" placeholder="Seats">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+
+                                <form action="update-date.php" method="get" class="modern-form inline-form mt-2">
+                                    <input type="hidden" name="course_id" value="<?php echo htmlspecialchars($current_selection); ?>">
+                                    <label>Start Date</label>
+                                    <input type="text" name="course_date" placeholder="yyyy/mm/dd">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+
+                                <form action="update-month.php" method="get" class="modern-form inline-form mt-2">
+                                    <input type="hidden" name="course_id" value="<?php echo htmlspecialchars($current_selection); ?>">
+                                    <label>Duration</label>
+                                    <input type="text" name="duration_months" placeholder="Months">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+                            </div>
+
+                            <div class="card">
+                                <h3>Class & Delivery</h3>
+                                <form action="update-time.php" method="get" class="modern-form inline-form mt-1">
+                                    <input type="hidden" name="course_id" value="<?php echo htmlspecialchars($current_selection); ?>">
+                                    <label>Class Time</label>
+                                    <input type="text" name="course_time" placeholder="Time">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+
+                                <form action="update-hours.php" method="get" class="modern-form inline-form mt-2">
+                                    <input type="hidden" name="course_id" value="<?php echo htmlspecialchars($current_selection); ?>">
+                                    <label>Total Hours</label>
+                                    <input type="text" name="duration_hours" placeholder="Hours">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+
+                                <form action="update-type.php" method="get" class="modern-form inline-form mt-2">
+                                    <input type="hidden" name="course_id" value="<?php echo htmlspecialchars($current_selection); ?>">
+                                    <label>Course Type</label>
+                                    <input type="text" name="course_type" placeholder="Type">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+                            </div>
+
+                            <div class="card">
+                                <h3>Fees & Links</h3>
+                                <form action="update-payments.php" method="get" class="modern-form inline-form mt-1">
+                                    <input type="hidden" name="course_id" value="<?php echo htmlspecialchars($current_selection); ?>">
+                                    <label>Course Fee</label>
+                                    <input type="text" name="payments" placeholder="Fee">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+
+                                <form action="update-link.php" method="get" class="modern-form mt-2">
+                                    <input type="hidden" name="course_id" value="<?php echo htmlspecialchars($current_selection); ?>">
+                                    <div class="input-group">
+                                        <label>Class Link</label>
+                                        <textarea name="link" class="modern-select" style="min-height: 80px;" placeholder="Zoom/Meet Link"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary full-width">Update Link</button>
+                                </form>
+                            </div>
+                        </div>
+                        <?php else: ?>
+                            <div class="card text-center">
+                                <p>Please select a course to access management tools.</p>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <div id="add-course-section" class="sub-tab-content">
+                        <div class="card">
+                            <h3>Create New Course</h3>
+                            <form action="entry4.php" method="get" class="modern-form mt-1">
+                                <div class="management-grid">
+                                    <div class="col">
+                                        <div class="input-group">
+                                            <label>Course ID <font color="red">*</font></label>
+                                            <input type="text" name="course_id" placeholder="e.g. iot" required>
+                                        </div>
+                                        <div class="input-group">
+                                            <label>Course Name <font color="red">*</font></label>
+                                            <input type="text" name="course_name" placeholder="e.g. Arduino Robotics" required>
+                                        </div>
+                                        <div class="input-group">
+                                            <label>Class Time <font color="red">*</font></label>
+                                            <input type="time" name="course_time" required>
+                                        </div>
+                                        <div class="input-group">
+                                            <label>Start Date <font color="red">*</font></label>
+                                            <input type="date" name="course_date" required>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group">
+                                            <label>Duration Months <font color="red">*</font></label>
+                                            <input type="text" name="duration_months" placeholder="e.g. 6 Months" required>
+                                        </div>
+                                        <div class="input-group">
+                                            <label>Duration Hours <font color="red">*</font></label>
+                                            <input type="text" name="duration_hours" placeholder="e.g. 120 Hours" required>
+                                        </div>
+                                        <div class="input-group">
+                                            <label>Course Type <font color="red">*</font></label>
+                                            <input type="text" name="course_type" placeholder="Online | Institute" required>
+                                        </div>
+                                        <div class="input-group">
+                                            <label>Batch Size <font color="red">*</font></label>
+                                            <input type="number" name="students" placeholder="e.g. 20" required>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group">
+                                            <label>Course Payments <font color="red">*</font></label>
+                                            <input type="text" name="payments" placeholder="e.g. 15000" required>
+                                        </div>
+                                        <div class="input-group">
+                                            <label>Class Link <font color="red">*</font></label>
+                                            <textarea name="link" class="modern-select" style="min-height: 100px;" required placeholder="Meeting Link"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="search-actions mt-2" style="justify-content: flex-end;">
+                                    <button type="reset" class="btn btn-secondary">Clear Form</button>
+                                    <button type="submit" class="btn btn-primary">Create Course</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    <?php endif; ?>
+</div>
+
+<style>
+.admin-wrapper {
+    min-height: 80vh;
+    padding: 2rem 0;
+}
+
+.admin-login-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 1.5rem;
+}
+
+.dashboard-layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
+    padding: 0 1.5rem;
+}
+
+.admin-sidebar {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 2.5em;
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+}
+
+.admin-profile {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.dash-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    border: 3px solid var(--primary);
+}
+
+.admin-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.nav-item {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 1rem;
+    text-align: left;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 500;
+}
+
+.nav-item:hover, .nav-item.active {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+}
+
+.admin-main {
+    min-height: 600px;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+.dashboard-header {
+    margin-bottom: 2.5rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.stat-info h4 {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.stat-info .count {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.mini-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.mini-stat span {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* Tables */
+.table-container {
+    overflow-x: auto;
+}
+
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.modern-table th, .modern-table td {
+    padding: 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modern-table th {
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+/* Messages */
+.messages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.message-card .msg-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.msg-date {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.msg-footer {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.msg-footer a {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+    .dashboard-layout { grid-template-columns: 1fr; }
+    .admin-sidebar { position: static; }
+    .management-grid { grid-template-columns: 1fr; }
+}
+
+.modern-select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-main);
+    font-family: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.5em;
+}
+
+.modern-select option {
+    background-color: #0f172a; /* Force dark background for options */
+    color: #f8fafc;
+}
+
+/* Chrome/Safari specific fix for options */
+.modern-select:focus option {
+    background-color: #1e293b;
+}
+
+.modern-table tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.modern-table td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-main);
+    vertical-align: middle;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.modern-form input[type="text"], 
+.modern-form input[type="email"], 
+.modern-form input[type="password"], 
+.modern-form input[type="number"], 
+.modern-form input[type="date"], 
+.modern-form input[type="time"],
+.modern-form textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-main);
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+.modern-form input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.inline-form {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: nowrap;
+}
+
+.inline-form label {
+    min-width: 100px;
+    margin-bottom: 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.inline-form input {
+    flex: 1;
+    min-width: 0;
+}
+
+.inline-form .btn {
+    padding: 0.8rem 1.2rem;
+    white-space: nowrap;
+}
+
+.search-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.search-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.tabs-sub {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.sub-tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-weight: 600;
+    cursor: pointer;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid transparent;
+    transition: var(--transition);
+}
+
+.sub-tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+.sub-tab-content {
+    display: none;
+}
+
+.sub-tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+</style>
+
+<script>
+function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    
+    const content = document.getElementById(tabId);
+    if (content) content.classList.add('active');
+    
+    const navItem = Array.from(document.querySelectorAll('.nav-item')).find(n => 
+        n.getAttribute('onclick') && n.getAttribute('onclick').includes(tabId)
+    );
+    if (navItem) navItem.classList.add('active');
+}
+
+function showSubTab(subId) {
+    document.querySelectorAll('.sub-tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+    
+    const content = document.getElementById(subId + '-section');
+    if (content) content.classList.add('active');
+    
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
+}
+
+// Auto-open tab based on URL or session
+window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('selected_course')) {
+        showTab('courses');
+    } else if (urlParams.has('send')) {
+        showTab('courses');
+    } else if (urlParams.has('nic_no') || urlParams.has('student_name') || urlParams.has('city') || urlParams.has('course_filter') || urlParams.get('tab') === 'registers') {
+        showTab('registers');
+    }
+}
+</script>
+
+<?php include("includes/footer.php"); ?>

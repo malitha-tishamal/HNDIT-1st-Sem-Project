@@ -1,31 +1,30 @@
 <?php 
-	include("connect.php");
+require_once("connect.php");
 
-	$name = $_GET["name"];
-	$nic_no = $_GET["nic_no"];
-	$email = $_GET["email"];
-	$number = $_GET["number"];
-	$age = $_GET["age"];
-	$gender = $_GET["gender"];
-	$city = $_GET["city"];
-	$java = $_GET["java"];
-	$web = $_GET["web"];
-	$python = $_GET["python"];
-	$iot = $_GET["iot"];
-	$c1 = $_GET["c1"];
-	$class = $_GET["class"];
+if (isset($_GET["name"])) {
+    $name = $_GET["name"];
+    $nic_no = $_GET["nic_no"];
+    $email = $_GET["email"];
+    $number = $_GET["number"];
+    $age = $_GET["age"];
+    $gender = $_GET["gender"] ?? 'Prefer not to say';
+    $city = $_GET["city"];
+    $java = $_GET["java"] ?? 0;
+    $web = $_GET["web"] ?? 0;
+    $python = $_GET["python"] ?? 0;
+    $iot = $_GET["iot"] ?? 0;
+    $c1 = $_GET["c1"] ?? 0;
+    $class = $_GET["class"] ?? 'Online';
 
-	$query = "INSERT INTO students VALUES ('$name','$nic_no','$email'
-		,$number,$age,'$gender','$city','$java','$web','$python','$iot','$c1','$class')";
+    $stmt = $con->prepare("INSERT INTO students (name, nic_no, email, number, age, gender, city, java, web, python, iot, c1, class) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssisssiiiii", $name, $nic_no, $email, $number, $age, $gender, $city, $java, $web, $python, $iot, $c1, $class);
 
-	$result = mysqli_query($con,$query);
-	if($result){
-		//echo "Data Send Successfully";
-		header("location:Register.php?success=1");
-	}
-	else{
-		//echo "Data Sending Faild";
-		header("location:Register.php?success=0");
-	}
-
+    if ($stmt->execute()) {
+        header("Location: Register.php?success=1");
+    } else {
+        header("Location: Register.php?success=0");
+    }
+} else {
+    header("Location: Register.php");
+}
 ?>

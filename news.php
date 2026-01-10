@@ -1,398 +1,174 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="images/icon-head.png">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<link rel="stylesheet" type="text/css" href="css/news2.css">
-	<link rel="stylesheet" type="text/css" href="css/log-in-out.css">
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<title>Learninglk - News</title>
-</head>
-<body>
+<?php 
+$pageTitle = "Latest News";
+include("includes/header.php"); 
+?>
 
-	<div class="user">
-        <div class="top-box align3">&nbsp;&nbsp;&nbsp;&nbsp;
-           <a href="index.php"><img src="images/icon.png" width="200px" height="60px"></a></div>
-        <div class="top-box"></div>
-
-        <div class="top-box output-align ">        		        
-            <?php
-                     if(isset($_GET['sign'])){
-                        if ($_GET['sign']== 1) {
-                        	echo "<div ><img src='images/success.png' width='55px'></div>";
-                            echo "<div class='success'>New Account Create Successfull</div>";
-                        }
-                        if ($_GET['sign']== 0) {
-                        	echo "<div ><img src='images/error.png' width='50px'></div>";
-                            echo "<div class='error'>New Account Create Unsuccessfull</div>";
-                        }
-                    }
-            ?>
-
-           <?php
-                if (isset($_POST["sub12"])) {    
-                require("connect.php");       
-                    $email=$_POST['email'];
-                    $password = $_POST['password'];
-
-                   $query = "SELECT * FROM account WHERE email = '$email' AND password = '$password'";
-		    			$result = mysqli_query($con,$query);
-
-					while($row=mysqli_fetch_array($result)){
-						if(mysqli_num_rows($result)== 1){
-		    				echo "<div class='success'> Log in Successfull! <br> $row[2] Wellcome! </div>";
-		    				$_SESSION["user"]="$row[2]";
-		    			}
-		    			else{
-		    				 echo "<div class='error'> Invalid Credentials! <br>  Please Cheak Again! </div>";
-		    			}
-						
-					}
-				}
-            ?>
-
-        </div>
-
-        <div class="top-box align4">
-	        <button class="main login" onclick="document.getElementById('id01').style.display='block'">
-	        	<i class="fa fa-fw fa-user"></i>Login
-	        </button>
-	        <button class="main signup" onclick="document.getElementById('id02').style.display='block'" >
-	        	<i class="fa fa-sign-in"></i>SignUp
-	        </button>
-        </div>
+<section class="news-hero">
+    <div class="container">
+        <h1>Stay Updated</h1>
+        <p>Latest announcements, batch starts, and IT industry insights.</p>
     </div>
+</section>
 
+<section class="news-section">
+    <div class="news-container">
+        <?php
+        require_once("connect.php");
+        
+        $newsItems = [
+            ['id' => 'iot', 'img' => 'Arduino.jpg', 'title' => 'Arduino-Robotic New Batch Starting'],
+            ['id' => 'java', 'img' => 'java2.jpg', 'title' => 'Java Programming New Batch Starting'],
+            ['id' => 'python', 'img' => 'pyth2.png', 'title' => 'Python Programming New Batch Starting'],
+            ['id' => 'web', 'img' => 'web2.jpg', 'title' => 'Web Designing New Batch Starting']
+        ];
 
-    <!--Log in content -->
-    <div id="id01" class="modal">
-	  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-	  
-	  <div class="signup-container modal-content">
-	        <h1>Log In</h1>
-	        <p>Don't have an Account? <span onclick="signform()">Sign in</span></p>
-	       
-	        <div class="social-signup">
-	            <button class="social-btn">Google
-	            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	            	<img src="images/google.png" width="20px">
-	            </button>
-	            <button class="social-btn">Facebook
-	            	&nbsp;&nbsp;&nbsp;
-	            	<img src="images/facebook2.png" width="20px">
-	            </button>
-	        </div>  
-	        <div class="social-signup">
-	            <button class="social-btn">Instagram
-	            	&nbsp;&nbsp;&nbsp;
-	            	<img src="images/ins.jpg" width="20px">
-	            </button>
-	            <button class="social-btn">Github
-	            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	            	<img src="images/github.png" width="20px">
-	            </button>
-	        </div>
-	        
-	        <div class="divid">OR</div>
-	        
-	        <form class="signup-form" method="post">
-	            <input type="text" id="ajest-input" name="email" placeholder="email" required>
-	            <input type="password" id="ajest-input" name="password" placeholder="password" required>
-	            <button class="social-btn">Forgot Password ?</button>
-	            <button type="submit" name="sub12" class="signup-btn width-ajest2">Log In</button>
-	        </form>
-	        
-	    </div>
-	</div>
-	
-	<!--sign in content -->
-	<div id="id02" class="modal">
-	  <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-	  
-	  <div class="signup-container modal-content">
-	        <h1>Sign Up</h1>
-	        <p>Already have an account? <span onclick="loginform()">Log in</span></p>
-	       
-	        <div class="social-signup">
-	            <button class="social-btn">Google
-	            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	            	<img src="images/google.png" width="20px">
-	            </button>
-	            <button class="social-btn">Facebook
-	            	&nbsp;&nbsp;&nbsp;
-	            	<img src="images/facebook2.png" width="20px">
-	            </button>
-	        </div>  
-	        <div class="social-signup">
-	            <button class="social-btn">Instagram
-	            	&nbsp;&nbsp;&nbsp;
-	            	<img src="images/ins.jpg" width="20px">
-	            </button>
-	            <button class="social-btn">Github
-	            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	            	<img src="images/github.png" width="20px">
-	            </button>
-	        </div>
-	        
-	        <div class="divid">OR</div>
-	        
-	        <form class="signup-form" method="get" action="entry3.php">
-	            <input type="email" id="ajest-input" name="email" placeholder="email" required>
-	            <input type="password" id="ajest-input" name="password" placeholder="password" required>
-	            <input type="text" id="ajest-input" name="first_name" placeholder="first name" required>
-	            <input type="text" id="ajest-input" name="last_name" placeholder="last name" required>
-	            <input type="submit" value="SignUp" class="signup-btn width-ajest1">
-	        </form>
-	        
-	        <p class="terms">
-	            By signing up you agree to our <a href="#" >
-	            <span class="policy">Terms of Service</span><br>
-	            </a> and <a href="#" ><span class="policy">Privacy Policy</span></a><br>
-	            <br><br>
-	            <span class="policy">
-	            <input type="checkbox" checked ></span>
-	            Email me with news and updates
-	        </p>
-	    </div>
-	</div>
+        foreach ($newsItems as $item) {
+            $stmt = $con->prepare("SELECT * FROM courses WHERE course_id = ?");
+            $stmt->bind_param("s", $item['id']);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-	<script type="text/javascript">
-		function signform(){
-				document.getElementById('id01').style.display='none';
-				document.getElementById('id02').style.display='block';
-			}
-			function loginform(){
-				document.getElementById('id02').style.display='none';
-				document.getElementById('id01').style.display='block';
-			}
-	</script>
-
-	<script type="text/javascript" src="js/user.js"></script>
-	
-	<div class="navbar">
-		<a href="index.php">
-			<i class="fa fa-home"></i> Home
-		</a>
-		<a href="Store.php">
- 			<i class="fa fa-shopping-cart"></i> Store
- 		</a>
- 		<a style="background-color: red;"href="#news">
- 			<i class="fa fa-newspaper-o"></i> News
- 		</a>
- 		<div class="dropdown">
- 			<button class="dropdown-btn">
- 				<i class="fa fa-download"></i> Downloads 
- 			</button>
-   			<div class="dropdown-contents">
-                <a href="java-download.php"><i class='fa fa-coffee' style='color:red'></i> Java Programming</a>
-                <a href="python-download.php"><i class="fa fa-code" style="color:orange"></i> Python Programming</a>
-                <a href="web-download.php"><i class="fa fa-code" style="color:blue"></i> Web Programming</a>
-            </div>
- 		</div>
- 		<a href="courses.php">
- 			<i class="fa fa-clone"></i> Courses
- 		</a>
- 		<a href="contact.php">
- 			<i class="fa fa-envelope"></i> Contact
- 		</a>
- 		<a href="Admin.php">
- 			<i class="fa fa-user-secret"></i> Admin
- 		</a>
- 		<a href="Register.php">
- 			<i class="fa fa-user-circle-o"></i> Register
- 		</a>
+            if ($row = $result->fetch_assoc()) {
+                ?>
+                <article class="news-card" id="<?php echo $item['id']; ?>">
+                    <div class="news-img-wrapper">
+                        <img src="images/<?php echo $item['img']; ?>" alt="<?php echo $item['title']; ?>">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-category">Batch Start</span>
+                            <span class="news-date"><i class="fa fa-calendar"></i> <?php echo htmlspecialchars($row['course_date'] ?? ''); ?></span>
+                        </div>
+                        <h2><?php echo $item['title']; ?></h2>
+                        <p>
+                            Great news! A new batch for <strong><?php echo htmlspecialchars($item['title']); ?></strong> is starting on <strong><?php echo htmlspecialchars($row['course_date'] ?? ''); ?></strong> at our Institute. 
+                            We have <strong><?php echo htmlspecialchars($row['students'] ?? ''); ?> seats</strong> available for the physical classroom batch. 
+                            Classes start at <strong><?php echo htmlspecialchars($row['course_time'] ?? ''); ?> A.M.</strong> 
+                            Live streaming is also available for the online batch.
+                        </p>
+                        <div class="news-actions">
+                            <a href="Register.php" class="btn btn-primary">Enroll Now <i class="fa fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+                <?php
+            }
+        }
+        ?>
     </div>
+</section>
 
-    <br>
-  	<div class="container news-arduino">
-	    <img src="images/Arduino.jpg" width="130px">
-	     <div class="card news-color2 ">
-	        <div class="news-header ">
-	          "Arduino-Robotic" New Batch Starting...
-	        </div>
-	        <div class="news-body">
+<style>
+.news-hero {
+    padding: 6rem 0;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(15, 23, 42, 0) 100%);
+}
 
-	        	<?php
-					require("connect.php");
-					$query="SELECT * FROM courses WHERE course_id = 'iot'";
-					$result = mysqli_query($con,$query);
+.news-hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
 
-					while($row=mysqli_fetch_array($result)){
-						echo '
-	            Arduino-Robotic New Batch Starting <b> '.$row[3].' </b> Our Instatute. Physical Class Room '.$row[7].' Seat Avalable. Start at '.$row[2].' A.M. & Live Class Streming for Online Batch Start at Same Day Same Time. Hurry up and Register now....
-	            ';           			 }
-	                    ?>
-	            <a href="Register.php"><div class="news-footer">
-	              Enroll Now!
-	            </div></a>
-	        </div>
-	    </div>
-  	</div>
+.news-container {
+    max-width: 900px;
+    margin: -4rem auto 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 0 1.5rem;
+}
 
-  	<div class="container news-java">
-	    <img src="images/java2.jpg" width="130px">
-	     <div class="card news-color2 ">
-	        <div class="news-header ">
-	          Java Programming" New Batch Starting...
-	        </div>
-	        <div class="news-body">
-	            <?php
-					require("connect.php");
-					$query="SELECT * FROM courses WHERE course_id = 'java'";
-					$result = mysqli_query($con,$query);
+.news-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    overflow: hidden;
+    transition: var(--transition);
+}
 
-					while($row=mysqli_fetch_array($result)){
-						echo '
-	            Java Programming New Batch Starting <b> '.$row[3].' </b> Our Instatute. Physical Class Room '.$row[7].' Seat Avalable. Start at '.$row[2].' A.M. & Live Class Streming for Online Batch Start at Same Day Same Time. Hurry up and Register now....
-	            ';           			 }
-	                    ?>
-	            <a href="Register.php"><div class="news-footer">
-	              Enroll Now!
-	            </div></a>
-	        </div>
-	    </div>
-  	</div>
+.news-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+    border-color: rgba(99, 102, 241, 0.3);
+}
 
-  	<div class="container news-python">
-	    <img src="images/pyth2.png" width="130px">
-	     <div class="card news-color2 ">
-	        <div class="news-header ">
-	         "Python Proramming" New Batch Starting...
-	        </div>
-	        <div class="news-body">
-	            <?php
-					require("connect.php");
-					$query="SELECT * FROM courses WHERE course_id = 'python'";
-					$result = mysqli_query($con,$query);
+.news-img-wrapper {
+    height: 100%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
 
-					while($row=mysqli_fetch_array($result)){
-						echo '
-	            Python Programming New Batch Starting <b> '.$row[3].' </b> Our Instatute. Physical Class Room '.$row[7].' Seat Avalable. Start at '.$row[2].' A.M. & Live Class Streming for Online Batch Start at Same Day Same Time. Hurry up and Register now....
-	            ';           			 }
-	                    ?>
-	            <a href="Register.php"><div class="news-footer">
-	              Enroll Now!
-	            </div></a>
-	        </div>
-	    </div>
-  	</div>
+.news-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: var(--transition);
+}
 
-  	<div class="container news-web">
-	    <img src="images/web2.jpg" width="130px">
-	     <div class="card news-color2 ">
-	        <div class="news-header ">
-	         "Web Designing" New Batch Starting...
-	        </div>
-	        <div class="news-body">
-	           <?php
-					require("connect.php");
-					$query="SELECT * FROM courses WHERE course_id = 'web'";
-					$result = mysqli_query($con,$query);
+.news-card:hover .news-img-wrapper img {
+    transform: scale(1.05);
+}
 
-					while($row=mysqli_fetch_array($result)){
-						echo '
-	            Web Development New Batch Starting <b> '.$row[3].' </b> Our Instatute. Physical Class Room '.$row[7].' Seat Avalable. Start at '.$row[2].' A.M. & Live Class Streming for Online Batch Start at Same Day Same Time. Hurry up and Register now....
-	            ';           			 }
-	                    ?>
-	           <a href="Register.php"><div class="news-footer">
-	              Enroll Now!
-	            </div></a>
-	        </div>
-	    </div>
-  	</div>
-	  
+.news-content {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
 
-	<br><br>	
+.news-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
 
-      <div class="footer apply1">
-      	<div class="box1 apply">
- 
-      		<i class="fa fa-thumbs-o-up"></i>
-      		REACH US
-      		<div class="font-apply2">
-      			<i class="fa fa-map-marker" style="font-size:20px; "></i>
-      			Siridhamma Mawatha, 
-      			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Akmeemana
-      		</div>
-      		<div style="font-size: 18px;">
-      			<i class="fa fa-rss"></i>
-      			FOLLOW US
-      		</div>
-      		<div>
-      			<a href="#" class="fa fa-instagram apply4"></a>
-				<a href="#" class="fa fa-facebook apply4"></a>
-				<a href="#" class="fa fa-linkedin apply4"></a>
-				<a href="#" class="fa fa-twitter apply4"></a>
-				<a href="#" class="fa fa-youtube apply4"></a>
-				<a href="#" class="fa fa-google apply4"></a>
-				<a href="#" class="fa fa-pinterest apply4"></a>
-				<a href="#" class="fa fa-snapchat-ghost apply4"></a>
-      		</div>
-      		<div class="font-apply2">
-      			<i class="fa fa-phone" style="font-size:20px;"></i>
-      			<a href="tel:+94412225554">0412225554</a>
-      		</div>
-      	</div>
-      	<div class="box1">
-      		<div style="font-size: 20px; padding:0px 0px 10px 0px;">
-      			<i class="fa fa-newspaper-o"></i>
-      			POPULAR NEWS
-      		</div>
-      		<a href="news.php#robotic1">
-      			<div class="footer-news" >
-      				<mark class="color4">Robotics</mark> 
-      				<span class="date">2024.09.10</span>
-      				<br>
-      				NEW COURSE STARTING NOV 18 <sup>th</sup></a>
-      			</div>
-      		
-      		<a href="news.php#java6">
-      			<div class="footer-news">
-      				<mark class="color4">Java</mark>
-      				<span class="date"> 2024.09.08 </span>
-      				<br>
-      				NEW 6<sup>th</sup> BATCH STARTING NOV 12</a>
-      			</div>
-      		
-      		<a href="news.php#python5">
-      			<div class="footer-news">
-      				<mark class="color4">Python</mark>
-      				 <span class="date">2024.06.06 </span>
-      				<br>
-      				NEW 5<sup>th</sup> BATCH STARTING OCT 6</a>
-      				<br>
-      			</div>
-      		
-      	</div>
-      	<div class="box1">
-      		<div style="font-size: 20px;padding-bottom:10px;">
-      			<i class="fa fa-puzzle-piece"></i> 
-      			CATEGORIES
-      		</div>
-      			<a href="courses.php#java"><mark class="color5">Java</mark></a>
-      			<a href="courses.php#web"><mark class="color5">Web Design</mark></a>
-      			<br><br>
-      			<a href="courses.php#python"><mark class="color5">Python</mark></a>
-      			<a href="courses.php#arduino"><mark class="color5">Robotics</mark></a>
-      			<br><br>
-      			<a href="courses.php#c1"><mark class="color5">C#</mark></a>
-      			<a href="courses.php#c2"><mark class="color5">C++</mark></a>
-      	</div>
-      	<div class="box1">
-      		<div style="font-size: 20px;padding-bottom:10px;">
-      			<i class="fa fa-map-marker"></i>
-      			FIND US
-      		</div>
-      		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3967.4184450925177!2d80.23076517546636!3d6.074174528220766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae17182cf82c5bf%3A0xcabc61ef94f1ad0e!2sAdvanced%20Technological%20Institute%20-%20Galle!5e0!3m2!1sen!2slk!4v1725649661855!5m2!1sen!2slk" width="300" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-      		</iframe>
-      	</div>
-      </div>
-      <div class="copyright-cont">
-      	<hr>
-      	Copyright © 2024 Malitha Tishamal. All Rights Reserved.
-      	<hr>
-      </div>
-</body>
-</html>
+.news-category {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.news-date {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.news-content h2 {
+    font-size: 1.8rem;
+    line-height: 1.2;
+}
+
+.news-content p {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.news-actions {
+    margin-top: auto;
+}
+
+@media (max-width: 768px) {
+    .news-card {
+        grid-template-columns: 1fr;
+    }
+    .news-img-wrapper {
+        height: 200px;
+    }
+}
+</style>
+
+<?php include("includes/footer.php"); ?>

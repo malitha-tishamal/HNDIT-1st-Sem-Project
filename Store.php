@@ -1,776 +1,371 @@
+<?php 
+$pageTitle = "Store";
+include("includes/header.php"); 
+?>
 
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="images/icon-head.png">
-  <link rel="stylesheet" type="text/css" href="css/main.css">
-  <link rel="stylesheet" type="text/css" href="css/store.css">
-  <link rel="stylesheet" type="text/css" href="css/log-in-out.css">
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <title>Learning.lk - Store</title>
-</head>
-<body>
-
-  <div class="user">
-        <div class="top-box align3">&nbsp;&nbsp;&nbsp;&nbsp;
-             <a href="index.php"><img src="images/icon.png" width="200px" height="60px"></a></div>
-
-        <div class="top-box"></div>
-
-        <div class="top-box output-align ">             
-            
-            <?php
-                if (isset($_POST["sub12"])) {           
-                    $username = $_POST["username"];
-                    $password = $_POST["password"];
-                    if ($username =="admin@elk.com" && $password =="1234") {
-                        echo "<div ><img src='images/admin2.jpg' width='55px'></div>";
-                        echo "<div class='success'> Log in Successfull! <br> As Admin. Wellcome! </div>";
-                        $_SESSION["user"]="Admin";
-                    }
-                   
-                    else{
-                        echo "<div ><img src='images/error.png' width='50px'></div>";
-                        echo "<div class='error'> Invalid Credentials! <br>  Please Cheak Again! </div>";
-                        }
-                    }
-            ?>
-
-            <?php
-                     if(isset($_GET['sign'])){
-                        if ($_GET['sign']== 1) {
-                          echo "<div ><img src='images/success.png' width='55px'></div>";
-                            echo "<div class='success'>New Account Create Successfull</div>";
-                        }
-                        if ($_GET['sign']== 0) {
-                          echo "<div ><img src='images/error.png' width='50px'></div>";
-                            echo "<div class='error'>New Account Create Unsuccessfull</div>";
-                        }
-                    }
-            ?>
-            <?php
-                     if(isset($_GET['send'])){
-                        if ($_GET['send']== 1) {
-                          echo "<div ><img src='images/success.png' width='55px'></div>";
-                            echo "<div class='success'>Update Successfull</div>";
-                        }
-                        if ($_GET['send']== 0) {
-                          echo "<div ><img src='images/error.png' width='50px'></div>";
-                            echo "<div class='error'>Update Unsuccessfull</div>";
-                        }
-                    }
-            ?>
-
-            <?php
-                if (isset($_POST["sub12"])) {    
-                require("connect.php");       
-                    $email=$_POST['email'];
-                    $password = $_POST['password'];
-
-                   $query = "SELECT * FROM account WHERE email = '$email' AND password = '$password'";
-              $result = mysqli_query($con,$query);
-
-          while($row=mysqli_fetch_array($result)){
-            if(mysqli_num_rows($result)== 1){
-                echo "<div class='success'> Log in Successfull! <br> $row[2] Wellcome! </div>";
-                $_SESSION["user"]="$row[2]";
-              }
-              else{
-                 echo "<div class='error'> Invalid Credentials! <br>  Please Cheak Again! </div>";
-              }
-            
-          }
-        }
-            ?>
-
-
-        </div>
-
-        <div>
-          <div class="box">
-              <div class="cart-count">0</div>
-              <i class="fa fa-shopping-cart" style="color: orange; font-size: 40px; cursor: pointer;" id="cart-icon"></i> 
-          </div>         
-        </div>
-
-        <div class="top-box align4">
-          <button class="main login" onclick="document.getElementById('id01').style.display='block'">
-          <i class="fa fa-fw fa-user"></i>Login
-          </button>
-          <button class="main signup" onclick="document.getElementById('id02').style.display='block'" >
-          <i class="fa fa-sign-in"></i>SignUp
-        </button>
-        </div>
+<section class="store-hero">
+    <div class="container">
+        <h1>Learning Resources</h1>
+        <p>Expertly crafted tutorials and course materials to accelerate your learning.</p>
     </div>
+</section>
 
-
-    <!--Log in content -->
-    <div id="id01" class="modal">
-    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-    
-    <div class="signup-container modal-content">
-          <h1>Log In</h1>
-          <p>Don't have an Account? <span onclick="signform()">Sign in</span></p>
-         
-          <div class="social-signup">
-              <button class="social-btn">Google
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <img src="images/google.png" width="20px">
-              </button>
-              <button class="social-btn">Facebook
-                &nbsp;&nbsp;&nbsp;
-                <img src="images/facebook2.png" width="20px">
-              </button>
-          </div>  
-          <div class="social-signup">
-              <button class="social-btn">Instagram
-                &nbsp;&nbsp;&nbsp;
-                <img src="images/ins.jpg" width="20px">
-              </button>
-              <button class="social-btn">Github
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <img src="images/github.png" width="20px">
-              </button>
-          </div>
-          
-          <div class="divid">OR</div>
-          
-          <form class="signup-form" method="post">
-              <input type="text" id="ajest-input" name="email" placeholder="email" required>
-              <input type="password" id="ajest-input" name="password" placeholder="password" required>
-              <button class="social-btn">Forgot Password ?</button>
-              <button type="submit" name="sub12" class="signup-btn width-ajest2">Log In</button>
-          </form>
-          
-      </div>
-  </div>
-  
-  <!--sign in content -->
-  <div id="id02" class="modal">
-    <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-    
-    <div class="signup-container modal-content">
-          <h1>Sign Up</h1>
-          <p>Already have an account? <span onclick="loginform()">Log in</span></p>
-         
-          <div class="social-signup">
-              <button class="social-btn">Google
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <img src="images/google.png" width="20px">
-              </button>
-              <button class="social-btn">Facebook
-                &nbsp;&nbsp;&nbsp;
-                <img src="images/facebook2.png" width="20px">
-              </button>
-          </div>  
-          <div class="social-signup">
-              <button class="social-btn">Instagram
-                &nbsp;&nbsp;&nbsp;
-                <img src="images/ins.jpg" width="20px">
-              </button>
-              <button class="social-btn">Github
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <img src="images/github.png" width="20px">
-              </button>
-          </div>
-          
-          <div class="divid">OR</div>
-          
-          <form class="signup-form" method="get" action="entry3.php">
-              <input type="email" id="ajest-input" name="email" placeholder="email" required>
-              <input type="password" id="ajest-input" name="password" placeholder="password" required>
-              <input type="text" id="ajest-input" name="first_name" placeholder="first name" required>
-              <input type="text" id="ajest-input" name="last_name" placeholder="last name" required>
-              <input type="submit" value="SignUp" class="signup-btn width-ajest1">
-          </form>
-          
-          <p class="terms">
-              By signing up you agree to our <a href="#" >
-              <span class="policy">Terms of Service</span><br>
-              </a> and <a href="#" ><span class="policy">Privacy Policy</span></a><br>
-              <br><br>
-              <span class="policy">
-              <input type="checkbox" checked ></span>
-              Email me with news and updates
-          </p>
-      </div>
-  </div>
-
-  <script type="text/javascript">
-    function signform(){
-        document.getElementById('id01').style.display='none';
-        document.getElementById('id02').style.display='block';
-      }
-      function loginform(){
-        document.getElementById('id02').style.display='none';
-        document.getElementById('id01').style.display='block';
-      }
-  </script>
-
-  <script type="text/javascript" src="js/user.js"></script>
-  
-  <div class="navbar">
-    <a  href="index.php">
-      <i class="fa fa-home"></i> Home
-    </a>
-    <a href="Store.php" style="background-color: red;">
-      <i class="fa fa-shopping-cart"></i> Store
-    </a>
-    <a href="news.php">
-      <i class="fa fa-newspaper-o"></i> News
-    </a>
-    <div class="dropdown">
-      <button class="dropdown-btn">
-        <i class="fa fa-download"></i> Downloads <i class="fa fa-caret-down"></i>
-      </button>
-        <div class="dropdown-contents">
-                <a href="java-download.php"><i class='fa fa-coffee' style='color:red'></i> Java Programming</a>
-                <a href="python-download.php"><i class="fa fa-code" style="color:orange"></i> Python Programming</a>
-                <a href="web-download.php"><i class="fa fa-code" style="color:blue"></i> Web Programming</a>
+<div class="store-layout">
+    <aside class="store-sidebar">
+        <div class="cart-preview card glass-card">
+            <div class="cart-header">
+                <h3><i class="fa fa-shopping-cart"></i> Your Cart</h3>
+                <span class="cart-count">0</span>
             </div>
-    </div>
-    <a href="courses.php">
-      <i class="fa fa-clone"></i> Courses
-    </a>
-    <a href="contact.php">
-      <i class="fa fa-envelope"></i> Contact
-    </a>
-    <a href="Admin.php">
-      <i class="fa fa-user-secret"></i> Admin
-    </a>
-    <a href="Register.php">
-      <i class="fa fa-user-circle-o"></i> Register
-    </a>
-
-    <input type="submit" value="Log Out" name="sub" class="log-out-btn">
-
-    </div>
-
-
-
-      <div class="cart">
-          <div class="cart-title" name= "item">Cart Items</div>
-          <div class="cart-content">
-          </div>
-          
-          <div class="total">
-            <div class="total-title">Total</div>
-            <div class="total-price">Rs.0</div>
-          </div>
-
-          <button class="btn-buy" onclick="order()">Place Order</button>
-          <button id="cart-close">x</button>
-     </div>
-      <script type="text/javascript">
-        function order (){
-          var x = document.getElementByName('item');
-          alert(x)
-      }
-      </script>
-
-     <div class="main-category-box">
-        <h1>Choose by Category :</h1>
-         <div class="category">
-
-            <a onclick="filterSelection('all')">
-              <div class="category-btn " style="border:2px solid #3333ff; color: #3333ff;">
-                <img src="images/store/all.png" class="img-cteg" width="60px" height ="60px"><br></a>
-                Show all
-              </div>
-
-            <a onclick="filterSelection('java2')">
-              <div class="category-btn" style="border:2px solid red; color: red;">
-                <img src="images/store/java.png" class="img-cteg" width="50px" height ="50px"><br></a>
-                Java Programming
-              </div>
-
-            <a onclick="filterSelection('web2')">
-              <div class="category-btn" style="border:2px solid #3333ff; color: #3333ff;">
-                <img src="images/store/web.png" class="img-cteg" width="50px" height ="50px"><br></a>
-                Web Development
-              </div>
-
-            <a onclick="filterSelection('python2')">
-              <div class="category-btn" style="border:2px solid orange; color: #e69500;">
-                <img src="images/store/pyth.png" class="img-cteg" width="50px" height ="50px"><br></a>
-                 Python Development
-              </div>
-
-            <a onclick="filterSelection('full')">
-              <div class="category-btn" style="border:2px solid #0d0d0d; color: black;"> 
-                <img src="images/store/course.png" class="img-cteg" width="50px" height ="60px"><br></a>
-                Full Courses
-              </div>
-
-            <a onclick="filterSelection('tute')">
-              <div class="category-btn" style="border:2px solid #3333ff;; color: #3333ff;">
-                <img src="images/store/tute.png" class="img-cteg" width="60px" height ="60px"><br></a>
-                 Tutes
-              </div>
-        </div>
-      </div>
-
-    <div class="shop-content">
-
-          <div class="item-box all full java2">
-              <div class="pic"><img src="images/store/javafull.jpg" class="item-img"></div>
-              <h2 class="item-title">Java Programming Full Course</h2>
-              <span class="item-price">Rs.10000</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-          </div>
-
-          <div class="item-box all full python2">
-              <div class="pic"><img src="images/store/pythonfull.jpg" class="item-img"></div>
-              <h2 class="item-title">Python Development Full Course</h2>
-              <span class="item-price">Rs.12000</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-          </div>
-
-          <div class="item-box all full web2">
-              <div class="pic"><img src="images/store/webfull.jpg" class="item-img"></div>
-              <h2 class="item-title">Web Development Full Course</h2>
-              <span class="item-price">Rs.15000</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-          </div>
-
-
-          <div class="item-box all java2">         
-              <div class="pic"><img src="images/store/java1.jpg" class="item-img"></div>
-              <h2 class="item-title">Java Programming Semester 1</h2>
-              <span class="item-price">Rs.1500</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-          </div>
-
-          <div class="item-box all java2"> 
-              <div class="pic"><img src="images/store/java2.jpg" class="item-img"></div>
-              <h2 class="item-title">Java Programming Semester 2</h2>
-              <span class="item-price">Rs.1500</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-          </div>
-          
-        <div class="item-box all java2"> 
-            <div class="pic"><img src="images/store/java3.jpg" class="item-img"></div>
-            <h2 class="item-title">Java Programming Semester 3</h2>
-              <span class="item-price">Rs.1500</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
+            <div class="cart-items-list">
+                <!-- Cart items will be injected here -->
+                <p class="empty-msg">Your cart is empty</p>
+            </div>
+            <div class="cart-footer">
+                <div class="total-row">
+                    <span>Total:</span>
+                    <span class="total-price">Rs. 0</span>
+                </div>
+                <button class="btn btn-primary full-width" onclick="placeOrder()">Checkout</button>
+            </div>
         </div>
 
-        <div class="item-box all java2"> 
-            <div class="pic"><img src="images/store/java4.jpg" class="item-img"></div>
-            <h2 class="item-title">Java Programming Semester 4</h2>
-              <span class="item-price">Rs.1500</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
+        <div class="filter-section card">
+            <h3>Categories</h3>
+            <div class="filter-options">
+                <button class="filter-btn active" onclick="filterSelection('all')">All Resources</button>
+                <button class="filter-btn" onclick="filterSelection('full')">Full Courses</button>
+                <button class="filter-btn" onclick="filterSelection('java2')">Java Materials</button>
+                <button class="filter-btn" onclick="filterSelection('web2')">Web Materials</button>
+                <button class="filter-btn" onclick="filterSelection('python2')">Python Materials</button>
+                <button class="filter-btn" onclick="filterSelection('tute')">Tutes Only</button>
+            </div>
         </div>
+    </aside>
 
-          <div class="item-box all java2"> 
-          <div class="pic"><img src="images/store/java5.jpg" class="item-img"></div>
-          <h2 class="item-title">Java Programming Semester 5</h2>
-              <span class="item-price">Rs.1500</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
+    <main class="store-grid-wrapper">
+        <div class="shop-grid">
+            <?php
+            $items = [
+                ['cat' => 'all full java2', 'img' => 'javafull.jpg', 'title' => 'Java Programming Full Course', 'price' => 10000],
+                ['cat' => 'all full python2', 'img' => 'pythonfull.jpg', 'title' => 'Python Development Full Course', 'price' => 12000],
+                ['cat' => 'all full web2', 'img' => 'webfull.jpg', 'title' => 'Web Development Full Course', 'price' => 15000],
+                ['cat' => 'all java2', 'img' => 'java1.jpg', 'title' => 'Java Programming Semester 1', 'price' => 1500],
+                ['cat' => 'all java2', 'img' => 'java2.jpg', 'title' => 'Java Programming Semester 2', 'price' => 1500],
+                ['cat' => 'all java2', 'img' => 'java3.jpg', 'title' => 'Java Programming Semester 3', 'price' => 1500],
+                ['cat' => 'all java2', 'img' => 'java4.jpg', 'title' => 'Java Programming Semester 4', 'price' => 1500],
+                ['cat' => 'all java2', 'img' => 'java5.jpg', 'title' => 'Java Programming Semester 5', 'price' => 1500],
+                ['cat' => 'all java2', 'img' => 'java6.jpg', 'title' => 'Java Programming Semester 6', 'price' => 1500],
+                ['cat' => 'all java2 tute', 'img' => 'javat1.jpg', 'title' => 'Java Tute 1 Variables', 'price' => 600],
+                ['cat' => 'all java2 tute', 'img' => 'javat2.jpg', 'title' => 'Java Tute 2 Data Types', 'price' => 600],
+                ['cat' => 'all web2', 'img' => 'web1.jpg', 'title' => 'Web Development Semester 1', 'price' => 1800],
+                ['cat' => 'all web2', 'img' => 'web2.jpg', 'title' => 'Web Development Semester 2', 'price' => 1800],
+                ['cat' => 'all web2 tute', 'img' => 'html.jpg', 'title' => 'Web Development Tute - HTML', 'price' => 600],
+                ['cat' => 'all python2', 'img' => 'pyth1.jpg', 'title' => 'Python Development Semester 1', 'price' => 2000],
+            ];
+
+            foreach ($items as $item) {
+                ?>
+                <div class="product-card <?php echo $item['cat']; ?>">
+                    <div class="product-img">
+                        <img src="images/store/<?php echo $item['img']; ?>" alt="<?php echo $item['title']; ?>">
+                    </div>
+                    <div class="product-info">
+                        <h3><?php echo $item['title']; ?></h3>
+                        <div class="price-row">
+                            <span class="price">Rs. <?php echo number_format($item['price']); ?></span>
+                            <button class="add-to-cart-btn" onclick="addToCart('<?php echo addslashes($item['title']); ?>', <?php echo $item['price']; ?>, 'images/store/<?php echo $item['img']; ?>')">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
         </div>
+    </main>
+</div>
 
-        <div class="item-box all java2">
-        <div class="pic"><img src="images/store/java6.jpg" class="item-img"></div> 
-         <h2 class="item-title">Java Programming Semester 6</h2>
-              <span class="item-price">Rs.1500</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+<style>
+.store-hero {
+    padding: 6rem 0 4rem;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(15, 23, 42, 0) 100%);
+}
 
-        <div class="item-box all java2 tute">
-          <div class="pic"><img src="images/store/javat1.jpg" class="item-img"></div>
-          <h2 class="item-title">Java Tute 1 Variables</h2>
-              <span class="item-price">Rs.600</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.store-layout {
+    max-width: 1300px;
+    margin: 0 auto 6rem;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 3rem;
+    padding: 0 1.5rem;
+}
 
-        <div class="item-box all java2 tute">
-          <div class="pic"><img src="images/store/javat2.jpg" class="item-img"></div>
-          <h2 class="item-title">Java Tute 2 Data Types</h2>
-              <span class="item-price">Rs.600</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.store-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+}
 
-        <div class="item-box all java2 tute">
-          <div class="pic"><img src="images/store/javat3.jpg" class="item-img"></div>
-          <h2 class="item-title">Java Tute 3 Loops</h2>
-              <span class="item-price">Rs.600</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 1.5rem;
+}
 
-        <div class="item-box all java2 tute">
-          <div class="pic"><img src="images/store/javat4.jpg" class="item-img"></div>
-          <h2 class="item-title">Java Tute 4 Statements</h2>
-              <span class="item-price">Rs.600</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
 
-        <div class="item-box all web2">
-          <div class="pic"><img src="images/store/web1.jpg" class="item-img"></div>
-          <h2 class="item-title">Web Development Semester 1</h2>
-              <span class="item-price">Rs.1800</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.cart-count {
+    background: var(--primary);
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
 
-        <div class="item-box all web2">
-          <div class="pic"><img src="images/store/web2.jpg" class="item-img"></div>
-          <h2 class="item-title">Web Development Semester 2</h2>
-              <span class="item-price">Rs.1800</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.cart-items-list {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 1.5rem;
+}
 
-        <div class="item-box all web2">
-          <div class="pic"><img src="images/store/web3.jpg" class="item-img"></div>
-          <h2 class="item-title">Web Development Semester 3</h2>
-              <span class="item-price">Rs.1800</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.cart-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
 
-        <div class="item-box all web2">
-          <div class="pic"><img src="images/store/web4.jpg" class="item-img"></div>
-          <h2 class="item-title">Web Development Semester 4</h2>
-              <span class="item-price">Rs.1800</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.cart-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+}
 
-        <div class="item-box all web2">
-          <div class="pic"><img src="images/store/web5.jpg" class="item-img"></div>
-          <h2 class="item-title">Web Development Semester 5</h2>
-              <span class="item-price">Rs.1800</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.cart-item-info h4 {
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+}
 
-        <div class="item-box all web2">
-          <div class="pic"><img src="images/store/web6.jpg" class="item-img"></div>
-          <h2 class="item-title">Web Development Semester 6</h2>
-              <span class="item-price">Rs.1800</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.cart-item-info span {
+    font-size: 0.8rem;
+    color: var(--primary);
+    font-weight: 600;
+}
 
-        <div class="item-box all web2 tute">
-          <div class="pic"><img src="images/store/html.jpg" class="item-img"></div>
-          <h2 class="item-title">Web Development Tute - HTML</h2>
-              <span class="item-price">Rs.600</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.empty-msg {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 2rem 0;
+}
 
-        <div class="item-box all web2 tute">
-          <div class="pic"><img src="images/store/css.jpeg" class="item-img"></div>
-          <h2 class="item-title">Web Development Tute - CSS</h2>
-              <span class="item-price">Rs.600</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
 
-        <div class="item-box all web2 tute">
-          <div class="pic"><img src="images/store/js.jpeg" class="item-img"></div>
-          <h2 class="item-title">Web Development Tute - JS</h2>
-              <span class="item-price">Rs.600</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
 
-        <div class="item-box all web2 tute">
-          <div class="pic"><img src="images/store/php.jpeg" class="item-img"></div>
-          <h2 class="item-title">Web Development Tute - PHP</h2>
-              <span class="item-price">Rs.600</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.filter-btn {
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+}
 
-        <div class="item-box all python2">
-          <div class="pic"><img src="images/store/pyth1.jpg" class="item-img"></div>
-          <h2 class="item-title">Python Development Semester 1</h2>
-              <span class="item-price">Rs.2000</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.filter-btn:hover, .filter-btn.active {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-main);
+}
 
-        <div class="item-box all python2">
-          <div class="pic"><img src="images/store/pyth2.jpg" class="item-img"></div>
-          <h2 class="item-title">Python Development Semester 2</h2>
-              <span class="item-price">Rs.2000</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.filter-btn.active {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+}
 
-        <div class="item-box all python2">
-          <div class="pic"><img src="images/store/pyth3.jpg" class="item-img"></div>
-          <h2 class="item-title">Python Development Semester 3</h2>
-              <span class="item-price">Rs.2000</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2rem;
+}
 
-        <div class="item-box all python2">
-          <div class="pic"><img src="images/store/pyth4.jpg" class="item-img"></div>
-          <h2 class="item-title">Python Development Semester 4</h2>
-              <span class="item-price">Rs.2000</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.product-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: var(--transition);
+}
 
-        <div class="item-box all python2">
-          <div class="pic"><img src="images/store/pyth5.jpg" class="item-img"></div>
-          <h2 class="item-title">Python Development Semester 5</h2>
-              <span class="item-price">Rs.20000</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.product-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+}
 
-        <div class="item-box all python2">
-          <div class="pic"><img src="images/store/pyth6.jpg" class="item-img"></div>
-          <h2 class="item-title">Python Development Semester 6</h2>
-              <span class="item-price">Rs.20000</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.product-img {
+    height: 200px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
 
-        <div class="item-box all python2 tute">
-          <div class="pic"><img src="images/store/pytht1.jpg" class="item-img"></div>
-          <h2 class="item-title">Python Tute 1 Variables</h2>
-              <span class="item-price">Rs.20000</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.product-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
 
-        <div class="item-box all python2 tute">
-          <div class="pic"><img src="images/store/pytht2.jpg" class="item-img"></div>
-          <h2 class="item-title">Python Tute 2 Data Types</h2>
-              <span class="item-price">Rs.500</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.product-info {
+    padding: 1.5rem;
+}
 
-        <div class="item-box all python2 tute">
-          <div class="pic"><img src="images/store/pytht3.jpg" class="item-img"></div>
-          <h2 class="item-title">Python Tute 3 Loops</h2>
-              <span class="item-price">Rs.500</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.product-info h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    height: 2.4rem;
+    overflow: hidden;
+}
 
-        <div class="item-box all python2 tute">
-          <div class="pic"><img src="images/store/pytht4.jpg" class="item-img"></div>
-          <h2 class="item-title">Python Tute 4 Statements</h2>
-              <span class="item-price">Rs.500</span>       
-              <button class="add-cart">Add Cart <i class="fa fa-shopping-cart"></i></button>
-        </div>
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-     </div>
+.price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+}
 
+.add-to-cart-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+}
 
-     <script type="text/javascript" src="js/shop.js"></script>
+.add-to-cart-btn:hover {
+    transform: scale(1.1);
+}
 
-    <script>
-      const btnCart=document.querySelector('#cart-icon');
-      const cart=document.querySelector('.cart');
-      const btnClose=document.querySelector('#cart-close');
+@media (max-width: 900px) {
+    .store-layout {
+        grid-template-columns: 1fr;
+    }
+    .store-sidebar {
+        position: static;
+    }
+}
+</style>
 
-      btnCart.addEventListener('click',()=>{
-        cart.classList.add('cart-active');
-      });
+<script>
+let cart = [];
 
-      btnClose.addEventListener('click',()=>{
-        cart.classList.remove('cart-active');
-      });
+function addToCart(title, price, img) {
+    const existing = cart.find(i => i.title === title);
+    if (!existing) {
+        cart.push({title, price, img});
+        updateCartUI();
+    }
+}
 
-      document.addEventListener('DOMContentLoaded',loadFood);
+function removeFromCart(title) {
+    cart = cart.filter(i => i.title !== title);
+    updateCartUI();
+}
 
-      function loadFood(){
-        loadContent();
-
-      }
-
-      function loadContent(){
-        let btnRemove=document.querySelectorAll('.cart-remove');
-        btnRemove.forEach((btn)=>{
-          btn.addEventListener('click',removeItem);
-        });
-
-        let qtyElements=document.querySelectorAll('.cart-quantity');
-        qtyElements.forEach((input)=>{
-          input.addEventListener('change',changeQty);
-        });
-
-        let cartBtns=document.querySelectorAll('.add-cart');
-        cartBtns.forEach((btn)=>{
-          btn.addEventListener('click',addCart);
-        });
-
-        updateTotal();
-      }
-
-      function removeItem(){
-        if(confirm('Are Your Sure to Remove')){
-          let title=this.parentElement.querySelector('.cart-item-title').innerHTML;
-          itemList=itemList.filter(el=>el.title!=title);
-          this.parentElement.remove();
-          loadContent();
-        }
-      }
-
-      function changeQty(){
-        if(isNaN(this.value) || this.value<1){
-          this.value=1;
-        }
-        loadContent();
-      }
-
-      let itemList=[];
-
-      function addCart(){
-       let item=this.parentElement;
-       let title=item.querySelector('.item-title').innerHTML;
-       let price=item.querySelector('.item-price').innerHTML;
-       let imgSrc=item.querySelector('.item-img').src;
-       
-       let newProduct={title,price,imgSrc}
-
-       //Check Product already Exist in Cart
-       if(itemList.find((el)=>el.title==newProduct.title)){
-        alert("Product Already added in Cart");
+function updateCartUI() {
+    const list = document.querySelector('.cart-items-list');
+    const count = document.querySelector('.cart-count');
+    const total = document.querySelector('.total-price');
+    
+    count.textContent = cart.length;
+    
+    if (cart.length === 0) {
+        list.innerHTML = '<p class="empty-msg">Your cart is empty</p>';
+        total.textContent = 'Rs. 0';
         return;
-       }else{
-        itemList.push(newProduct);
-       }
-
-
-      let newProductElement= createCartProduct(title,price,imgSrc);
-      let element=document.createElement('div');
-      element.innerHTML=newProductElement;
-      let cartBasket=document.querySelector('.cart-content');
-      cartBasket.append(element);
-      loadContent();
-      }
-
-
-      function createCartProduct(title,price,imgSrc){
-
-        return `
-        <div class="cart-box">
-        <img src="${imgSrc}" class="cart-img">
-        <div class="detail-box">
-          <div class="cart-item-title" id="item">${title}</div>
-          <div class="price-box">
-            <div class="cart-price">${price}</div>
-             <div class="cart-amt">${price}</div>
-         </div>
-          <input type="number" value="1" class="cart-quantity">
+    }
+    
+    list.innerHTML = cart.map(item => `
+        <div class="cart-item">
+            <img src="${item.img}" alt="${item.title}">
+            <div class="cart-item-info">
+                <h4>${item.title}</h4>
+                <span>Rs. ${item.price.toLocaleString()}</span>
+            </div>
+            <button onclick="removeFromCart('${item.title.replace("'", "\\'")}')" style="background:none; border:none; color: #ef4444; margin-left:auto; cursor:pointer">
+                <i class="fa fa-trash"></i>
+            </button>
         </div>
-        <ion-icon name="trash" class="cart-remove"></ion-icon>
-      </div>
-        `;
-      }
-       
-      function updateTotal()
-      {
-        const cartItems=document.querySelectorAll('.cart-box');
-        const totalValue=document.querySelector('.total-price');
+    `).join('');
+    
+    const sum = cart.reduce((a, b) => a + b.price, 0);
+    total.textContent = 'Rs. ' + sum.toLocaleString();
+}
 
-        let total=0;
-
-        cartItems.forEach(product=>{
-          let priceElement=product.querySelector('.cart-price');
-          let price=parseFloat(priceElement.innerHTML.replace("Rs.",""));
-          let qty=product.querySelector('.cart-quantity').value;
-          total+=(price*qty);
-          product.querySelector('.cart-amt').innerText="Rs."+(price*qty);
-
-        });
-
-        totalValue.innerHTML='Rs.'+total;
-
-        const cartCount=document.querySelector('.cart-count');
-        let count=itemList.length;
-        cartCount.innerHTML=count;
-
-        if(count==0){
-          cartCount.style.display='none';
-        }else{
-          cartCount.style.display='block';
+function filterSelection(c) {
+    var x, i;
+    x = document.getElementsByClassName("product-card");
+    if (c == "all") c = "";
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+        if (x[i].className.indexOf(c) > -1) {
+            x[i].style.display = "block";
         }
     }
-  </script>
     
-  <br><br>
+    // Update active filter btn
+    const btns = document.querySelectorAll('.filter-btn');
+    btns.forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+}
 
-      <div class="footer apply1">
-        <div class="box1 apply">
- 
-          <i class="fa fa-thumbs-o-up"></i>
-          REACH US
-          <div class="font-apply2">
-            <i class="fa fa-map-marker" style="font-size:20px; "></i>
-            Siridhamma Mawatha, 
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Akmeemana
-          </div>
-          <div style="font-size: 18px;">
-            <i class="fa fa-rss"></i>
-            FOLLOW US
-          </div>
-          <div>
-            <a href="#" class="fa fa-instagram apply4"></a>
-        <a href="#" class="fa fa-facebook apply4"></a>
-        <a href="#" class="fa fa-linkedin apply4"></a>
-        <a href="#" class="fa fa-twitter apply4"></a>
-        <a href="#" class="fa fa-youtube apply4"></a>
-        <a href="#" class="fa fa-google apply4"></a>
-        <a href="#" class="fa fa-pinterest apply4"></a>
-        <a href="#" class="fa fa-snapchat-ghost apply4"></a>
-          </div>
-          <div class="font-apply2">
-            <i class="fa fa-phone" style="font-size:20px;"></i>
-            <a href="tel:+94412225554">0412225554</a>
-          </div>
-        </div>
-        <div class="box1">
-          <div style="font-size: 20px; padding:0px 0px 10px 0px;">
-            <i class="fa fa-newspaper-o"></i>
-            POPULAR NEWS
-          </div>
-          <a href="news.php#robotic1">
-            <div class="footer-news" >
-              <mark class="color4">Robotics</mark> 
-              <span class="date">2024.09.10</span>
-              <br>
-              NEW COURSE STARTING NOV 18 <sup>th</sup></a>
-            </div>
-          
-          <a href="news.php#java6">
-            <div class="footer-news">
-              <mark class="color4">Java</mark>
-              <span class="date"> 2024.09.08 </span>
-              <br>
-              NEW 6<sup>th</sup> BATCH STARTING NOV 12</a>
-            </div>
-          
-          <a href="news.php#python5">
-            <div class="footer-news">
-              <mark class="color4">Python</mark>
-               <span class="date">2024.06.06 </span>
-              <br>
-              NEW 5<sup>th</sup> BATCH STARTING OCT 6</a>
-              <br>
-            </div>
-          
-        </div>
-        <div class="box1">
-          <div style="font-size: 20px;padding-bottom:10px;">
-            <i class="fa fa-puzzle-piece"></i> 
-            CATEGORIES
-          </div>
-            <a href="courses.php#java"><mark class="color5">Java</mark></a>
-            <a href="courses.php#web"><mark class="color5">Web Design</mark></a>
-            <br><br>
-            <a href="courses.php#python"><mark class="color5">Python</mark></a>
-            <a href="courses.php#arduino"><mark class="color5">Robotics</mark></a>
-            <br><br>
-            <a href="courses.php#c1"><mark class="color5">C#</mark></a>
-            <a href="courses.php#c2"><mark class="color5">C++</mark></a>
-        </div>
-        <div class="box1">
-          <div style="font-size: 20px;padding-bottom:10px;">
-            <i class="fa fa-map-marker"></i>
-            FIND US
-          </div>
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3967.4184450925177!2d80.23076517546636!3d6.074174528220766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae17182cf82c5bf%3A0xcabc61ef94f1ad0e!2sAdvanced%20Technological%20Institute%20-%20Galle!5e0!3m2!1sen!2slk!4v1725649661855!5m2!1sen!2slk" width="300" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
-        </div>
-      </div>
-      <div class="copyright-cont">
-        <hr>
-        Copyright © 2024 Malitha Tishamal. All Rights Reserved.
-        <hr>
-      </div>
-</body>
-</html>
+function placeOrder() {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+    alert("Thank you for your order! In a real system, this would proceed to payment.");
+    cart = [];
+    updateCartUI();
+}
+</script>
+
+<?php include("includes/footer.php"); ?>

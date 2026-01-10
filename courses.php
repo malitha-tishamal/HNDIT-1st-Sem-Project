@@ -1,531 +1,235 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="images/icon-head.png">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/log-in-out.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>All Courses - Learninglk </title>
-</head>
-<body>
+<?php 
+$pageTitle = "All Courses";
+include("includes/header.php"); 
+?>
 
-    <div class="user">
-        <div class="top-box align3">&nbsp;&nbsp;&nbsp;&nbsp;
-             <a href="index.php"><img src="images/icon.png" width="200px" height="60px"></a></div>
+<section class="courses-hero">
+    <div class="container">
+        <h1>Our Expert-Led Courses</h1>
+        <p>Choose from a variety of IT courses designed to jumpstart your career.</p>
+    </div>
+</section>
 
-        <div class="top-box"></div>
+<section class="all-courses-section">
+    <div class="courses-container">
+        <?php
+        require_once("connect.php");
+        $query = "SELECT * FROM courses";
+        $result = mysqli_query($con, $query);
 
-        <div class="top-box output-align ">             
-            <?php
-                if (isset($_POST["sub12"])) {           
-                    $username = $_POST["username"];
-                    $password = $_POST["password"];
-                    if ($username =="admin@elk.com" && $password="1234") {
-                        echo "<div ><img src='images/admin2.jpg' width='55px'></div>";
-                        echo "<div class='success'> Log in Successfull! <br> As Admin. Wellcome! </div>";
-                        $_SESSION["user"]="Admin";
-                    }
-                    else{
-                        echo "<div ><img src='images/error.png' width='50px'></div>";
-                        echo "<div class='error'> Invalid Credentials! <br>  Please Cheak Again! </div>";
-                        }
-                    }
+        $courseMeta = [
+            'java' => ['icon' => 'fa-coffee', 'color' => 'java-color', 'title' => 'Java Development'],
+            'python' => ['icon' => 'fa-code', 'color' => 'python-color', 'title' => 'Python Development'],
+            'web' => ['icon' => 'fa-globe', 'color' => 'web-color', 'title' => 'Web Development'],
+            'iot' => ['icon' => 'fa-microchip', 'color' => 'iot-color', 'title' => 'IOT Robotics'],
+            'c01' => ['icon' => 'fa-terminal', 'color' => 'csharp-color', 'title' => 'C# Development'],
+        ];
+
+        while($row = mysqli_fetch_array($result)) {
+            $cid = $row['course_id'];
+            $meta = isset($courseMeta[$cid]) ? $courseMeta[$cid] : ['icon' => 'fa-book', 'color' => 'default-color', 'title' => $cid];
             ?>
+            <div class="course-detail-card <?php echo $meta['color']; ?>" id="<?php echo $cid; ?>">
+                <div class="card-header">
+                    <div class="header-main">
+                        <i class="fa <?php echo $meta['icon']; ?> course-icon"></i>
+                        <div>
+                        <h2><?php echo $meta['title']; ?></h2>
+                        <span class="badge"><?php echo htmlspecialchars($row['duration_months'] ?? '0'); ?> Months</span>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="card-body">
+                    <div class="course-info">
+                        <h3>About this course</h3>
+                        <p><?php
+                            if ($cid == 'java') echo "Java is fast, secure, and reliable. Used worldwide for developing applications for computers, laptops, data centers, games consoles, cell phones and more.";
+                            elseif ($cid == 'python') echo "Easy to learn and incredibly powerful. Python is used in Software/Web development, Data Science, Machine Learning, and more.";
+                            elseif ($cid == 'web') echo "The foundation of modern websites. Master HTML, CSS, and JavaScript to build interactive and responsive web pages.";
+                            elseif ($cid == 'iot') echo "Learn to build and program robots using the Arduino platform, covering both hardware and software aspects.";
+                            elseif ($cid == 'c01') echo "A powerful language used by large organizations. Perfect for those with no coding experience looking to enter the industry.";
+                            else echo "A comprehensive course designed to give you industry-ready skills in " . htmlspecialchars($meta['title']) . ".";
+                        ?></p>
+                    </div>
+
+                    <div class="course-stats">
+                        <div class="stat">
+                            <span class="label">Total Hours</span>
+                            <span class="value"><?php echo htmlspecialchars($row['duration_hours'] ?? '0'); ?> hrs</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Start Date</span>
+                            <span class="value"><?php echo htmlspecialchars($row['course_date'] ?? 'N/A'); ?></span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Batch Size</span>
+                            <span class="value"><?php echo htmlspecialchars($row['students'] ?? '0'); ?> Students</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Course Fee</span>
+                            <span class="value price"><?php echo htmlspecialchars($row['payments'] ?? '0'); ?></span>
+                        </div>
+                    </div>
+
+                    <div class="card-actions">
+                        <?php if (in_array($cid, ['java', 'python', 'web'])): ?>
+                            <a href="Register.php" class="btn btn-primary">Enroll Now</a>
+                        <?php else: ?>
+                            <button class="btn btn-disabled" disabled>Coming Soon</button>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
             <?php
-                     if(isset($_GET['sign'])){
-                        if ($_GET['sign']== 1) {
-                            echo "<div ><img src='images/success.png' width='55px'></div>";
-                            echo "<div class='success'>New Account Create Successfull</div>";
-                        }
-                        if ($_GET['sign']== 0) {
-                            echo "<div ><img src='images/error.png' width='50px'></div>";
-                            echo "<div class='error'>New Account Create Unsuccessfull</div>";
-                        }
-                    }
-            ?>
-            <?php
-                if (isset($_POST["sub12"])) {    
-                require("connect.php");       
-                    $email=$_POST['email'];
-                    $password = $_POST['password'];
-
-                   $query = "SELECT * FROM account WHERE email = '$email' AND password = '$password'";
-                        $result = mysqli_query($con,$query);
-
-                    while($row=mysqli_fetch_array($result)){
-                        if(mysqli_num_rows($result)== 1){
-                            echo "<div class='success'> Log in Successfull! <br> $row[2] Wellcome! </div>";
-                            $_SESSION["user"]="$row[2]";
-                        }
-                        else{
-                             echo "<div class='error'> Invalid Credentials! <br>  Please Cheak Again! </div>";
-                        }
-                        
-                    }
-                }
-            ?>
-
-
-        </div>
-
-        <div class="top-box align4">
-            <button class="main login" onclick="document.getElementById('id01').style.display='block'">
-            <i class="fa fa-fw fa-user"></i>Login
-            </button>
-            <button class="main signup" onclick="document.getElementById('id02').style.display='block'" >
-            <i class="fa fa-sign-in"></i>SignUp
-        </button>
-        </div>
+        }
+        ?>
     </div>
+</section>
 
+<style>
+.courses-hero {
+    padding: 6rem 0;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(15, 23, 42, 0) 100%);
+}
 
-    <!--Log in content -->
-    <div id="id01" class="modal">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-      
-      <div class="signup-container modal-content">
-            <h1>Log In</h1>
-            <p>Don't have an Account? <span onclick="signform()">Sign in</span></p>
-           
-            <div class="social-signup">
-                <button class="social-btn">Google
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img src="images/google.png" width="20px">
-                </button>
-                <button class="social-btn">Facebook
-                    &nbsp;&nbsp;&nbsp;
-                    <img src="images/facebook2.png" width="20px">
-                </button>
-            </div>  
-            <div class="social-signup">
-                <button class="social-btn">Instagram
-                    &nbsp;&nbsp;&nbsp;
-                    <img src="images/ins.jpg" width="20px">
-                </button>
-                <button class="social-btn">Github
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img src="images/github.png" width="20px">
-                </button>
-            </div>
-            
-            <div class="divid">OR</div>
-            
-            <form class="signup-form" method="post">
-                <input type="text" id="ajest-input" name="email" placeholder="email" required>
-                <input type="password" id="ajest-input" name="password" placeholder="password" required>
-                <button class="social-btn">Forgot Password ?</button>
-                <button type="submit" name="sub12" class="signup-btn width-ajest2">Log In</button>
-            </form>
-            
-        </div>
-    </div>
-    
-    <!--sign in content -->
-    <div id="id02" class="modal">
-      <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-      
-      <div class="signup-container modal-content">
-            <h1>Sign Up</h1>
-            <p>Already have an account? <span onclick="loginform()">Log in</span></p>
-           
-            <div class="social-signup">
-                <button class="social-btn">Google
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img src="images/google.png" width="20px">
-                </button>
-                <button class="social-btn">Facebook
-                    &nbsp;&nbsp;&nbsp;
-                    <img src="images/facebook2.png" width="20px">
-                </button>
-            </div>  
-            <div class="social-signup">
-                <button class="social-btn">Instagram
-                    &nbsp;&nbsp;&nbsp;
-                    <img src="images/ins.jpg" width="20px">
-                </button>
-                <button class="social-btn">Github
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img src="images/github.png" width="20px">
-                </button>
-            </div>
-            
-            <div class="divid">OR</div>
-            
-            <form class="signup-form" method="get" action="entry3.php">
-                <input type="email" id="ajest-input" name="email" placeholder="email" required>
-                <input type="password" id="ajest-input" name="password" placeholder="password" required>
-                <input type="text" id="ajest-input" name="first_name" placeholder="first name" required>
-                <input type="text" id="ajest-input" name="last_name" placeholder="last name" required>
-                <input type="submit" value="SignUp" class="signup-btn width-ajest1">
-            </form>
-            
-            <p class="terms">
-                By signing up you agree to our <a href="#" >
-                <span class="policy">Terms of Service</span><br>
-                </a> and <a href="#" ><span class="policy">Privacy Policy</span></a><br>
-                <br><br>
-                <span class="policy">
-                <input type="checkbox" checked ></span>
-                Email me with news and updates
-            </p>
-        </div>
-    </div>
+.courses-hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
 
-    <script type="text/javascript">
-        function signform(){
-                document.getElementById('id01').style.display='none';
-                document.getElementById('id02').style.display='block';
-            }
-            function loginform(){
-                document.getElementById('id02').style.display='none';
-                document.getElementById('id01').style.display='block';
-            }
-    </script>
+.courses-container {
+    max-width: 1000px;
+    margin: -4rem auto 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 0 1.5rem;
+}
 
-    <script type="text/javascript" src="js/user.js"></script>
-    
-    <div class="navbar">
-        <a  href="index.php">
-            <i class="fa fa-home"></i> Home
-        </a>
-        <a href="Store.php">
-            <i class="fa fa-shopping-cart"></i> Store
-        </a>
-        <a href="news.php">
-            <i class="fa fa-newspaper-o"></i> News
-        </a>
-        <div class="dropdown">
-            <button class="dropdown-btn">
-                <i class="fa fa-download"></i> Downloads 
-            </button>
-            <div class="dropdown-contents">
-                <a href="java-download.php"><i class='fa fa-coffee' style='color:red'></i> Java Programming</a>
-                <a href="python-download.php"><i class="fa fa-code" style="color:orange"></i> Python Programming</a>
-                <a href="web-download.php"><i class="fa fa-code" style="color:blue"></i> Web Programming</a>
-            </div>
-        </div>
-        <a href="#" style="background-color: red;">
-            <i class="fa fa-clone"></i> Courses
-        </a>
-        <a href="contact.php">
-            <i class="fa fa-envelope"></i> Contact
-        </a>
-        <a href="admin.php">
-            <i class="fa fa-user-circle-o"></i> Admin
-        </a>
-        <a href="Register.php">
-            <i class="fa fa-user-circle-o"></i> Register
-        </a>
-        <form method="post">
-            <input type="submit" value="Log Out" name="sub13" class="log-out-btn">
-        </form>     
-    </div>
+.course-detail-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    overflow: hidden;
+    transition: var(--transition);
+}
 
-    <br>
+.course-detail-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+    border-color: rgba(99, 102, 241, 0.3);
+}
 
-    <div>
-        <div class="content">
-            <div class="content-box hed-color3" name = "java">
-                <?php
-                    require("connect.php");
-                    $query="SELECT * FROM courses WHERE course_id = 'java'";
-                    $result = mysqli_query($con,$query);
+.card-header {
+    padding: 2.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
 
-                    while($row=mysqli_fetch_array($result)){
-                        echo '
-                <h2 class="java courses">Java Development &nbsp;&nbsp;<br>('.$row[4].' Month)</h2>
-                <div>
-                    <div class="course-banner">
-                        <img src="images/java.png" width="150px" alt="java">
-                        <img src="images/java2.jpg" width="90px" alt="java" >
-                    </div>
-                    <div class="intro">
-                        Java is popular, fast, secure, and reliable - and it’s used on over 5.5 billion devices worldwide! It’s used for developing applications for computers, laptops, data centres, games consoles, cell phones and more.This course is perfect for people who are just starting out on their Java coding journey.
-                    </div>
-                    <div class="detail"><div class="inside">Course Content</div>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> Variables <br>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> Data Types <br>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> User inputs <br>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> Conditional Statements<br>
-                    </div>
+.header-main {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
 
-                    <div class="dates">
-                        Duration : '.$row[4].' Month ('.$row[5].' Hours) <br>
-                        Start &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$row[3].' <br>
-                        Class &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$row[6].'<br>
-                        Batch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$row[7].' Students  <br>
-                        Payment : '.$row[8].'  <br>
-                        ';
-                             }
-                        ?>
-                        <div class="link-btn">
-                            <a href="Register.php"><button class="link-btn btncolor1">Register Now..</button></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+.course-icon {
+    font-size: 3rem;
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.card-header h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
 
-            <div class="content-box hed-color2" name = "python">
-                <?php
-                    require("connect.php");
-                    $query="SELECT * FROM courses WHERE course_id = 'python'";
-                    $result = mysqli_query($con,$query);
+.badge {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
 
-                    while($row=mysqli_fetch_array($result)){
-                        echo '
-                <h2 class= "pyth courses">Python Development <br>('.$row[4].' Month) </h2>
-                <div>
-                    <div class="course-banner">
-                        <img src="images/pyth.png" width="150px" alt="pyth">
-                        <img src="images/pyth.jpg" width="150px" alt="pyth">
-                    </div>
-                    
-                    <div class="intro">
-                        It’s popular. It’s powerful. It’s Python! Python is easy to learn and is used in a huge range of fields, including software and web development, data science, machine learning, and more. If you’re just starting out on your coding journey this course is a great choice;
-                    </div>
-                     <div class="detail"><div class="inside">Course Content</div>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> Variables <br>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> Data Types <br>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> User inputs <br>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> Conditional Statements
-                    </div>
-                    <div class="dates">
-                        Duration : '.$row[4].' Month ('.$row[5].' Hours) <br>
-                        Start &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$row[3].' <br>
-                        Class &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$row[6].'<br>
-                        Batch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$row[7].' Students  <br>
-                        Payment : '.$row[8].' 
-                        ';
-                             }
-                        ?>
-                        <div class="link-btn">
-                            <a href="Register.php"><button class="link-btn btncolor2"> Register Now..</button></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+.card-body {
+    padding: 2.5rem;
+}
 
+.course-info h3 {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+}
 
-            <div class="content-box hed-color1" name = "java">
-                <?php
-                    require("connect.php");
-                    $query="SELECT * FROM courses WHERE course_id = 'web'";
-                    $result = mysqli_query($con,$query);
+.course-info p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    margin-bottom: 2.5rem;
+}
 
-                    while($row=mysqli_fetch_array($result)){
-                        echo '
-                <h2 class ="web courses">Web Development <br> ('.$row[4].' Month)</h2>
-                <div>
-                    <div class="course-banner">
-                        <img src="images/web.png" width="160px" alt="web">
-                        <img src="images/web.jpg" width="160px" alt="web">
-                    </div>
-                    
-                    <div class="intro">
-                        Web Development is the foundation of modern websites and applications. This course covers HTML, CSS, and JavaScript, the core technologies for building interactive and responsive web pages.Perfect for beginners, this course will give you the skills needed to create stunning websites.
-                    </div>
-                     <div class="detail"><div class="inside">Course Content</div>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> HTML <br>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> CSS <br>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> PHP <br>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> JavaScript<br>
-                    </div>
-                    <div class="dates">
-                        Duration : '.$row[4].' Month ('.$row[5].' Hours) <br>
-                        Start &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$row[3].' <br>
-                        Class &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$row[6].'<br>
-                        Batch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$row[7].' Students  <br>
-                        Payment : '.$row[8].' 
-                        <div class="link-btn btn-align3">
-                        ';
-                             }
-                        ?>
-                            <a href="Register.php"> <button class="link-btn btncolor3" >Register Now..</button></a>
-                        </div>
-                    </div>
-                </div>
-             </div>      
-          </div>
-          <br>
+.course-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    background: rgba(15, 23, 42, 0.4);
+    padding: 2rem;
+    border-radius: 20px;
+    margin-bottom: 2.5rem;
+}
 
-        <div class="content2">
-            <div class="content-box hed-color4" name = "arduino">
-                <?php
-                    require("connect.php");
-                    $query="SELECT * FROM courses WHERE course_id = 'iot'";
-                    $result = mysqli_query($con,$query);
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
 
-                    while($row=mysqli_fetch_array($result)){
-                        echo '
-                <h2 class="robotic courses">IOT Robotics &nbsp;&nbsp;<br>('.$row[4].' Month)</h2>
-                <div>
-                    <div class="course-banner">
-                        <img src="images/robotic1.jpg" width="150px" height="80px" alt="robotic">
-                        <img src="images/robotic2.jpg" width="150px" height="80px" alt="robotic" >
-                    </div>
-                    
-                    <div class="intro">
-                        An Arduino Robotics course is an introductory course that teaches students the basics of building and programming robots using the Arduino microcontroller platform. The course typically covers both the hardware and software aspects of robotics, allowing students to gain a comprehensive understanding of the field.
-                    </div>
-                    <div class="detail"><div class="inside">Course Content</div>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> Basic Electonic <br>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> Arduino Programing <br>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> Nde MCU Programming <br>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> IOT<br>
-                    </div>
+.stat .label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
 
-                    <div class="dates">
-                        Duration : '.$row[4].' Month ('.$row[5].' Hours) <br>
-                        Start &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$row[3].' <br>
-                        Class &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$row[6].'<br>
-                        Batch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$row[7].' Students  <br>
-                        Payment : '.$row[8].' <br>
-                        <div class="link-btn">
-                        ';
-                             }
-                        ?>
-                            <a href="#"><button class="link-btn btncolor4" disabled> Comming Soon...</button></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+.stat .value {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
 
-            <div class="content-box hed-color5" name ="c1">
-                <?php
-                    require("connect.php");
-                    $query="SELECT * FROM courses WHERE course_id = 'c01'";
-                    $result = mysqli_query($con,$query);
+.stat .value.price {
+    color: var(--accent);
+}
 
-                    while($row=mysqli_fetch_array($result)){
-                        echo '
-                <h2 class= "c-dev courses">C# Development <br>('.$row[4].' Month) </h2>
-                <div>
-                    <div class="course-banner">
-                        <img src="images/Cpro.jpg" width="150px" height="80px" alt="C#">
-                        <img src="images/Cpro2.jpg" width="150px" height="80px" alt="C#">
-                  </div>
-                    
-                    <div class="intro">
-                        C# is used by many large organizations, start-ups and beginners alike. It takes some of the useful features of C and adds syntax to save time and effort. Although C# is based on C, you can learn it without any knowledge of C — in fact, this course is perfect for those with no coding experience at all!. <br>
-                    </div>
-                     <div class="detail"><div class="inside">Course Content</div>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> Variables <br>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> Data Types <br>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> User inputs <br>
-                       <i class="fa fa-circle" style="font-size: 12px"></i> Conditional Statements
-                    </div>
-                    <div class="dates">
-                        Duration : '.$row[4].' Month ('.$row[5].' Hours) <br>
-                        Start &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$row[3].' <br>
-                        Class &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$row[6].'<br>
-                        Batch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$row[7].' Students  <br>
-                        Payment : '.$row[8].'
-                        <div class="link-btn">
-                        ';
-                             }
-                        ?>
-                            <a href="#"><button class="link-btn btncolor5" disabled> Comming Soon...</button></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+}
 
+.btn-disabled {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
 
-    <br>
+/* Course colors */
+.java-color .course-icon { color: #f87171; background: rgba(248, 113, 113, 0.1); }
+.python-color .course-icon { color: #60a5fa; background: rgba(96, 165, 250, 0.1); }
+.web-color .course-icon { color: #c084fc; background: rgba(192, 132, 252, 0.1); }
+.iot-color .course-icon { color: #fbbf24; background: rgba(251, 191, 36, 0.1); }
+.csharp-color .course-icon { color: #34d399; background: rgba(52, 211, 153, 0.1); }
 
-      <div class="footer apply1">
-        <div class="box1 apply">
- 
-            <i class="fa fa-thumbs-o-up"></i>
-            REACH US
-            <div class="font-apply2">
-                <i class="fa fa-map-marker" style="font-size:20px; "></i>
-                Siridhamma Mawatha, 
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Akmeemana
-            </div>
-            <div style="font-size: 18px;">
-                <i class="fa fa-rss"></i>
-                FOLLOW US
-            </div>
-            <div>
-                <a href="#" class="fa fa-instagram apply4"></a>
-                <a href="#" class="fa fa-facebook apply4"></a>
-                <a href="#" class="fa fa-linkedin apply4"></a>
-                <a href="#" class="fa fa-twitter apply4"></a>
-                <a href="#" class="fa fa-youtube apply4"></a>
-                <a href="#" class="fa fa-google apply4"></a>
-                <a href="#" class="fa fa-pinterest apply4"></a>
-                <a href="#" class="fa fa-snapchat-ghost apply4"></a>
-            </div>
-            <div class="font-apply2">
-                <i class="fa fa-phone" style="font-size:20px;"></i>
-                <a href="tel:+94412225554">0412225554</a>
-            </div>
-        </div>
-        <div class="box1">
-            <div style="font-size: 20px; padding:0px 0px 10px 0px;">
-                <i class="fa fa-newspaper-o"></i>
-                POPULAR NEWS
-            </div>
-            <a href="news.php#robotic1">
-                <div class="footer-news" >
-                    <mark class="color4">Robotics</mark> 
-                    <span class="date">2024.09.10</span>
-                    <br>
-                    NEW COURSE STARTING NOV 18 <sup>th</sup></a>
-                </div>
-            
-            <a href="news.php#java6">
-                <div class="footer-news">
-                    <mark class="color4">Java</mark>
-                    <span class="date"> 2024.09.08 </span>
-                    <br>
-                    NEW 6<sup>th</sup> BATCH STARTING NOV 12</a>
-                </div>
-            
-            <a href="news.php#python5">
-                <div class="footer-news">
-                    <mark class="color4">Python</mark>
-                     <span class="date">2024.06.06 </span>
-                    <br>
-                    NEW 5<sup>th</sup> BATCH STARTING OCT 6</a>
-                    <br>
-                </div>
-            
-        </div>
-        <div class="box1">
-            <div style="font-size: 20px;padding-bottom:10px;">
-                <i class="fa fa-puzzle-piece"></i> 
-                CATEGORIES
-            </div>
-                <a href="courses.php#java"><mark class="color5">Java</mark></a>
-                <a href="courses.php#web"><mark class="color5">Web Design</mark></a>
-                <br><br>
-                <a href="courses.php#python"><mark class="color5">Python</mark></a>
-                <a href="courses.php#arduino"><mark class="color5">Robotics</mark></a>
-                <br><br>
-                <a href="courses.php#c1"><mark class="color5">C#</mark></a>
-                <a href="courses.php#c2"><mark class="color5">C++</mark></a>
-        </div>
-        <div class="box1">
-            <div style="font-size: 20px;padding-bottom:10px;">
-                <i class="fa fa-map-marker"></i>
-                FIND US
-            </div>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3967.4184450925177!2d80.23076517546636!3d6.074174528220766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae17182cf82c5bf%3A0xcabc61ef94f1ad0e!2sAdvanced%20Technological%20Institute%20-%20Galle!5e0!3m2!1sen!2slk!4v1725649661855!5m2!1sen!2slk" width="300" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
-      </div>
-      <div class="copyright-cont">
-        <hr>
-        Copyright © 2024 Malitha Tishamal. All Rights Reserved.
-        <hr>
-      </div>
-</body>
-</html>
+@media (max-width: 600px) {
+    .header-main { flex-direction: column; text-align: center; gap: 1rem; }
+    .card-actions { justify-content: center; }
+}
+</style>
+
+<?php include("includes/footer.php"); ?>

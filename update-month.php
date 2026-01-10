@@ -1,19 +1,19 @@
 <?php 
-	include("connect.php");
+require_once("connect.php");
 
-	$course_id = $_GET["course_id"];
-	$duration_months = $_GET["duration_months"];
+if (isset($_GET["course_id"]) && isset($_GET["duration_months"])) {
+    $course_id = $_GET["course_id"];
+    $duration_months = $_GET["duration_months"];
 
-	$query = "UPDATE courses SET duration_months = '$duration_months' WHERE course_id ='$course_id'";
-; 
-	$result = mysqli_query($con,$query);
-	if($result){
-		//echo "Data Send Successfully";
-		header("location:admin.php?send=1");
-	}
-	else{
-		//echo "Data Sending Faild";
-		header("location:admin.php?send=0");
-	}
-
+    $stmt = $con->prepare("UPDATE courses SET duration_months = ? WHERE course_id = ?");
+    $stmt->bind_param("ss", $duration_months, $course_id);
+    
+    if($stmt->execute()){
+        header("location:Admin.php?send=1&selected_course=$course_id");
+    } else {
+        header("location:Admin.php?send=0&selected_course=$course_id");
+    }
+} else {
+    header("location:Admin.php?error=missing_params");
+}
 ?>

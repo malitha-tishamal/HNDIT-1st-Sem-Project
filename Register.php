@@ -1,424 +1,265 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="images/icon-head.png">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/register.css">
-    <link rel="stylesheet" type="text/css" href="css/forms.css">
-    <link rel="stylesheet" type="text/css" href="css/log-in-out.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Learninglk - Student Register</title>
-</head>
-<body>
+<?php 
+$pageTitle = "Course Registration";
+include("includes/header.php"); 
+?>
 
-    <div class="user">
-        <div class="top-box align3">&nbsp;&nbsp;&nbsp;&nbsp;
-           <a href="index.php"><img src="images/icon.png" width="200px" height="60px"></a></div>
+<section class="register-hero">
+    <div class="container">
+        <h1>Enroll in a Course</h1>
+        <p>Take the first step towards your future in technology.</p>
+    </div>
+</section>
 
-        <div class="top-box"></div>
-
-        <div class="top-box output-align ">                    
-
+<section class="register-section">
+    <div class="register-container">
+        <div class="register-card card glass-card">
             <?php
-                     if(isset($_GET['sign'])){
-                        if ($_GET['sign']== 1) {
-                            echo "<div ><img src='images/success.png' width='55px'></div>";
-                            echo "<div class='success'>New Account Create Successfull</div>";
-                        }
-                        if ($_GET['sign']== 0) {
-                            echo "<div ><img src='images/error.png' width='50px'></div>";
-                            echo "<div class='error'>New Account Create Unsuccessfull</div>";
-                        }
-                    }
-            ?>
-            <?php
-                if (isset($_POST["sub12"])) {    
-                require("connect.php");       
-                    $email=$_POST['email'];
-                    $password = $_POST['password'];
-
-                   $query = "SELECT * FROM account WHERE email = '$email' AND password = '$password'";
-                        $result = mysqli_query($con,$query);
-
-                    while($row=mysqli_fetch_array($result)){
-                        if(mysqli_num_rows($result)== 1){
-                            echo "<div class='success'> Log in Successfull! <br> $row[2] Wellcome! </div>";
-                            $_SESSION["user"]="$row[2]";
-                        }
-                        else{
-                             echo "<div class='error'> Invalid Credentials! <br>  Please Cheak Again! </div>";
-                        }
-                        
-                    }
+            if(isset($_GET['success'])){
+                if ($_GET['success']== 1) {
+                    echo "<div class='alert alert-success'>Registration Successful! We will contact you soon.</div>";
+                } else {
+                    echo "<div class='alert alert-error'>Registration Unsuccessful. Please check your details and try again.</div>";
                 }
+            }
             ?>
+            <form method="get" action="entry.php" class="modern-form">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="name"><i class="fa fa-user"></i> Full Name *</label>
+                        <input type="text" id="name" name="name" placeholder="John Doe" required>
+                    </div>
 
-        </div>
+                    <div class="input-group">
+                        <label for="nic_no"><i class="fa fa-id-card-o"></i> NIC Number *</label>
+                        <input type="text" id="nic_no" name="nic_no" placeholder="987654321V" required>
+                    </div>
 
-        <div class="top-box align4">
-            <button class="main login" onclick="document.getElementById('id01').style.display='block'">
-                <i class="fa fa-fw fa-user"></i>Login
-            </button>
-            <button class="main signup" onclick="document.getElementById('id02').style.display='block'" >
-                <i class="fa fa-sign-in"></i>SignUp
-            </button>
-        </div>
-    </div>
+                    <div class="input-group">
+                        <label for="email"><i class="fa fa-envelope"></i> Email Address *</label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                    </div>
 
+                    <div class="input-group">
+                        <label for="phone"><i class="fa fa-phone"></i> Mobile Number *</label>
+                        <input type="tel" id="phone" name="number" placeholder="071 234 5678" required>
+                    </div>
 
-    <!--Log in content -->
-    <div id="id01" class="modal">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-      
-      <div class="signup-container modal-content">
-            <h1>Log In</h1>
-            <p>Don't have an Account? <span onclick="signform()">Sign in</span></p>
-           
-            <div class="social-signup">
-                <button class="social-btn">Google
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img src="images/google.png" width="20px">
-                </button>
-                <button class="social-btn">Facebook
-                    &nbsp;&nbsp;&nbsp;
-                    <img src="images/facebook2.png" width="20px">
-                </button>
-            </div>  
-            <div class="social-signup">
-                <button class="social-btn">Instagram
-                    &nbsp;&nbsp;&nbsp;
-                    <img src="images/ins.jpg" width="20px">
-                </button>
-                <button class="social-btn">Github
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img src="images/github.png" width="20px">
-                </button>
-            </div>
-            
-            <div class="divid">OR</div>
-            
-            <form class="signup-form" method="post">
-                <input type="text" id="ajest-input" name="email" placeholder="email" required>
-                <input type="password" id="ajest-input" name="password" placeholder="password" required>
-                <button class="social-btn">Forgot Password ?</button>
-                <button type="submit" name="sub12" class="signup-btn width-ajest2">Log In</button>
+                    <div class="input-group">
+                        <label for="age"><i class="fa fa-calendar-check-o"></i> Age *</label>
+                        <input type="number" id="age" name="age" placeholder="22" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label><i class="fa fa-venus-mars"></i> Gender</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="male" checked>
+                                <span>Male</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="female">
+                                <span>Female</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="city"><i class="fa fa-map-marker"></i> City</label>
+                        <select id="city" name="city" class="modern-select">
+                            <option value="Galle">Galle</option>
+                            <option value="Matara">Matara</option>
+                            <option value="Hambanthota">Hambanthota</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label><i class="fa fa-university"></i> Class Type</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="class" value="online" checked>
+                                <span>Online</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="class" value="physical">
+                                <span>Physical</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-selection">
+                    <label><i class="fa fa-book"></i> Select Courses</label>
+                    <div class="course-options">
+                        <label class="checkbox-card">
+                            <input type="checkbox" name="java" value="15000">
+                            <div class="checkbox-content">
+                                <i class="fa fa-coffee"></i>
+                                <span>Java (Rs.15,000)</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-card">
+                            <input type="checkbox" name="web" value="10000">
+                            <div class="checkbox-content">
+                                <i class="fa fa-globe"></i>
+                                <span>Web (Rs.10,000)</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-card">
+                            <input type="checkbox" name="python" value="12000">
+                            <div class="checkbox-content">
+                                <i class="fa fa-code"></i>
+                                <span>Python (Rs.12,000)</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-card">
+                            <input type="checkbox" name="iot" value="12000">
+                            <div class="checkbox-content">
+                                <i class="fa fa-microchip"></i>
+                                <span>IOT (Rs.12,000)</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-card">
+                            <input type="checkbox" name="c1" value="12000">
+                            <div class="checkbox-content">
+                                <i class="fa fa-window-maximize"></i>
+                                <span>C# (Rs.12,000)</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-footer">
+                    <button type="reset" class="btn btn-secondary">Clear All</button>
+                    <button type="submit" class="btn btn-primary">Submit Registration</button>
+                </div>
             </form>
-            
         </div>
     </div>
+</section>
+
+<style>
+.register-hero {
+    padding: 6rem 0;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(15, 23, 42, 0) 100%);
+}
+
+.register-container {
+    max-width: 900px;
+    margin: -4rem auto 6rem;
+    padding: 0 1.5rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.radio-group {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0.8rem 0;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.radio-label input {
+    width: auto;
+}
+
+.modern-select {
+    width: 100%;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.8rem 1.2rem;
+    color: white;
+    cursor: pointer;
+}
+
+.course-selection {
+    margin-top: 3rem;
+}
+
+.course-selection > label {
+    display: block;
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.course-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.25rem;
+}
+
+.checkbox-card {
+    cursor: pointer;
+    position: relative;
+}
+
+.checkbox-card input {
+    position: absolute;
+    opacity: 0;
+}
+
+.checkbox-content {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.checkbox-card input:checked + .checkbox-content {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+}
+
+.checkbox-content i {
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.checkbox-content span {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.25rem;
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
     
-    <!--sign in content -->
-    <div id="id02" class="modal">
-      <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-      
-      <div class="signup-container modal-content">
-            <h1>Sign Up</h1>
-            <p>Already have an account? <span onclick="loginform()">Log in</span></p>
-           
-            <div class="social-signup">
-                <button class="social-btn">Google
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img src="images/google.png" width="20px">
-                </button>
-                <button class="social-btn">Facebook
-                    &nbsp;&nbsp;&nbsp;
-                    <img src="images/facebook2.png" width="20px">
-                </button>
-            </div>  
-            <div class="social-signup">
-                <button class="social-btn">Instagram
-                    &nbsp;&nbsp;&nbsp;
-                    <img src="images/ins.jpg" width="20px">
-                </button>
-                <button class="social-btn">Github
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img src="images/github.png" width="20px">
-                </button>
-            </div>
-            
-            <div class="divid">OR</div>
-            
-            <form class="signup-form" method="get" action="entry3.php">
-                <input type="email" id="ajest-input" name="email" placeholder="email" required>
-                <input type="password" id="ajest-input" name="password" placeholder="password" required>
-                <input type="text" id="ajest-input" name="first_name" placeholder="first name" required>
-                <input type="text" id="ajest-input" name="last_name" placeholder="last name" required>
-                <input type="submit" value="SignUp" class="signup-btn width-ajest1">
-            </form>
-            
-            <p class="terms">
-                By signing up you agree to our <a href="#" >
-                <span class="policy">Terms of Service</span><br>
-                </a> and <a href="#" ><span class="policy">Privacy Policy</span></a><br>
-                <br><br>
-                <span class="policy">
-                <input type="checkbox" checked ></span>
-                Email me with news and updates
-            </p>
-        </div>
-    </div>
+    .form-footer {
+        flex-direction: column-reverse;
+    }
+}
+</style>
 
-    <script type="text/javascript">
-        function signform(){
-                document.getElementById('id01').style.display='none';
-                document.getElementById('id02').style.display='block';
-            }
-            function loginform(){
-                document.getElementById('id02').style.display='none';
-                document.getElementById('id01').style.display='block';
-            }
-    </script>
-
-    <script type="text/javascript" src="js/user.js"></script>
-
-    
-    <div class="navbar">
-        <a  href="index.php">
-            <i class="fa fa-home"></i> Home
-        </a>
-        <a href="Store.php">
-            <i class="fa fa-shopping-cart"></i> Store
-        </a>
-        <a href="news.php">
-            <i class="fa fa-newspaper-o"></i> News
-        </a>
-        <div class="dropdown">
-            <button class="dropdown-btn">
-                <i class="fa fa-download"></i> Downloads 
-            </button>
-            <div class="dropdown-contents">
-                <a href="java-download.php"><i class='fa fa-coffee' style='color:red'></i> Java Programming</a>
-                <a href="python-download.php"><i class="fa fa-code" style="color:orange"></i> Python Programming</a>
-                <a href="web-download.php"><i class="fa fa-code" style="color:blue"></i> Web Programming</a>
-            </div>
-        </div>
-        <a href="courses.php">
-            <i class="fa fa-clone"></i> Courses
-        </a>
-        <a href="contact.php">
-            <i class="fa fa-envelope"></i> Contact
-        </a>
-        <a href="Admin.php">
-            <i class="fa fa-user-secret"></i> Admin
-        </a>
-        <a href="#" style="background-color: red;">
-            <i class="fa fa-user-secret"></i> Register
-        </a>
-    </div>
-
-
-   <div class="form-content">
-        <div class="form-box">
-            <div class="form-container ajest-form2">
-                <div class="hedding">Registration Form</div>
-                <form method="get" action="entry.php">
-
-                    <label>
-                        <i class="fa fa-user icon"></i>
-                        Name <font color="red">*</font> :</label>
-                    <input type="text" id="name" name="name" required>
-
-                    <label>
-                     <i class="fa fa-id-card-o"></i>
-                        NIC No <font color="red">*</font> :</label>
-                    <input type="text" id="name" name="nic_no" required>
-
-                    <label>
-                        <i class="fa fa-envelope icon"></i>
-                        Email <font color="red">*</font> :</label>
-                    <input type="email" id="email" name="email" required>
-
-                      <label>
-                        <i class="fa fa-phone"></i>
-                        Mobile Number <font color="red">*</font> :</label>
-                    <input type="tel" id="phone" name="number">
-
-                    <label>
-                        <i class="fa fa-calendar-check-o"></i>
-                        Age:<font color="red">*</font> :</label>
-                    <input type="tel" id="phone" name="age">
-
-                     <label>
-                        <i class="fa fa-user"></i>
-                        Gender:
-                        </label>
-                        <div class="align6">
-                            <i class="fa fa-male"></i>
-                            Male
-                            <input type="radio" name="gender" value="male">
-                            &nbsp;&nbsp;&nbsp;
-                            <i class="fa fa-female"></i>
-                            Female 
-                            <input type="radio" name="gender" value="female">
-                        </div>
-
-                     <label>
-                        <i class="fa fa-map-marker"></i>
-                        City:
-                        </label>
-                        <div class="align6">
-                            <select id="city" name="city">
-                                <option value="Galle">Galle</option>
-                                <option value="Matara">Matara</option>
-                                <option value="Hambanthota">Hambanthota</option>
-                            </select>
-                        </div>
-
-                        <label>
-                         Course Type:
-                        </label>
-                        
-                        <div class="align6">
-                            <i class='fa fa-coffee' style='color:red'></i>
-                            Java 
-                            <input type="radio" id="java" name="java" value="15000">
-                            &nbsp;&nbsp;&nbsp;
-                            <i class='fa fa-code' style='color:blue'></i>
-                            Web
-                            <input type="radio" id="web" name="web" value="10000">
-                            &nbsp;&nbsp;&nbsp;
-                            <i class='fa fa-code' style='color:orange'></i>
-                            Python
-                            <input type="radio" id="py" name="python" value="12000">
-                            <br>
-                            <i class='fa fa-microchip' style='color:#00e68a'></i>
-                            IOT
-                            <input type="radio" id="web" name="iot" value="12000">
-                            &nbsp;&nbsp;&nbsp;
-                            <i class='fa fa-window-maximize' style='color:purple'></i>
-                            C#
-                            <input type="radio" id="py" name="c1" value="12000">
-                        </div>
-
-                        <label>Class Type : </label>
-                        
-                        <div class="align6">
-                            <i class="fa fa-globe"></i>
-                            Online
-                            <input type="radio" name="class" value="online">
-                            &nbsp;&nbsp;&nbsp;
-                            <i class="fa fa-institution"></i>
-                            Physical 
-                            <input type="radio" name="class" value="physical ">
-                        </div>
-
-                    <input type="submit" class="submitbtn" value="Submit">
-                    <input type="reset" class="submitbtn" value="Clear">
-                </form>
-            </div >
-        </div>
-        <div class="form-box">
-
-            <div class="subform-box">
-                <?php
-                     if(isset($_GET['success'])){
-                        if ($_GET['success']== 1) {
-                            echo "<font color ='Green' size='5px'><b>Registration Successfull</b></font>";
-                        }
-                        if ($_GET['success']== 0) {
-                            echo "<font color ='red' size='5px'><b>Registration Unuccessfull</b></font>";
-                        }
-                    }
-                ?>
-
-            </div>
-            <div>
-                <img src="images/icon.png" width="90%">
-            </div>
-        </div>
-    </div>
-
-    <br>
-
-      <div class="footer apply1">
-        <div class="box1 apply">
- 
-            <i class="fa fa-thumbs-o-up"></i>
-            REACH US
-            <div class="font-apply2">
-                <i class="fa fa-map-marker" style="font-size:20px; "></i>
-                Siridhamma Mawatha, 
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Akmeemana
-            </div>
-            <div style="font-size: 18px;">
-                <i class="fa fa-rss"></i>
-                FOLLOW US
-            </div>
-            <div>
-                <a href="#" class="fa fa-instagram apply4"></a>
-                <a href="#" class="fa fa-facebook apply4"></a>
-                <a href="#" class="fa fa-linkedin apply4"></a>
-                <a href="#" class="fa fa-twitter apply4"></a>
-                <a href="#" class="fa fa-youtube apply4"></a>
-                <a href="#" class="fa fa-google apply4"></a>
-                <a href="#" class="fa fa-pinterest apply4"></a>
-                <a href="#" class="fa fa-snapchat-ghost apply4"></a>
-            </div>
-            <div class="font-apply2">
-                <i class="fa fa-phone" style="font-size:20px;"></i>
-                <a href="tel:+94412225554">0412225554</a>
-            </div>
-        </div>
-        <div class="box1">
-            <div style="font-size: 20px; padding:0px 0px 10px 0px;">
-                <i class="fa fa-newspaper-o"></i>
-                POPULAR NEWS
-            </div>
-            <a href="news.php#robotic1">
-                <div class="footer-news" >
-                    <mark class="color4">Robotics</mark> 
-                    <span class="date">2024.09.10</span>
-                    <br>
-                    NEW COURSE STARTING NOV 18 <sup>th</sup></a>
-                </div>
-            
-            <a href="news.php#java6">
-                <div class="footer-news">
-                    <mark class="color4">Java</mark>
-                    <span class="date"> 2024.09.08 </span>
-                    <br>
-                    NEW 6<sup>th</sup> BATCH STARTING NOV 12</a>
-                </div>
-            
-            <a href="news.php#python5">
-                <div class="footer-news">
-                    <mark class="color4">Python</mark>
-                     <span class="date">2024.06.06 </span>
-                    <br>
-                    NEW 5<sup>th</sup> BATCH STARTING OCT 6</a>
-                    <br>
-                </div>
-            
-        </div>
-        <div class="box1">
-            <div style="font-size: 20px;padding-bottom:10px;">
-                <i class="fa fa-puzzle-piece"></i> 
-                CATEGORIES
-            </div>
-                <a href="courses.php#java"><mark class="color5">Java</mark></a>
-                <a href="courses.php#web"><mark class="color5">Web Design</mark></a>
-                <br><br>
-                <a href="courses.php#python"><mark class="color5">Python</mark></a>
-                <a href="courses.php#arduino"><mark class="color5">Robotics</mark></a>
-                <br><br>
-                <a href="courses.php#c1"><mark class="color5">C#</mark></a>
-                <a href="courses.php#c2"><mark class="color5">C++</mark></a>
-        </div>
-        <div class="box1">
-            <div style="font-size: 20px;padding-bottom:10px;">
-                <i class="fa fa-map-marker"></i>
-                FIND US
-            </div>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3967.4184450925177!2d80.23076517546636!3d6.074174528220766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae17182cf82c5bf%3A0xcabc61ef94f1ad0e!2sAdvanced%20Technological%20Institute%20-%20Galle!5e0!3m2!1sen!2slk!4v1725649661855!5m2!1sen!2slk" width="300" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
-      </div>
-      <div class="copyright-cont">
-        <hr>
-        Copyright © 2024 Malitha Tishamal. All Rights Reserved.
-        <hr>
-      </div>
-</body>
-</html>
+<?php include("includes/footer.php"); ?>
