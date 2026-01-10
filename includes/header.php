@@ -37,6 +37,13 @@ require_once("connect.php");
     <title><?php echo isset($pageTitle) ? $pageTitle . " | Learninglk" : "Learninglk - Inspire your IT knowledge"; ?></title>
 </head>
 <body class="modern-theme">
+    <!-- Modern Preloader -->
+    <div id="preloader">
+        <div class="loader-content">
+            <div class="loader-circle"></div>
+            <div class="loader-text">Learning<span>lk</span></div>
+        </div>
+    </div>
 
     <header class="main-header">
         <div class="header-container">

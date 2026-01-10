@@ -22,10 +22,9 @@
             </div>
 
             <div class="footer-section popular-news">
-                <h3><i class="fa fa-newspaper-o"></i> Popular News</h3>
+                <h3 class="modern-footer-title"><i class="fa fa-newspaper-o"></i> Popular News</h3>
                 <?php
                 require_once("connect.php");
-                // Fetch the latest 3 courses for the news section
                 $footerNewsQuery = "SELECT * FROM courses ORDER BY course_date DESC LIMIT 3";
                 $footerNewsResult = $con->query($footerNewsQuery);
                 
@@ -34,27 +33,27 @@
                         $fId = $fRow['course_id'];
                         $fTag = ucfirst($fId);
                         if ($fId == 'iot') $fTag = "Robotics";
-                        if ($fId == 'web') $fTag = "Web";
+                        if ($fId == 'web') $fTag = "Web Design";
+                        if ($fId == 'c1' || $fId == 'c01') $fTag = "C#";
                         
-                        // Format the title for the news link
-                        $fTitle = "New Course Starting " . date('M jS', strtotime($fRow['course_date']));
-                        if ($fId == 'java') $fTitle = "New 6th Batch Starting " . date('M jS', strtotime($fRow['course_date']));
-                        if ($fId == 'python') $fTitle = "New 5th Batch Starting " . date('M jS', strtotime($fRow['course_date']));
+                        $fDesc = "New Course Starting " . date('M jS', strtotime($fRow['course_date']));
+                        if ($fId == 'java') $fDesc = "New 6th Batch Starting " . date('M jS', strtotime($fRow['course_date']));
+                        if ($fId == 'python') $fDesc = "New 5th Batch Starting " . date('M jS', strtotime($fRow['course_date']));
                         ?>
                         <?php
                         $colorClass = 'default-color';
-                        if ($fId == 'java') $colorClass = 'java-item';
-                        if ($fId == 'python') $colorClass = 'python-item';
-                        if ($fId == 'web') $colorClass = 'web-item';
-                        if ($fId == 'iot') $colorClass = 'iot-item';
+                        if ($fId == 'java') $colorClass = 'java-red';
+                        if ($fId == 'python') $colorClass = 'python-orange';
+                        if ($fId == 'c1' || $fId == 'c01' || $fId == 'c2') $colorClass = 'c-purple';
+                        if ($fId == 'iot' || $fId == 'arduino') $colorClass = 'iot-robotic-gradient';
                         ?>
-                        <div class="news-item-modern <?php echo $colorClass; ?> mb-4">
-                            <div class="d-flex align-items-center gap-2 mb-2">
-                                <span class="news-tag-modern"><?php echo $fTag; ?></span>
-                                <span class="news-date-modern"><?php echo str_replace('-', '.', $fRow['course_date']); ?></span>
+                        <div class="news-item-minimal <?php echo $colorClass; ?> mb-3">
+                            <div class="news-header-line">
+                                <span class="news-category-text"><?php echo $fTag; ?></span>
+                                <span class="news-date-text"><?php echo str_replace('-', '.', $fRow['course_date']); ?></span>
                             </div>
-                            <a href="news.php#<?php echo $fId; ?>" class="news-link-modern">
-                                <?php echo $fTitle; ?>
+                            <a href="news.php#<?php echo $fId; ?>" class="news-desc-link">
+                                <?php echo $fDesc; ?>
                             </a>
                         </div>
                         <?php
@@ -66,12 +65,12 @@
             <div class="footer-section categories">
                 <h3><i class="fa fa-puzzle-piece"></i> Categories</h3>
                 <div class="category-tags">
-                    <a href="courses.php#java" class="tag">Java</a>
-                    <a href="courses.php#web" class="tag">Web Design</a>
-                    <a href="courses.php#python" class="tag">Python</a>
-                    <a href="courses.php#arduino" class="tag">Robotics</a>
-                    <a href="courses.php#c1" class="tag">C#</a>
-                    <a href="courses.php#c2" class="tag">C++</a>
+                    <a href="courses.php#java" class="tag tag-java">Java</a>
+                    <a href="courses.php#web" class="tag tag-web">Web Design</a>
+                    <a href="courses.php#python" class="tag tag-python">Python</a>
+                    <a href="courses.php#arduino" class="tag tag-iot">Robotics</a>
+                    <a href="courses.php#c1" class="tag tag-c">C#</a>
+                    <a href="courses.php#c2" class="tag tag-c">C++</a>
                 </div>
             </div>
 

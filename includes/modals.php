@@ -3,14 +3,18 @@
     <div class="modal-content animate-zoom">
         <div class="modal-header">
             <span onclick="document.getElementById('id01').style.display='none'" class="close-btn" title="Close Modal">&times;</span>
-            <h2>Welcome Back</h2>
-            <p>Don't have an account? <span class="toggle-link" onclick="toggleModals('id01', 'id02')">Sign Up</span></p>
+            <h2 class="modal-title">Welcome Back</h2>
+            <p class="modal-subtitle">Don't have an account? <span class="toggle-link" onclick="toggleModals('id01', 'id02')">Sign Up</span></p>
         </div>
         
         <div class="modal-body">
             <div class="social-auth">
-                <button class="social-btn google-btn"><img src="images/google.png" alt="Google"> Google</button>
-                <button class="social-btn fb-btn"><img src="images/facebook2.png" alt="Facebook"> Facebook</button>
+                <button class="social-btn google-btn" onclick="alert('Coming soon')">
+                    <img src="images/google.png" alt="Google"> Google
+                </button>
+                <button class="social-btn fb-btn" onclick="alert('Coming soon')">
+                    <img src="images/facebook2.png" alt="Facebook"> Facebook
+                </button>
             </div>
             
             <div class="divider"><span>OR</span></div>
@@ -24,10 +28,12 @@
                     <label for="login-password">Password</label>
                     <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
                 </div>
-                <div class="form-actions">
+                
+                <div class="form-options">
                     <a href="#" class="forgot-pass">Forgot Password?</a>
-                    <button type="submit" name="login_sub" class="submit-btn">Log In</button>
                 </div>
+
+                <button type="submit" name="login_sub" class="submit-btn main-action-btn">Log In</button>
             </form>
         </div>
     </div>
@@ -38,14 +44,18 @@
     <div class="modal-content animate-zoom">
         <div class="modal-header">
             <span onclick="document.getElementById('id02').style.display='none'" class="close-btn" title="Close Modal">&times;</span>
-            <h2>Create Account</h2>
-            <p>Already have an account? <span class="toggle-link" onclick="toggleModals('id02', 'id01')">Log In</span></p>
+            <h2 class="modal-title">Create Account</h2>
+            <p class="modal-subtitle">Already have an account? <span class="toggle-link" onclick="toggleModals('id02', 'id01')">Log In</span></p>
         </div>
         
         <div class="modal-body">
             <div class="social-auth">
-                <button class="social-btn google-btn"><img src="images/google.png" alt="Google"> Google</button>
-                <button class="social-btn fb-btn"><img src="images/facebook2.png" alt="Facebook"> Facebook</button>
+                <button class="social-btn google-btn" onclick="alert('Coming soon')">
+                    <img src="images/google.png" alt="Google"> Google
+                </button>
+                <button class="social-btn fb-btn" onclick="alert('Coming soon')">
+                    <img src="images/facebook2.png" alt="Facebook"> Facebook
+                </button>
             </div>
             
             <div class="divider"><span>OR</span></div>
@@ -72,10 +82,10 @@
                 
                 <div class="terms-group">
                     <input type="checkbox" id="terms" required checked>
-                    <label for="terms">I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a></label>
+                    <label for="terms" class="small-text">I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a></label>
                 </div>
                 
-                <button type="submit" name="register_sub" class="submit-btn full-width">Create Account</button>
+                <button type="submit" name="register_sub" class="submit-btn main-action-btn full-width">Create Account</button>
             </form>
         </div>
     </div>

@@ -19,7 +19,8 @@ include("includes/header.php");
             ['id' => 'iot', 'img' => 'Arduino.jpg', 'title' => 'Arduino-Robotic New Batch Starting'],
             ['id' => 'java', 'img' => 'java2.jpg', 'title' => 'Java Programming New Batch Starting'],
             ['id' => 'python', 'img' => 'pyth2.png', 'title' => 'Python Programming New Batch Starting'],
-            ['id' => 'web', 'img' => 'web2.jpg', 'title' => 'Web Designing New Batch Starting']
+            ['id' => 'web', 'img' => 'web2.jpg', 'title' => 'Web Designing New Batch Starting'],
+            ['id' => 'c1', 'img' => 'csharp.png', 'title' => 'C# Desktop New Batch Starting']
         ];
 
         foreach ($newsItems as $item) {
@@ -29,8 +30,13 @@ include("includes/header.php");
             $result = $stmt->get_result();
 
             if ($row = $result->fetch_assoc()) {
+                $colorClass = 'default-news';
+                if ($item['id'] == 'java') $colorClass = 'news-java';
+                if ($item['id'] == 'python') $colorClass = 'news-python';
+                if ($item['id'] == 'web' || $item['id'] == 'c1') $colorClass = 'news-c-web';
+                if ($item['id'] == 'iot') $colorClass = 'news-iot';
                 ?>
-                <article class="news-card" id="<?php echo $item['id']; ?>">
+                <article class="news-card <?php echo $colorClass; ?>" id="<?php echo $item['id']; ?>">
                     <div class="news-img-wrapper">
                         <img src="images/<?php echo $item['img']; ?>" alt="<?php echo $item['title']; ?>">
                     </div>
@@ -47,7 +53,7 @@ include("includes/header.php");
                             Live streaming is also available for the online batch.
                         </p>
                         <div class="news-actions">
-                            <a href="Register.php" class="btn btn-primary">Enroll Now <i class="fa fa-arrow-right"></i></a>
+                            <a href="Register.php" class="btn enroll-btn">Enroll Now <i class="fa fa-arrow-right"></i></a>
                         </div>
                     </div>
                 </article>
@@ -60,113 +66,156 @@ include("includes/header.php");
 
 <style>
 .news-hero {
-    padding: 6rem 0;
+    padding: 8rem 0 6rem;
     text-align: center;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(15, 23, 42, 0) 100%);
+    background: radial-gradient(circle at top, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
 }
 
 .news-hero h1 {
-    font-size: 3.5rem;
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 800;
     margin-bottom: 1rem;
+    letter-spacing: -0.02em;
 }
 
 .news-container {
-    max-width: 900px;
-    margin: -4rem auto 6rem;
+    max-width: 1000px;
+    margin: -2rem auto 8rem;
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 4rem;
     padding: 0 1.5rem;
 }
 
 .news-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 24px;
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 32px;
     display: grid;
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 280px 1fr;
     overflow: hidden;
-    transition: var(--transition);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.4);
 }
 
 .news-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
-    border-color: rgba(99, 102, 241, 0.3);
+    transform: translateY(-10px);
+    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.6);
 }
 
 .news-img-wrapper {
-    height: 100%;
     background: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.5rem;
+    padding: 3rem;
 }
 
 .news-img-wrapper img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    max-height: 180px;
     object-fit: contain;
-    transition: var(--transition);
-}
-
-.news-card:hover .news-img-wrapper img {
-    transform: scale(1.05);
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
 }
 
 .news-content {
-    padding: 2.5rem;
+    padding: 3rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.25rem;
 }
 
 .news-meta {
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .news-category {
-    background: rgba(99, 102, 241, 0.1);
-    color: var(--primary);
-    padding: 0.3rem 0.8rem;
-    border-radius: 4px;
-    font-size: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .news-date {
-    color: var(--text-muted);
-    font-size: 0.85rem;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
 }
 
 .news-content h2 {
-    font-size: 1.8rem;
-    line-height: 1.2;
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: white;
 }
 
 .news-content p {
-    color: #cbd5e1;
-    font-size: 1.05rem;
-    line-height: 1.6;
+    color: #94a3b8;
+    font-size: 1.1rem;
+    line-height: 1.7;
     margin-bottom: 1.5rem;
 }
 
-.news-actions {
-    margin-top: auto;
+.news-content p strong {
+    color: white;
 }
 
-@media (max-width: 768px) {
+.enroll-btn {
+    padding: 1.1rem 2.5rem;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.enroll-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px -10px currentColor;
+}
+
+/* Dynamic News Colors */
+.news-java .news-category { background: rgba(248, 113, 113, 0.1); color: #f87171; }
+.news-java .enroll-btn { background: #ef4444; }
+.news-java .news-date i { color: #f87171; }
+.news-java:hover { border-color: rgba(248, 113, 113, 0.3); }
+
+.news-python .news-category { background: rgba(251, 146, 60, 0.1); color: #fb923c; }
+.news-python .enroll-btn { background: #f97316; }
+.news-python .news-date i { color: #fb923c; }
+.news-python:hover { border-color: rgba(251, 146, 60, 0.3); }
+
+.news-c-web .news-category { background: rgba(192, 132, 252, 0.1); color: #c084fc; }
+.news-c-web .enroll-btn { background: #a855f7; }
+.news-c-web .news-date i { color: #c084fc; }
+.news-c-web:hover { border-color: rgba(192, 132, 252, 0.3); }
+
+.news-iot .news-category { background: rgba(52, 211, 153, 0.1); color: #34d399; }
+.news-iot .enroll-btn { background: linear-gradient(135deg, #10b981, #0ea5e9); }
+.news-iot .news-date i { color: #34d399; }
+.news-iot:hover { border-color: rgba(52, 211, 153, 0.3); }
+
+@media (max-width: 992px) {
     .news-card {
         grid-template-columns: 1fr;
     }
     .news-img-wrapper {
-        height: 200px;
+        padding: 4rem;
     }
 }
 </style>
