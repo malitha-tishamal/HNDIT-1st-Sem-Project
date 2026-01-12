@@ -1,0 +1,84 @@
+.content-box1{
+	display: flex;
+	flex-direction: column;
+	position: static;
+}
+
+/*content-box1 inside boxes*/
+.sub-box{
+	background-color: red;
+	width: 90%;
+	height: 120px;
+	margin: 10px 0px 15px 10px;
+}
+
+
+
+/*sub-box bgcolor1*/
+.sub-bgcolor1{
+	background-color: #33cccc;
+}
+
+/*sub-box bgcolor2*/
+.sub-bgcolor2{
+	background-color: #ff0000;
+}
+
+/*sub-box bgcolor3*/
+.sub-bgcolor3{
+	background-color: orange;
+}
+
+/*sub-box bgcolor4*/
+.sub-bgcolor4{
+	background-color: #0066ff;
+}	
+
+.sub-box:hover{
+	opacity: 0.7;
+}
+
+/*sub box inside box*/
+.sub-box2{
+	display: block;
+
+	width: 98%;
+	height: 108px;
+	margin: 0px 10px 10px 10px;
+}
+
+.sub2-bgcolor1{
+	background-color: #ccfff5;
+}
+.sub2-bgcolor2{
+	background-color: #ffcccc;
+}
+.sub2-bgcolor3{
+	background-color: #ffeccc;
+}
+
+.sub2-bgcolor4{
+	background-color: #ccebff;
+}
+
+/*image box*/
+.sub-box3{
+	display: inline-block;
+	height: 150px;
+	width: 15%;
+}
+
+/*content box*/
+.sub-box4{
+	display: inline-block;
+	height: 150px;
+	width: 60%;	
+}
+/*sub-box 4 inside heading formats*/
+.heading{
+	font-size: 28px;
+	font-weight: bold ;
+	padding-bottom: 10px;
+}
+
+

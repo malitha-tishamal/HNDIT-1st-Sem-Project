@@ -1,0 +1,105 @@
+.main-down-box{
+	display: flex;
+	justify-content: space-around;
+}
+
+.java-download{
+	width: 30%;
+	border: 2px solid red;
+	border-radius: 10px;
+	padding: 10px;
+}
+.java-heding{
+	color: white;
+	background-color: red;
+	border-radius: 8px;
+	padding: 5px 0px 5px 10px;
+}
+
+.web-download{
+	width: 30%;
+	border: 2px solid blue;
+	border-radius: 10px;
+	padding: 10px;
+}
+.web-heding{
+	color: white;
+	background-color: blue;
+	border-radius: 8px;
+	padding: 5px 0px 5px 10px;
+}
+.python-download{
+	width: 30%;
+	border: 2px solid #e69500;
+	border-radius: 10px;
+	padding: 10px;
+}
+.python-heding{
+	color: white;
+	background-color: #ffa500;
+	border-radius: 8px;
+	padding: 5px 0px 5px 10px;
+}
+
+.down{
+	padding-left: 15px;
+}
+.content{
+	padding-top: 5px;
+	width: 60%;
+}
+.lable{
+	font-size: 20px;
+	margin: 10px 0px 5px 8px;
+	font-weight: bold;
+	color: white;
+	width: 50%;
+	padding: 4px;
+	border-radius: 5px;
+	text-align: center;
+}
+.lblcolor1{
+	background-color: #ff4d4d;
+}
+.lblcolor2{
+	background-color: #3333ff;
+}
+.lblcolor3{
+	background-color: #ffaf1a;
+}
+.down-btn{
+	width: 150px;
+	height: 40px;
+	color: white;
+	font-size: 15px;
+	background-color: red;
+	font-weight: bold;
+	border: none;
+	border-radius: 10px;
+	margin-top: 12px;
+	cursor: pointer;
+}
+@media (max-width: 768px) {
+
+	.main-down-box{
+		flex-direction: column;
+	    align-items: center; 
+	}
+
+    .java-download, .web-download, .python-download {
+       width: 90%; 
+    	margin-bottom: 10px; 
+    }
+
+    .content {
+        width: 100%; 
+    }
+
+    .lable {
+        width: 200px; 
+    }
+
+    .down-btn {
+        width: 100%; 
+    }
+}

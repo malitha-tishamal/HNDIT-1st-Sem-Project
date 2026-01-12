@@ -1,0 +1,76 @@
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  width: 90%;
+  margin: 10px 0px 15px 20px;
+
+}
+.news-arduino{
+	 box-shadow: 0 6px 10px #33cccc;
+	 background-color: #ebfafa;
+
+}
+
+.news-java{
+	 box-shadow: 0 6px 10px red;
+	 background-color: #ffe6e6;
+}
+
+.news-web{
+	 box-shadow: 0 6px 10px #000099;
+	 background-color: #e6e6ff;
+}
+
+.news-python{
+	 box-shadow: 0 6px 10px orange;
+	 background-color: #ffedcc;
+}
+
+.card {
+  padding: 10px;
+  margin: 10px 10px 10px 0px;
+  width: 80%;
+}
+
+.news-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.news-body {
+  font-size: 17px;
+  min-height: 50px;
+}
+
+.news-footer {
+  text-align: center;
+  font-size: 14px;
+  color: #888;
+  font-weight: bold;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    margin: 10px 0;
+  }
+  .card {
+    width: 100%; 
+    margin: 10px;
+  }
+  .news-header {
+    font-size: 20px; 
+  }
+  .news-body {
+    font-size: 16px; 
+
+  .news-footer {
+    font-size: 12px; 
+  }
+}

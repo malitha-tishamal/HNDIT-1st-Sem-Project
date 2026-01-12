@@ -46,26 +46,38 @@ require_once("connect.php");
                 </a>
             </div>
 
-            <div class="status-section">
-                <?php
-                if (isset($_SESSION["user"])) {
-                    echo "<div class='user-greeting'>Welcome, <span class='user-name'>" . htmlspecialchars($_SESSION["user"]) . "</span>!</div>";
-                }
-                ?>
-            </div>
+            <nav class="nav-links">
+                <a href="index.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>">Home</a>
+                <a href="Store.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'Store.php' ? 'active' : ''; ?>">Store</a>
+                <a href="news.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'news.php' ? 'active' : ''; ?>">News</a>
+                <div class="dropdown">
+                    <button class="dropdown-btn">
+                        Downloads
+                    </button>
+                    <div class="dropdown-contents">
+                        <a href="java-download.php">Java</a>
+                        <a href="python-download.php">Python</a>
+                        <a href="web-download.php">Web</a>
+                    </div>
+                </div>
+                <a href="courses.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'courses.php' ? 'active' : ''; ?>">Courses</a>
+                <a href="contact.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>">Contact Us</a>
+                <a href="Admin.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'Admin.php' ? 'active' : ''; ?>">Admin</a>
+            </nav>
 
             <div class="auth-section">
                 <?php if (!isset($_SESSION["user"])): ?>
                     <button class="btn btn-login" onclick="document.getElementById('id01').style.display='block'">
-                        <i class="fa fa-fw fa-user"></i> Login
+                        Login
                     </button>
                     <button class="btn btn-signup" onclick="document.getElementById('id02').style.display='block'">
-                        <i class="fa fa-sign-in"></i> Sign Up
+                        Sign In
                     </button>
                 <?php else: ?>
+                    <span class='user-greeting' style="margin-right: 15px; font-weight: 600; color: var(--text-main);">Hi, <?php echo htmlspecialchars($_SESSION["user"]); ?></span>
                     <form method="post" action="logout.php" style="display:inline;">
-                        <button type="submit" name="logout" class="btn btn-logout">
-                            <i class="fa fa-sign-out"></i> Log Out
+                        <button type="submit" name="logout" class="btn btn-login" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                            Log Out
                         </button>
                     </form>
                 <?php endif; ?>
@@ -76,42 +88,6 @@ require_once("connect.php");
             </button>
         </div>
     </header>
-
-    <nav class="navbar" id="nvg">
-        <div class="nav-container">
-            <a href="index.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>">
-                <i class="fa fa-home"></i> Home
-            </a>
-            <a href="Store.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'Store.php' ? 'active' : ''; ?>">
-                <i class="fa fa-shopping-cart"></i> Store
-            </a>
-            <a href="news.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'news.php' ? 'active' : ''; ?>">
-                <i class="fa fa-newspaper-o"></i> News
-            </a>
-            <div class="dropdown">
-                <button class="dropdown-btn">
-                    <i class="fa fa-download"></i> Downloads <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-contents">
-                    <a href="java-download.php"><i class='fa fa-coffee'></i> Java</a>
-                    <a href="python-download.php"><i class="fa fa-code"></i> Python</a>
-                    <a href="web-download.php"><i class="fa fa-globe"></i> Web</a>
-                </div>
-            </div>
-            <a href="courses.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'courses.php' ? 'active' : ''; ?>">
-                <i class="fa fa-clone"></i> Courses
-            </a>
-            <a href="contact.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>">
-                <i class="fa fa-envelope"></i> Contact
-            </a>
-            <a href="Admin.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'Admin.php' ? 'active' : ''; ?>">
-                <i class="fa fa-user-secret"></i> Admin
-            </a>
-            <a href="Register.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'Register.php' ? 'active' : ''; ?>">
-                <i class="fa fa-user-circle-o"></i> Register
-            </a>
-        </div>
-    </nav>
 
     <!-- Modals (moved here for consistency) -->
     <?php include_once("modals.php"); ?>

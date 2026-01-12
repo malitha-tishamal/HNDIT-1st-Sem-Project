@@ -1,0 +1,245 @@
+
+.conent-box{
+  display: flex;
+}
+.subcontent-box1{
+  width: 30%;
+  height: 600px;
+}
+.subcontent-box2{
+  width: 80%;
+
+}
+.subcontent-box3{
+  width: 100%;
+  min-height: 2px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+/*Output table sql*/
+h2{
+  padding-left: 10px;
+  color: blue;
+}
+
+table{
+  border: 2px solid black;
+  border-collapse: collapse;
+
+}
+td,th{
+  padding: 5px 8px;
+  text-align: center;
+}
+/*edit search result mark tag*/
+mark{
+    color: white;
+    background-color: red;
+    border-radius: 4px;
+}
+.ajest{
+    padding-right: 25px;
+}
+
+input[type=text]{
+  width: 22%;
+  height: 30px;
+  border: 1px solid grey;
+  border-radius: 6px;
+}
+select{
+  width: 16%;
+  height: 30px;
+  border: 1px solid grey;
+  border-radius: 6px;
+}
+
+.sidenav {
+  height: 100%;
+  width: 320px;
+  /*position: fixed;*/
+  background-color: #000080;
+  overflow-x: hidden;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px #000080;
+}
+
+.sidenav :hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+.dash-intro{
+  border: 3px solid white;
+  border-radius: 10px;
+  display: flex;
+  text-align: center;
+  color: white;
+  padding: 10px 5px 5px 5px;
+  margin: 0px 12px 15px 10px;
+}
+.dash-img{
+  width: 54px;
+ border-radius: 22px;
+}
+.dash-heading{
+  font-weight: bold;
+  font-size: 28px;
+  padding: 10px 5px 0px 10px;
+
+}
+.dash-btn-icon{
+  font-size: 18px;
+  width: 60px;
+  height: 40px;
+}
+.dash-btn{
+  color: white;
+  border: none;
+  background-color: blue;
+  font-weight: bold;
+  cursor: pointer;
+  height: 36px;
+  text-align: left;
+  margin: 8px 0px 4px 15px;
+  padding: 0px 0px 0px 15px;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px black;
+}
+.ajest1{
+  width: 230px;
+  font-size: 16px;
+}
+.ajest2{
+  width: 215px;
+  font-size: 18px;
+}
+/*.dash-btn2{
+  color: white;
+  border: none;
+  background-color: red;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 21px;
+  width: 250px;
+  height: 32px;
+  text-align: center;
+  padding: 8px 0px 0px 0px;
+  margin: 0px 0px 0px 15px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px black;
+}*/
+.dash-btn:hover{
+  opacity: 0.9;
+  box-shadow: 5px 5px 5px black;
+}
+/*.dash-btn2:hover{
+  opacity: 0.9;
+  box-shadow: 5px 5px 5px black;
+}*/
+ #inputdta {
+    display: none; /* loading the page hide the input field */
+}
+#addcourse {
+    display: none; 
+}
+#updatecourse{
+  display: none;
+}
+
+.dta-btn{
+  width: 60px;
+  height: 30px;
+  background-color:blue;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  border: none;
+  padding: 5px 2px 5px 2px;
+  margin-right: 15px;
+}
+.heading-serch{
+  font-weight: bold;
+  font-size: 30px;
+  margin: 5px 0px 15px 0px;
+}
+/*db details tab*/
+.db-details{
+  text-align: center;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  width: 135px;
+  height: 65px;
+  padding: 8px 5px 8px 5px;
+  margin: 0px 10px 10px 10px;
+  background-color: #fff;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+}
+.db-hedding{
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+}
+.db-count{
+  font-size: 20px;
+  font-weight: bold;
+  color: red;
+  padding-top: 15px;
+}
+#dbbox{
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .subcontent-box1,
+  .subcontent-box2 {
+    width: 100%; 
+    height: auto; 
+  }
+
+  input[type=text],
+  select {
+    width: 100%; 
+    margin-bottom: 10px; 
+  }
+
+  .sidenav {
+    width: 100%; 
+  }
+
+  .dash-intro {
+    flex-direction: column; 
+    align-items: center;
+  }
+
+  .dash-heading {
+    font-size: 24px; 
+  }
+
+  .dash-btn {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 5px 0;
+  }
+
+  .db-details {
+    width: 100%;
+    height: 80px;
+    margin: 10px 0; 
+}
+
+@media (max-width: 480px) {
+  .dash-heading {
+    font-size: 20px; 
+  }
+
+  .heading-serch {
+    font-size: 24px; 
+  }
+
+  .dta-btn {
+    width: 100%; 
+  }
+}

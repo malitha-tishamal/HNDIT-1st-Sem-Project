@@ -1,0 +1,522 @@
+body{
+  margin: 0;
+}
+a:active {
+  color: white;
+}
+a:link {
+  color: #b3b3b3;
+  text-decoration: none;
+}
+/*a:visited {
+  color: ;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: red;
+  background-color: transparent;
+  text-decoration: underline;
+}*/
+/* Top Banner*/
+.user{
+    display: flex;
+    justify-content: space-around;
+    padding-top: 10px;
+    margin-bottom: 0px;
+}
+.top-box{
+    padding-right: 10px;
+    width: 32%;
+}
+.align4{
+  text-align: right;
+  padding-top: 15px;
+}
+
+/*log out button*/
+
+.log-out-btn{
+  color: white;
+  background-color: black;
+  font-size: 18px;
+  padding: 18px 14px;
+  margin-right: 40px;
+  border: none;
+  float: right;
+  cursor: pointer;
+}
+.log-out-btn:hover{
+  background-color: red;
+}
+/*message on user log/sign in faild*/
+.error{
+  color: red;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 5px 0px 0px 10px;
+  text-align: center;
+}
+/*message on user log/sign in success*/
+.success{
+  color: #33cc33;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 5px 0px 0px 10px;
+  text-align: center;
+}
+/*message on user acess denied*/
+.session-ban{
+  color: red;
+  font-weight: bold;
+  font-size: 40px;
+  padding: 40px 0px 0px 0px;
+  text-align: center;
+}
+
+/*message on user log in faild align*/
+.output-align{
+  display: flex;
+  flex-direction: inline;
+}
+
+
+/*NV Bar */
+.navbar{
+  overflow: hidden;
+  background-color: #000000;
+}
+.navbar a {
+  float: left;
+  color: white;
+  font-size: 18px;
+  padding: 12px 14px;
+  text-decoration: none;
+}
+.dropdown{
+  float: left;
+  overflow: hidden;
+}
+.dropdown .dropdown-btn{
+  font-size: 18px;  
+  color: white;
+  border: none;
+  outline: none;
+  padding: 12px 14px;
+  background-color: black;
+  cursor: pointer;
+}
+.navbar a:hover, .dropdown:hover .dropdown-btn:hover{
+  background-color: red;
+}
+.dropdown-contents{
+  z-index: 1;
+  display: none;
+  position: absolute;
+  background-color:rgb(255,255,255);opacity:0.8;
+  min-width: 130px;
+  border-radius: 8px;
+}
+.dropdown-contents a{
+  float: none;
+  color: black;
+  display: block;
+  border-radius: 8px;
+}
+.dropdown-contents a:hover{
+  background-color: #ddd;
+}
+.dropdown:hover .dropdown-contents{
+  display: block;
+}
+
+/*fa fa icon size*/
+.icon-size{
+  font-size: 35px;
+}
+
+/*sign log Button*/
+
+.main{
+  color: white;
+  font-weight: bold;
+  margin: 0px 5px 0px 0px;
+  padding: 5px 3px 5px 3px;
+  border: none;
+  border-radius: 10px;
+  width: 100px;
+}
+.login{
+  background-color: blue;
+}
+.signup{
+  background-color: #33cc33;
+}
+.main:hover{
+  opacity: 0.8;
+}
+
+/*heading box css(link button)*/
+.heding-box{
+  display: flex;
+  flex-direction: inline;
+}
+
+/*heading tab css(populer tab)*/
+.heding1,.link-btn2{
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  padding: 0px 0px 0px 10px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  border-radius: 8px;
+}
+
+.heading-tab-color{
+  background-color: orange;
+  width: 200px;
+}
+.link-btn2-color{
+  background-color: blue;
+  width: 270px;
+}
+
+/*course content box*/
+
+.content{
+  display:flex;
+  justify-content: space-around;
+}
+/*course content box (courses page)*/
+.content2{
+  display:flex;
+  box-align: center;
+}
+.content-box{
+  text-align: justify;
+  border-radius: 10px;
+  padding: 5px 15px 10px 15px;
+  width: 30%;
+}
+.hed-color1{
+  border: 2px solid darkblue;
+}
+.hed-color2{
+  border: 2px solid orange;
+}
+.hed-color3{
+  border: 2px solid red;
+}
+.hed-color4{
+  border: 2px solid #33cccc ;
+  margin: 0px 8px 0px 5px;
+}
+.hed-color5{
+  border: 2px solid purple ;
+}
+
+.courses{
+  color: white;
+  border-radius: 8px;
+  padding: 5px 0px 5px 10px;
+}
+.course-banner{
+  text-align: center;
+}
+
+/*java content box  heading color*/
+.java{
+  background-color: red;
+}
+/*python content box  heading color*/
+.pyth{
+  background-color: orange;
+}
+/*web content box  heading color*/
+.web{
+  background-color: blue;
+}
+.robotic{
+  background-color: #33cccc;
+}
+.c-dev{
+  background-color: purple;
+}
+.content-box:hover{
+  opacity: 0.8;
+}
+.btn-align3{
+  padding-top: 10px;
+}
+
+
+/*link button*/
+.link-btn{
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+
+}
+
+.btncolor1{
+  background-color: red;  
+}
+.btncolor2{
+  background-color: orange;  
+}
+.btncolor3{
+  background-color: darkblue;  
+}
+.btncolor4{
+  background-color: #33cccc;  
+}
+.btncolor5{
+  background-color: purple;  
+}
+
+/* link buttons hover effects*/
+
+.btncolor1:hover{
+  box-shadow: 3px 3px 3px #ff3333;
+}
+.btncolor2:hover{
+  box-shadow: 3px 3px 3px #ffc14d;
+}
+.btncolor3:hover{
+  box-shadow: 3px 3px 3px #3333ff;
+}
+.btncolor4:hover{
+  box-shadow: 3px 3px 3px #70dbdb;
+}
+.btncolor5:hover{
+  box-shadow: 3px 3px 3px #990099;
+}
+
+/* course boxes*/
+.intro {
+  font-size: 18px;
+  padding: 8px 0px 0px 0px;
+}
+.detail{
+  padding: 0px 0px 8px 0px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+.inside{
+  font-weight: bold;
+  font-size: 20px;
+  padding: 8px 0px 2px 0px;
+  color: black;
+}
+.dates{
+  font-size: 18px;
+  font-weight:bold ;
+}
+
+/*footer*/
+
+.footer{
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  margin-top: 10px;
+}
+.footer, .box1{
+  background-color: black;
+  color: white;
+}
+
+.box1{
+  width: 30%;
+  height: 180px;
+  padding-left: 20px;
+}
+.apply{
+  font-weight: bold;
+  font-size: 20px;
+}
+#img-adjust{
+  width: 30px;
+  height: 30px;
+
+}
+.font-apply2{
+  color: #b3b3b3;
+  font-size: 18px;
+}
+/*footer date courses*/
+.date{
+  color: #e6e6e6;
+}
+mark{ 
+  padding:5px;
+  width: 5px;
+  font-size: 12px;
+  color: white;
+}
+.color4{
+  background-color: red;
+  border: none;
+}
+.color5{
+  background-color: blue;
+  font-weight: bold;
+  border: none;
+}
+.footer-news{
+  color: #b3b3b3;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 8px 0px 8px 0px;
+  line-height: 1.5;
+}
+
+/*footer copyright*/
+
+.copyright-cont{
+    background-color: black;
+    color: white;
+    font-size: 15px;
+    padding: 30px 0px 20px 0px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/*social icons*/
+.fa {
+  padding: 3px;
+  font-size: 25px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+}
+
+/*ajest social icons*/
+.apply4{
+  width: 25px;
+
+}
+.fa:hover {
+    opacity: 0.7;
+}
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+.fa-twitter {
+  background: #1DA1F2;
+  color: white;
+}
+.fa-google {
+  background: #EA4335;
+  color: white;
+}
+.fa-linkedin {
+  background: #007bb5;
+  color: white;
+}
+.fa-youtube {
+  background: #bb0000;
+  color: white;
+}
+.fa-instagram {
+  background: #ee2a7b;
+  color: white;
+}
+.fa-pinterest {
+  background: #cb2027;
+  color: white;
+}
+.fa-snapchat-ghost {
+  background: #fffc00;
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+
+@media (max-width: 768px) {
+  .user {
+    flex-direction: column; 
+    align-items: center;
+  }
+
+  .top-box {
+    width: 100%; 
+    padding-right: 0; 
+  }
+
+  .log-out-btn {
+    margin-right: 0; 
+    width: 100%; 
+    text-align: center; 
+  }
+
+   .navbar {
+    left: -250px;
+  }
+  .navbar.show {
+    left: 0;
+  }
+
+  .content,.content2 {
+    flex-direction: column;
+    align-items: center; 
+  }
+
+  .content-box {
+    width: 90%; 
+    margin-bottom: 10px; 
+  }
+
+  .footer {
+    flex-direction: column; 
+    align-items: center; 
+  }
+
+  .box1 {
+    width: 90%; 
+    height: 200px;
+    margin-bottom: 10px;
+  }
+
+  .copyright-cont {
+    font-size: 14px; 
+  }
+
+  .fa {
+    font-size: 20px;
+  }
+
+  .heding1, .link-btn2 {
+    font-size: 18px; 
+  }
+
+  .main {
+    width: 80px; 
+    margin: 10px 0; 
+  }
+}
+
+@media (max-width: 480px) {
+  .log-out-btn {
+    padding: 10px; 
+  }
+
+  .error, .success, .session-ban {
+    font-size: 18px; 
+  }
+
+  .detail, .inside, .dates {
+    font-size: 14px; 
+  }
+
+  .footer-news {
+    font-size: 12px;
+  }
+}

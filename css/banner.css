@@ -1,37 +1,85 @@
-* {box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
-.mySlides {display: none;}
-img {vertical-align: middle;}
 
-.slideshow-container{
+/* Slideshow Container */
+.slideshow-container {
   position: relative;
   margin: auto;
   align-content: center;
-}
-#banner{
-  width: 100%;
-  height: 400px;
+  overflow: hidden;
 }
 
-.dot{
+/* Optimize slides for performance */
+.mySlides {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
+  /* Hardware acceleration */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.mySlides.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+}
+
+/* Banner images */
+#banner {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+  /* Prevent image flickering */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Dots */
+.dot {
   height: 15px;
   width: 15px;
   margin: 0 2px;
   background-color: #bbb;
   border-radius: 50%;
   display: inline-block;
-  transition: background-color 0.4s ease;
+  transition: background-color 0.4s ease, transform 0.3s ease;
+  cursor: pointer;
+  /* Hardware acceleration */
+  will-change: background-color, transform;
+  transform: translateZ(0);
 }
 
-.fade{
-  animation-name: fade;
-  animation-duration: 1.5s;
+.dot.active {
+  background-color: #6366f1;
+  transform: scale(1.2) translateZ(0);
 }
-@keyframes fade {
-  from {opacity: .4} 
-  to {opacity: 1}
+
+.dot:hover {
+  background-color: #94a3b8;
+  transform: scale(1.1) translateZ(0);
 }
-@media only screen and (max-width: 300px){
-  .text {font-size: 11px}
+
+/* Remove old fade animation - now handled by active class */
+@media only screen and (max-width: 300px) {
+  .text {
+    font-size: 11px;
   }
+}
+
+/* Preload optimization */
+.mySlides img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }

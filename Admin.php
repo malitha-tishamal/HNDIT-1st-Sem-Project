@@ -381,11 +381,26 @@ include("includes/header.php");
 </div>
 
 <style>
+/* Admin Dashboard Modernization */
 .admin-wrapper {
-    min-height: 90vh;
+    min-height: 95vh;
     padding: 3rem 0;
-    background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.05), transparent),
-                radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.05), transparent);
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Add a colorful shape behind */
+.admin-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    z-index: 0;
 }
 
 .admin-login-section {
@@ -393,64 +408,124 @@ include("includes/header.php");
     justify-content: center;
     align-items: center;
     padding: 6rem 1.5rem;
+    position: relative;
+    z-index: 1;
 }
 
 .login-card {
-    max-width: 450px !important;
+    background: #ffffff !important;
+    max-width: 480px !important;
     width: 100%;
-    padding: 3.5rem !important;
-    border-radius: 32px !important;
+    padding: 4rem !important;
+    border-radius: 24px !important;
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.15) !important;
+    border: 1px solid rgba(226, 232, 240, 0.8) !important;
+}
+
+.login-card h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 2rem;
+    text-align: center;
+    background: linear-gradient(to right, #0EA5E9, #0284C7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.login-card .input-group label {
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.95rem;
+}
+
+.login-card .input-group input {
+    background: #F8FAFC;
+    border: 2px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 1rem;
+    width: 100%;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.login-card .input-group input:focus {
+    background: white;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+    outline: none;
+}
+
+.login-card .btn-primary {
+    background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+    box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3);
+    padding: 1rem;
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+}
+
+.login-card .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(14, 165, 233, 0.4);
 }
 
 .dashboard-layout {
-    max-width: 1500px;
+    max-width: 1600px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 3rem;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
     padding: 0 2rem;
+    position: relative;
+    z-index: 1;
 }
 
 .admin-sidebar {
-    background: #1e293b;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 32px;
-    padding: 3rem 2rem;
-    height: fit-content;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    padding: 2.5rem 1.5rem;
+    height: calc(100vh - 120px);
     position: sticky;
     top: 100px;
-    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 .admin-profile {
     text-align: center;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     padding-bottom: 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid #f1f5f9;
 }
 
 .dash-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 28px;
-    margin-bottom: 1.25rem;
-    border: 3px solid var(--primary);
-    padding: 4px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    border: 4px solid #e0f2fe;
+    padding: 2px;
     object-fit: cover;
 }
 
 .admin-profile h3 {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: white;
+    color: var(--text-main);
+    font-size: 1.1rem;
+    font-weight: 700;
 }
 
 .admin-profile p {
     color: var(--primary);
-    font-weight: 700;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #e0f2fe;
+    display: inline-block;
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    margin-top: 0.5rem;
 }
 
 .admin-nav {
